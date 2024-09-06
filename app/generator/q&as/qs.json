@@ -1,0 +1,44 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es el objetivo del Sistema de práctica social según la Resolución No. 051 de junio 24 de 2008?",
+            "choices": {
+                "a": "Promover el desarrollo de habilidades digitales",
+                "b": "Fomentar la capacidad crítica y discursiva",
+                "c": "Incidir en la transformación del entorno",
+                "d": "Impulsar proyectos de comunicación visual"
+            },
+            "answer": "c"
+        },
+        {
+            "question": "¿Qué tipo de lenguajes estéticos deben dominar los estudiantes?",
+            "choices": {
+                "a": "Lenguajes visuales",
+                "b": "Lenguajes auditivos",
+                "c": "Lenguajes escritos",
+                "d": "Lenguajes matemáticos"
+            },
+            "answer": "a"
+        },
+        {
+            "question": "¿Cuál es la facultad de la Universidad del Valle donde se ofreció la carrera de Comunicación Social y Diseño Gráfico?",
+            "choices": {
+                "a": "Facultad de Artes",
+                "b": "Facultad de Ingeniería",
+                "c": "Facultad de Ciencias Sociales y Económicas",
+                "d": "Facultad de Ciencias de la Salud"
+            },
+            "answer": "c"
+        },
+        {
+            "question": "¿En qué año fue docente de la Facultad de Diseño de Medios Interactivos en la Universidad ICESI?",
+            "choices": {
+                "a": "2005",
+                "b": "2007",
+                "c": "2009",
+                "d": "2010"
+            },
+            "answer": "b"
+        }
+    ]
+}

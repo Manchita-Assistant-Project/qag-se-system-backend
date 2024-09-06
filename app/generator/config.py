@@ -1,0 +1,8 @@
+CLIENT_ID = "e53cec9544a042fdb23c66537a7e82c9"
+CLIENT_SECRET = "81a10f73ac7d49fbb61a45382189feb3"
+
+OPENAI_API_KEY = "cf0bd49030ed4aa6a6509be1cd9d604b"
+AZURE_OPENAI_ENDPOINT = "https://invuniandesai.openai.azure.com/"
+OPENAI_API_TYPE = "azure"
+OPENAI_API_VERSION = "2023-05-15"
+OPENAI_DEPLOYMENT_NAME = 'gpt-35-turbo-16k-rfmanrique'
