@@ -1,44 +1,108 @@
 {
     "content": [
         {
-            "question": "¿Cuál es el objetivo del Sistema de práctica social según la Resolución No. 051 de junio 24 de 2008?",
-            "choices": {
-                "a": "Promover el desarrollo de habilidades digitales",
-                "b": "Fomentar la capacidad crítica y discursiva",
-                "c": "Incidir en la transformación del entorno",
-                "d": "Impulsar proyectos de comunicación visual"
-            },
-            "answer": "c"
-        },
-        {
-            "question": "¿Qué tipo de lenguajes estéticos deben dominar los estudiantes?",
-            "choices": {
-                "a": "Lenguajes visuales",
-                "b": "Lenguajes auditivos",
-                "c": "Lenguajes escritos",
-                "d": "Lenguajes matemáticos"
-            },
-            "answer": "a"
-        },
-        {
-            "question": "¿Cuál es la facultad de la Universidad del Valle donde se ofreció la carrera de Comunicación Social y Diseño Gráfico?",
-            "choices": {
-                "a": "Facultad de Artes",
-                "b": "Facultad de Ingeniería",
-                "c": "Facultad de Ciencias Sociales y Económicas",
-                "d": "Facultad de Ciencias de la Salud"
-            },
-            "answer": "c"
-        },
-        {
-            "question": "¿En qué año fue docente de la Facultad de Diseño de Medios Interactivos en la Universidad ICESI?",
-            "choices": {
-                "a": "2005",
-                "b": "2007",
-                "c": "2009",
-                "d": "2010"
-            },
-            "answer": "b"
+            "questions": [
+                {
+                    "question": "¿Cuál es el objetivo del Sistema de práctica social?",
+                    "choices": {
+                        "a": "Promover la fotografía",
+                        "b": "Incidir en la transformación del entorno",
+                        "c": "Generar proyectos de comunicación visual",
+                        "d": "Desarrollar habilidades estéticas"
+                    },
+                    "answer": "b"
+                },
+                {
+                    "question": "¿Qué tipo de lenguajes estéticos deben dominar los estudiantes?",
+                    "choices": {
+                        "a": "Lenguajes literarios",
+                        "b": "Lenguajes musicales",
+                        "c": "Lenguajes visuales",
+                        "d": "Lenguajes matemáticos"
+                    },
+                    "answer": "c"
+                },
+                {
+                    "question": "¿Cuál es la asignación presupuestaria para la Facultad de Artes Visuales y Aplicadas en 2011?",
+                    "choices": {
+                        "a": "$100.000",
+                        "b": "$500.000",
+                        "c": "$1.000.000",
+                        "d": "$10.000.000"
+                    },
+                    "answer": "c"
+                },
+                {
+                    "question": "¿Cuál es el nombre de la facultad a la que se presenta la asignación presupuestaria?",
+                    "choices": {
+                        "a": "Facultad de Ciencias Sociales",
+                        "b": "Facultad de Ingeniería",
+                        "c": "Facultad de Artes Visuales y Aplicadas",
+                        "d": "Facultad de Medicina"
+                    },
+                    "answer": "c"
+                },
+                {
+                    "question": "¿Cuál es el objetivo principal del diseño?",
+                    "choices": {
+                        "a": "Crear obras de arte",
+                        "b": "Incidir en la transformación del entorno",
+                        "c": "Desarrollar habilidades estéticas",
+                        "d": "Promover la fotografía"
+                    },
+                    "answer": "b"
+                },
+                {
+                    "question": "¿Cuál es el nombre de la resolución que establece el Sistema de práctica social?",
+                    "choices": {
+                        "a": "Resolución No. 051 de junio 24 de 2008",
+                        "b": "Resolución No. 001 de enero 1 de 2010",
+                        "c": "Resolución No. 100 de diciembre 31 de 2009",
+                        "d": "Resolución No. 999 de diciembre 31 de 2011"
+                    },
+                    "answer": "a"
+                },
+                {
+                    "question": "¿Cuál es la capacidad que deben tener los estudiantes para incidir en la transformación de su entorno?",
+                    "choices": {
+                        "a": "Capacidad crítica y discursiva",
+                        "b": "Capacidad física y deportiva",
+                        "c": "Capacidad musical y artística",
+                        "d": "Capacidad matemática y lógica"
+                    },
+                    "answer": "a"
+                },
+                {
+                    "question": "¿Cuál es el objetivo de los proyectos de comunicación visual?",
+                    "choices": {
+                        "a": "Promover la fotografía",
+                        "b": "Incidir en la transformación del entorno",
+                        "c": "Generar proyectos de animación",
+                        "d": "Desarrollar habilidades estéticas"
+                    },
+                    "answer": "b"
+                },
+                {
+                    "question": "¿Cuál es el nombre del instituto que emitió la resolución?",
+                    "choices": {
+                        "a": "Instituto Departamental de Bellas Artes",
+                        "b": "Instituto Nacional de Bellas Artes",
+                        "c": "Instituto de Arte Contemporáneo",
+                        "d": "Instituto de Bellas Artes de Cali"
+                    },
+                    "answer": "a"
+                },
+                {
+                    "question": "¿Cuál es el tipo de prácticas que se promueven en el Sistema de práctica social?",
+                    "choices": {
+                        "a": "Prácticas deportivas",
+                        "b": "Prácticas científicas",
+                        "c": "Prácticas sociales",
+                        "d": "Prácticas literarias"
+                    },
+                    "answer": "c"
+                }
+            ]
         }
     ]
 }

@@ -161,5 +161,11 @@ def main():
     response = EvaluateAs('app/generator/q&as/qs.json', question, answer, ProvideFeedback)
     print(response)
 
+    # ========================================== #
+    # 4. Continue with supplementary interaction #
+    # ========================================== #
+
+    ...
+
 if __name__ == "__main__":
     main()
