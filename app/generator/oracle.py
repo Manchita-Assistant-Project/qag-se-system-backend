@@ -1,6 +1,6 @@
 import app.generator.config as config
 from app.generator.prompts import ORACLE_PROMPT
-from app.generator.agents import QandAGenerationAgent, QandAEvaluationAgent, InteractionAgent, qanda_chooser, final_answer
+from app.generator.agents_graph import QandAGenerationAgent, QandAEvaluationAgent, InteractionAgent, qanda_chooser, final_answer
 
 import os
 from langchain_openai import AzureChatOpenAI
@@ -31,7 +31,7 @@ llm = AzureChatOpenAI(
 tools = [
     # QandAGenerationAgent,
     QandAEvaluationAgent,
-    InteractionAgent,
+    # InteractionAgent,
     qanda_chooser,
     final_answer
 ]
@@ -69,6 +69,7 @@ def run_oracle(state: list):
     print("run_oracle")
     print(f"intermediate_steps: {state['intermediate_steps']}")
     out = oracle.invoke(state)
+    print('BLOB')
     tool_name = out.tool_calls[0]["name"]
     tool_args = out.tool_calls[0]["args"]
     action_out = AgentAction(
@@ -77,6 +78,7 @@ def run_oracle(state: list):
         log="TBD"
     )
     
+    print('RETURN')
     return { "intermediate_steps": [action_out] }
 
 def router(state: list):
@@ -91,7 +93,7 @@ def router(state: list):
 
 tool_str_to_func = {
     # "QandAGenerationAgent": QandAGenerationAgent,
-    "InteractionAgent": InteractionAgent,
+    # "InteractionAgent": InteractionAgent,
     "QandAEvaluationAgent": QandAEvaluationAgent,
     "qanda_chooser": qanda_chooser,
     "final_answer": final_answer
@@ -109,4 +111,5 @@ def run_tool(state: list):
         tool_input=tool_args,
         log=str(out)
     )
+    print(f'ACTION_OUT: {action_out}')
     return {"intermediate_steps": [action_out]}

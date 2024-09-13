@@ -18,7 +18,7 @@ graph = StateGraph(AgentState)
 graph.add_node("oracle", run_oracle)
 # graph.add_node('QandAGenerationAgent', run_tool)
 graph.add_node('QandAEvaluationAgent', run_tool)
-graph.add_node('InteractionAgent', run_tool)
+# graph.add_node('InteractionAgent', run_tool)
 graph.add_node("qanda_chooser", run_tool)
 graph.add_node("final_answer", run_tool)
 
@@ -30,23 +30,26 @@ graph.add_conditional_edges( # a QandAGenerationAgent no debería haber un condi
 )
 
 for tool_obj in tools:
-    if (tool_obj.name != "final_answer" and tool_obj.name != "qanda_chooser"):
+    if (tool_obj.name != "final_answer"):
         graph.add_edge(
             tool_obj.name,
             "oracle"
         )
-    elif (tool_obj.name == "final_answer"):
+    # if (tool_obj.name == "qanda_chooser"):
+    #     graph.add_edge(
+    #         tool_obj.name,
+    #         "QandAEvaluationAgent"
+    #     )
+    # elif (tool_obj.name == "QandAEvaluationAgent"):
+    #     graph.add_edge(
+    #         tool_obj.name,
+    #         "final_answer"
+    #     )
+    if (tool_obj.name == "final_answer"):
         graph.add_edge(
             tool_obj.name,
             END
         )
-    elif (tool_obj.name == "qanda_chooser"):
-        graph.add_edge(
-            tool_obj.name,
-            "QandAEvaluationAgent"
-        )
-
-graph.remove_edge("oracle", "QandAEvaluationAgent")
 
 runnable = graph.compile()
 
@@ -58,7 +61,7 @@ def generate_graph_image():
 generate_graph_image()
 
 out = runnable.invoke({
-    "input": "tengo dudas sobre la Resolución No. 051 de junio 24 de 2008",
+    "input": "hazme una pregunta!",
     "chat_history": []
 })
 

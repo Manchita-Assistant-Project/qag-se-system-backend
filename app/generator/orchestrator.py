@@ -1,7 +1,7 @@
 import app.generator.utils as utils
 import app.generator.config as config
 from app.generator.prompts import FIXED_AGENTS_PROMPT
-from app.generator.agents import QAndAGenerationAgent, QAndAChooserTool, QandAEvaluationAgent, InteractionAgent
+from app.generator.agents import QandAGenerationAgent, QandAChooserTool, QandAEvaluationAgent, InteractionAgent
 
 import os
 import json
@@ -32,8 +32,8 @@ memory = ConversationBufferWindowMemory(
 )
 
 tools = [
-    # QAndAGenerationAgent(),
-    # QAndAChooserTool(),
+    QandAGenerationAgent(),
+    QandAChooserTool(),
     QandAEvaluationAgent(),
     InteractionAgent(),
 ]
@@ -49,21 +49,44 @@ conversational_agent = initialize_agent(
 
 conversational_agent.agent.llm_chain.prompt.messages[0].prompt.template = FIXED_AGENTS_PROMPT
 
+states = {
+    'initial',
+    'question_asked',
+    'question_answered',
+}
+
 def main():
     print("Bot: ¿Cómo quieres aprender hoy? Puedo evaluar conocimiento haciéndote preguntas o podemos tener una conversación educativa.")
+    current_state = 'initial'
+    question = None
     while True:
         user_input = input("You: ")
-        question = None
-        if 'pregunta' in user_input.lower(): # DEMO - por supuesto que esta evaluación hay que cambiarla!!
-            print('Bot: ¡Genial! Vamos a evaluar tus conocimientos.')
+        response = None
+        
+        if current_state == 'initial':
+            if 'pregunta' in user_input.lower(): # DEMO - por supuesto que esta evaluación hay que cambiarla!!
+                print('Bot: ¡Genial! Vamos a evaluar tus conocimientos.')
 
-            chooser_tool = QAndAChooserTool()
-            question = chooser_tool._run()
-            print(f"     {question}")
-            continue
+                chooser_tool = QandAChooserTool()
+                question = chooser_tool._run('')
+                print(f"     {question}")
+                current_state = 'question_asked'
+                continue
+            elif 'sí' in user_input.lower():
+                interaction_tool = InteractionAgent()
+                print(question)
+                response = interaction_tool._run(f"{question}|||{user_input}")
+                current_state = 'initial'
+            else:
+                response = conversational_agent.run(f"{question}|||{user_input}")
+                cle
+        elif current_state == 'question_asked':
+            evaluation_tool = QandAEvaluationAgent()
+            response = evaluation_tool._run(f"{question}|||{user_input}")
+            current_state = 'initial'
+                        
 
         # manejo de estados... sí o sí
-        response = conversational_agent.run(f"{question}|||{user_input}")
         print(f"Bot: {response}")
 
 if __name__ == "__main__":
