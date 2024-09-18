@@ -47,6 +47,8 @@ es la respuesta correcta o incorrecta a la pregunta: \
 {question}
 ----------------------------------------------------------------
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
+----------------------------------------------------------------
+Si el estudiante tuvo la respuesta correcta, súmale un punto. \
 """
 
 FEEDBACK_PROMPT = """
@@ -62,23 +64,14 @@ Contesta la pregunta basado únicamente en el contexto anterior: {question}
 INTERACTION_PROMPT = """
 Eres un asistente que educativo particular para un estudiante. \
 Debes responderle siempre de forma educativa y respetuosa. \
+Nunca saludes al estudiante, solo resuelve sus dudas. \
 Es importante que el estudiante se sienta cómodo, escuchado y comprendido. \
 El estudiante te ha preguntado sobre un tema en específico. \
-El tema es:
-
-{topic}
-
------------------------------------------------------------------------------------
-
-La conversación con el estudiante puede ir de diferentes maneras: \
-- Puede que el estudiante no entienda algo y necesite una explicación más detallada. \
-- Puede que el estudiante quiera responder preguntas y ser evaluado. \
-- Puede que el estudiante quiera retroalimentación en caso de responderte una pregunta mal. \
-
------------------------------------------------------------------------------------
-
-Conversación Actual:\n{history}
-Última Línea:\nHuman: {input}\nYou:
+Haz lo posible por responderle de manera clara y concisa, utilizando ejemplos si es necesario. \
+Se prefieren las explicaciones cortas y directas. \
+Responde sus preguntas únicamente basándote en el siguiente contexto: \
+    
+{context}
 """
 
 FIXED_AGENTS_PROMPT = """

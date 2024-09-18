@@ -3,104 +3,104 @@
         {
             "questions": [
                 {
-                    "question": "¿Cuál de las siguientes disciplinas digitales no se menciona en el texto?",
+                    "question": "¿Cuál es el objetivo principal del Sistema de práctica social?",
                     "choices": {
-                        "a": "Fotografía",
-                        "b": "Video",
-                        "c": "Animación",
-                        "d": "Pintura"
+                        "a": "Promover la comunicación visual",
+                        "b": "Transformar el entorno",
+                        "c": "Desarrollar habilidades estéticas",
+                        "d": "Generar proyectos multimedia"
                     },
-                    "answer": "d"
+                    "answer": "b"
                 },
                 {
-                    "question": "¿Cuál es uno de los requisitos mencionados para los estudiantes de la institución?",
+                    "question": "¿Cuál es una de las características del modelo de práctica social?",
                     "choices": {
                         "a": "Dominio de diversos lenguajes estéticos",
-                        "b": "Dominio de diversos idiomas",
-                        "c": "Dominio de diversas técnicas de pintura",
-                        "d": "Dominio de diversas técnicas de escultura"
+                        "b": "Enfoque en la comunicación oral",
+                        "c": "Énfasis en la teoría del diseño",
+                        "d": "Fomento de la práctica individual"
                     },
                     "answer": "a"
                 },
                 {
-                    "question": "¿Cuál es el número de la resolución que se menciona en el texto?",
+                    "question": "¿Cuál es la formación académica del docente de la Facultad de Diseño de Medios Interactivos?",
                     "choices": {
-                        "a": "Resolución No. 051 de junio 24 de 2008",
-                        "b": "Resolución No. 051 de junio 24 de 2009",
-                        "c": "Resolución No. 052 de junio 24 de 2008",
-                        "d": "Resolución No. 052 de junio 24 de 2009"
+                        "a": "Comunicación Social y Diseño Gráfico",
+                        "b": "Artes Visuales y Multimedia",
+                        "c": "Diseño Industrial y Animación",
+                        "d": "Ingeniería de Sistemas y Programación"
                     },
                     "answer": "a"
                 },
                 {
-                    "question": "¿Cuál es el nombre de la institución mencionada en el texto?",
+                    "question": "¿En qué año se graduó el docente de la Universidad del Valle?",
                     "choices": {
-                        "a": "Instituto Departamental de Bellas Artes",
-                        "b": "Instituto Nacional de Bellas Artes",
-                        "c": "Instituto de Bellas Artes de Cali",
-                        "d": "Instituto de Bellas Artes de Colombia"
-                    },
-                    "answer": "a"
-                },
-                {
-                    "question": "¿Cuál es el título de la sección que se menciona en el texto?",
-                    "choices": {
-                        "a": "Consideraciones",
-                        "b": "Presentación de la Facultad",
-                        "c": "Asignación presupuestaria",
-                        "d": "Vigencia del año 2011"
-                    },
-                    "answer": "a"
-                },
-                {
-                    "question": "¿Cuál es el nombre de la facultad mencionada en el texto?",
-                    "choices": {
-                        "a": "Facultad de Artes Visuales y Aplicadas",
-                        "b": "Facultad de Bellas Artes",
-                        "c": "Facultad de Artes Digitales",
-                        "d": "Facultad de Comunicación Visual"
-                    },
-                    "answer": "a"
-                },
-                {
-                    "question": "¿Cuál es el año de la asignación presupuestaria mencionada en el texto?",
-                    "choices": {
-                        "a": "2011",
-                        "b": "2012",
-                        "c": "2013",
-                        "d": "2014"
-                    },
-                    "answer": "a"
-                },
-                {
-                    "question": "¿Cuál de las siguientes opciones no es una disciplina de diseño?",
-                    "choices": {
-                        "a": "Diseño gráfico",
-                        "b": "Diseño industrial",
-                        "c": "Diseño de moda",
-                        "d": "Diseño de arquitectura"
-                    },
-                    "answer": "d"
-                },
-                {
-                    "question": "¿Cuál es el número de la asignatura mencionada en el texto?",
-                    "choices": {
-                        "a": "PEP66",
-                        "b": "PEP67",
-                        "c": "PEP68",
-                        "d": "PEP69"
-                    },
-                    "answer": "a"
-                },
-                {
-                    "question": "¿Cuál de las siguientes opciones no es una disciplina digital mencionada en el texto?",
-                    "choices": {
-                        "a": "Fotografía",
-                        "b": "Video",
-                        "c": "Pintura",
-                        "d": "Animación"
+                        "a": "2005",
+                        "b": "2006",
+                        "c": "2007",
+                        "d": "2008"
                     },
                     "answer": "c"
+                },
+                {
+                    "question": "¿Cuál es el nombre de la resolución que establece el Sistema de práctica social?",
+                    "choices": {
+                        "a": "Resolución No. 051 de junio 24 de 2008",
+                        "b": "Resolución No. 044 de mayo 15 de 2007",
+                        "c": "Resolución No. 066 de agosto 10 de 2009",
+                        "d": "Resolución No. 077 de septiembre 5 de 2010"
+                    },
+                    "answer": "a"
+                },
+                {
+                    "question": "¿Cuál es la facultad a la que pertenece el docente de la Universidad Autónoma de Occidente?",
+                    "choices": {
+                        "a": "Facultad de Diseño de Medios Interactivos",
+                        "b": "Facultad de Comunicación Social",
+                        "c": "Facultad de Artes Visuales",
+                        "d": "Facultad de Ingeniería de Sistemas"
+                    },
+                    "answer": "b"
+                },
+                {
+                    "question": "¿Cuál es uno de los campos de estudio del diseño?",
+                    "choices": {
+                        "a": "Física cuántica",
+                        "b": "Historia del arte",
+                        "c": "Biología molecular",
+                        "d": "Economía internacional"
+                    },
+                    "answer": "b"
+                },
+                {
+                    "question": "¿Cuál es una de las habilidades necesarias para el diseño digital?",
+                    "choices": {
+                        "a": "Conocimiento de técnicas de carpintería",
+                        "b": "Dominio de diversos lenguajes de programación",
+                        "c": "Experiencia en la agricultura",
+                        "d": "Habilidad para tocar instrumentos musicales"
+                    },
+                    "answer": "b"
+                },
+                {
+                    "question": "¿Cuál es una de las áreas de especialización en diseño?",
+                    "choices": {
+                        "a": "Diseño de moda",
+                        "b": "Diseño de edificios",
+                        "c": "Diseño de automóviles",
+                        "d": "Diseño de alimentos"
+                    },
+                    "answer": "a"
+                },
+                {
+                    "question": "¿Cuál es una de las competencias del diseñador?",
+                    "choices": {
+                        "a": "Capacidad para realizar cirugías",
+                        "b": "Habilidad para construir puentes",
+                        "c": "Destreza en la cocina",
+                        "d": "Capacidad crítica y discursiva"
+                    },
+                    "answer": "d"
                 }
             ]
         }

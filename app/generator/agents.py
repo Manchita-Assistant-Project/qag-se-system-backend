@@ -19,8 +19,7 @@ os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
 load_dotenv()
 
-from app.generator.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT
-
+from app.generator.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT, INTERACTION_PROMPT
 
 embedding_function = db_utils.get_embedding_function()
 db = Chroma(persist_directory=db_utils.CHROMA_PATH, embedding_function=embedding_function)
@@ -65,9 +64,11 @@ class QandAEvaluationAgent(BaseTool):
     """
     Si lo último que el Agente respondió fue una pregunta, entonces evalúa la respuesta.
     En caso contrario, no hace nada.
+    
+    Si piden saber los puntos actuales, el agente debe responder con la cantidad de puntos.
     """
     name = "Question and Answer Evaluation Agent"
-    description = "Evaluates the answer to a question."
+    description = "Evaluates the answer to a question. It also responds to requests for current points."
     
     def _run(self, input_data: str):    
         json_path: str=utils.JSON_PATH
@@ -91,11 +92,30 @@ class InteractionAgent(BaseTool):
     """
     Responds when asked about an specific topic about the context.
     """
-    # ======================================================================================================= #
-    # TOCA CAMBIAR ESTE... TOCA QUE EL FEEDBACK SEA EN EVALUATE_AGENT Y ESTE SEA SOLO PARA INTERACCIÓN RAG... #
-    # ======================================================================================================= #
     name = "Interaction Agent"
     description = "Responds when asked about an specific topic about the context."
+    
+    def _run(self, query: str):       
+        model = AzureChatOpenAI(
+            deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+            temperature=0.5
+        )
+        results = db.similarity_search_with_score(query, k=5)
+        
+        context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+        prompt_template = ChatPromptTemplate.from_template(INTERACTION_PROMPT)
+        prompt = prompt_template.format(context=context_text)
+        
+        response_text = model.invoke(prompt).content
+
+        return response_text
+
+class FeedbackAgent(BaseTool):
+    """
+    Responds when asked about feedback on an answer.
+    """
+    name = "Feedback Agent"
+    description = "Responds when asked about feedback on an answer."
     
     def _run(self, input_data: str):
         question, answer = input_data.split("|||")

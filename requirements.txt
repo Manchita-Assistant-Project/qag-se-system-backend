@@ -11,3 +11,4 @@ langchain_community==0.2.7
 langchain_openai==0.1.15
 langchain==0.2.7
 langgraph
+langchain_anthropic==0.34.2

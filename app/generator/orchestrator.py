@@ -55,6 +55,8 @@ states = {
     'question_answered',
 }
 
+points = 0
+
 def main():
     print("Bot: ¿Cómo quieres aprender hoy? Puedo evaluar conocimiento haciéndote preguntas o podemos tener una conversación educativa.")
     current_state = 'initial'
@@ -73,18 +75,23 @@ def main():
                 current_state = 'question_asked'
                 continue
             elif 'sí' in user_input.lower():
-                interaction_tool = InteractionAgent()
+                feedback_tool = FeedbackAgent()
                 print(question)
-                response = interaction_tool._run(f"{question}|||{user_input}")
-                current_state = 'initial'
+                response = feedback_tool._run(f"{question}|||{user_input}")
+            
             else:
-                response = conversational_agent.run(f"{question}|||{user_input}")
-                cle
+                interaction_tool = InteractionAgent()
+                response = interaction_tool._run(user_input) 
+            
+            current_state = 'initial'
+        
         elif current_state == 'question_asked':
             evaluation_tool = QandAEvaluationAgent()
             response = evaluation_tool._run(f"{question}|||{user_input}")
-            current_state = 'initial'
-                        
+            if 'correcto' in response.lower():
+                points += 1
+                
+            current_state = 'initial'                       
 
         # manejo de estados... sí o sí
         print(f"Bot: {response}")
