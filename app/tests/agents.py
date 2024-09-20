@@ -1,6 +1,6 @@
 from app.generator import config
 from app.tests.utils import create_agent
-from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation
+from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, points_updater
 
 from langchain_openai import AzureChatOpenAI
 
@@ -27,6 +27,17 @@ Don't generate any text.
 You have to call a tool ALWAYS. NO EXCEPTIONS.
 Don't answer questions directly.
 Always output the exact same as the user input.
+
+If the output is not in the form {{question}}|||{{answer}}, try again.
+"""
+
+points_counter_template = """
+You are a points counter.
+Your job is to persist the number of points a player has.
+It's an easy job! Just remember the number of points and return it.
+
+If the input of the user was in the form {{correcto}}, you should
+add a point to the player.
 """
 
 llm = AzureChatOpenAI(
@@ -37,3 +48,4 @@ llm = AzureChatOpenAI(
 single_tools_agent = create_agent(llm, single_tools, single_tools_template)
 qanda_chooser_agent = create_agent(llm, [qanda_chooser], loop_tools_template)
 qanda_evaluation_agent = create_agent(llm, [qanda_evaluation], loop_tools_template)
+points_updater_agent = create_agent(llm, [points_updater], loop_tools_template)

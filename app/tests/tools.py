@@ -13,9 +13,10 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 from langgraph.graph.message import AnyMessage, add_messages
 
-import app.generator.config as config
-import app.database.db_utils as db_utils
 import app.generator.utils as utils
+import app.generator.config as config
+import app.database.chroma_utils as chroma_utils
+import app.database.sqlite_utils as sqlite_utils
 from app.generator.prompts import QANDA_PROMPT, EVALUATE_PROMPT, INTERACTION_PROMPT
 
 from dotenv import load_dotenv
@@ -26,11 +27,11 @@ os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
 load_dotenv()
 
-embedding_function = db_utils.get_embedding_function()
-db = Chroma(persist_directory=db_utils.CHROMA_PATH, embedding_function=embedding_function)
+embedding_function = chroma_utils.get_embedding_function()
+db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
 
 @tool('qanda_generation')
-def qanda_generation():
+def qanda_generation() -> str:
     """
     Saves questions and answers to the JSON file.
     """
@@ -56,11 +57,10 @@ def qanda_generation():
 
 
 @tool('qanda_evaluation')
-def qanda_evaluation(input_data: str):
+def qanda_evaluation(input_data: str) -> str:
     """
     Evaluates the given answer to a question.
     """
-    print('ACÁ')
     json_path: str=utils.JSON_PATH
     data = utils.load_json(json_path)       
 
@@ -86,7 +86,7 @@ def qanda_evaluation(input_data: str):
 
 
 @tool('rag_search')
-def rag_search(query: str):
+def rag_search(query: str) -> str:
     """
     Responds when asked about an specific topic about the context.
     """    
@@ -106,7 +106,7 @@ def rag_search(query: str):
 
 
 @tool('qanda_chooser')
-def qanda_chooser():
+def qanda_chooser() -> str:
     """
     It does not generate questions.
     Chooses a random question ONLY from the JSON file.
@@ -118,4 +118,18 @@ def qanda_chooser():
     
     return random_question
 
-single_tools = [rag_search, qanda_chooser]
+# @tool('points_updater')
+def points_updater(user_id: str, points: int=1):
+    """
+    Updates the points of the user.
+    """
+    sqlite_utils.update_points(user_id, points)
+
+@tool('points_retrieval')
+def points_retrieval(user_id: str) -> int:
+    """
+    Returns the current points count.
+    """
+    return sqlite_utils.get_points(user_id)
+    
+single_tools = [rag_search, qanda_chooser, points_retrieval]

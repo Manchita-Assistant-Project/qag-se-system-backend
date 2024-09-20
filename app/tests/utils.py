@@ -58,6 +58,7 @@ def create_agent(llm, tools, systems_message: str):
                 "{systems_message}",
             ),
             MessagesPlaceholder(variable_name="messages"),
+            # MessagesPlaceholder(variable_name="thread_id"),
         ]
     )
     prompt = prompt.partial(systems_message=systems_message)
