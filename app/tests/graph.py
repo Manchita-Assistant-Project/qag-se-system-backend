@@ -1,6 +1,6 @@
 import app.tests.utils as utils
 from app.tests.state import State
-from app.tests.nodes import single_tools_node, single_tools_tool_node, chooser_tool_node, evaluation_node, evaluation_tool_node, points_updater_tool_node
+from app.tests.nodes import single_tools_node, single_tools_tool_node, chooser_tool_node, evaluation_tool_node, points_updater_tool_node
 
 import uuid
 from typing import Literal
@@ -34,16 +34,6 @@ def should_use_single_tool(state) -> Literal["chooser", "single_tools", "__end__
     
     return "chooser"
 
-def should_evaluate_answer(state) -> Literal["evaluation_tools", "points_updater_tools", "__end__"]:
-    messages = state["messages"]
-    last_message = messages[-1]
-
-    print(f"last_message.tool_calls: {last_message.tool_calls}")
-    if last_message.tool_calls[0]["name"] == "points_updater_tools":
-        return "points_updater_tools"
-
-    return "evaluation_tools"
-
 # building the graph
 workflow = StateGraph(State)
 
@@ -51,10 +41,9 @@ workflow = StateGraph(State)
 workflow.add_node("simple_interaction", single_tools_node)
 workflow.add_node("single_tools", single_tools_tool_node)
 workflow.add_node("chooser", chooser_tool_node)
-workflow.add_node("evaluation", evaluation_node)
-workflow.add_node("evaluation_tools", evaluation_tool_node)
-# workflow.add_node("points_updater", points_updater_node)
-workflow.add_node("points_updater_tools", points_updater_tool_node)
+# workflow.add_node("evaluation", evaluation_node)
+workflow.add_node("evaluation_tool", evaluation_tool_node)
+workflow.add_node("points_updater_tool", points_updater_tool_node)
 
 # add edges
 workflow.set_entry_point("simple_interaction")
@@ -62,25 +51,17 @@ workflow.add_conditional_edges(
     "simple_interaction",
     should_use_single_tool
 )
-# workflow.add_conditional_edges(
-#     "evaluation",
-#     should_evaluate_answer
-# )
 
 workflow.add_edge("single_tools", END)
-workflow.add_edge("chooser", "evaluation")
-workflow.add_edge("evaluation", "evaluation_tools")
-# workflow.add_edge("evaluation_tools", "evaluation")
-# workflow.add_edge("evaluation", END)
-workflow.add_edge("evaluation_tools", "points_updater_tools")
-# workflow.add_edge("points_updater", "points_updater_tools")
-workflow.add_edge("points_updater_tools", END)
+workflow.add_edge("chooser", "evaluation_tool")
+workflow.add_edge("evaluation_tool", "points_updater_tool")
+workflow.add_edge("points_updater_tool", END)
 
 # compile the graph
 checkpointer = MemorySaver()
 graph = workflow.compile(
     checkpointer=checkpointer,
-    interrupt_before=["evaluation"],
+    interrupt_before=["evaluation_tool"],
 )
 
 # generate a graph image
@@ -95,8 +76,9 @@ thread = {
 
 questions = [
     # 'me llamo nicolás'
-    'hazme una pregunta!',
+    # 'hazme una pregunta!',
     # 'háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
+    '¿cuántos puntos tengo?',
 ]
 
 # while True:
@@ -112,7 +94,10 @@ for query in questions:
     # for event in graph.stream({'messages': [HumanMessage(content=user_answer)]}, thread, stream_mode="values"):
     #     event['messages'][-1].pretty_print()
 
-    if snapshot.next == (): # interruption for the quiz way
+    tool_used = graph.get_state(thread).values['messages'][-1].name
+    is_not_single_use = len([tool for tool in single_use_tools if tool in tool_used]) != 1
+    
+    if is_not_single_use: # interruption for the quiz evaluation
         user_answer = input('You: ')
         question = event['messages'][-1].content
         

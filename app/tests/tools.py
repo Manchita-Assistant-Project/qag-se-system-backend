@@ -17,7 +17,7 @@ import app.generator.utils as utils
 import app.generator.config as config
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
-from app.generator.prompts import QANDA_PROMPT, EVALUATE_PROMPT, INTERACTION_PROMPT
+from app.tests.prompts import QANDA_PROMPT, EVALUATE_PROMPT, INTERACTION_PROMPT, POINTS_RETRIEVAL_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -56,7 +56,7 @@ def qanda_generation() -> str:
     return response_text
 
 
-@tool('qanda_evaluation')
+# @tool('qanda_evaluation')
 def qanda_evaluation(input_data: str) -> str:
     """
     Evaluates the given answer to a question.
@@ -65,13 +65,6 @@ def qanda_evaluation(input_data: str) -> str:
     data = utils.load_json(json_path)       
 
     question, answer = input_data.split('|||')
-    # question = state.get('question', None)
-
-    # Verificar que la pregunta está en el estado
-    if not question:
-        raise ValueError("La pregunta no está disponible en el estado.")
-    
-    # answer = input_data
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -101,7 +94,7 @@ def rag_search(query: str) -> str:
     prompt = prompt_template.format(context=context_text)
     
     response_text = model.invoke(prompt).content
-    print(f"INTERACTION_AGENT_RESPONSE: {response_text}")
+
     return response_text
 
 
@@ -130,6 +123,18 @@ def points_retrieval(user_id: str) -> int:
     """
     Returns the current points count.
     """
-    return sqlite_utils.get_points(user_id)
+    user_id = 'a1efdbdc-5256-4980-ae8b-e72c2a2f024d'
+    current_points = sqlite_utils.get_points(user_id)
+    
+    prompt_template = ChatPromptTemplate.from_template(POINTS_RETRIEVAL_PROMPT)
+    prompt = prompt_template.format(points=current_points)
+
+    model = AzureChatOpenAI(
+        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+        temperature=0.2
+    )
+
+    response_text = model.invoke(prompt).content
+    return response_text
     
 single_tools = [rag_search, qanda_chooser, points_retrieval]
