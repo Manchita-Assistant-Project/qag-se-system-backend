@@ -3,7 +3,7 @@ import functools
 from app.tests.state import State
 from app.tests.utils import agent_node
 from app.tests.agents import single_tools_agent, qanda_chooser_agent
-from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, points_retrieval, points_updater
+from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, points_retrieval, points_updater, rag_search
 
 from langgraph.prebuilt import ToolNode
 
@@ -11,8 +11,23 @@ from langgraph.prebuilt import ToolNode
 single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name="Single Tools")
 chooser_node = functools.partial(agent_node, agent=qanda_chooser_agent, name="QandA Chooser")
 
-single_tools_tool_node = ToolNode(single_tools)
+# single_tools_tool_node = ToolNode(single_tools)
 chooser_tool_node = ToolNode([qanda_chooser])
+
+def single_tools_tool_node(state):
+    user_message = state["messages"][0]
+    ai_message = state["messages"][-1]
+    thread_id = state["thread_id"]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    
+    if tool_call == "points_retrieval":
+        result = points_retrieval(thread_id)
+        return {"messages": [result]}
+    elif tool_call == "rag_search":
+        result = rag_search(user_message.content)
+        return {"messages": [result]}
+    
+    return {"messages": [user_message]}
 
 def evaluation_tool_node(state):
     """

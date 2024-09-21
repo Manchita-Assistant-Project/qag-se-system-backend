@@ -78,7 +78,7 @@ def qanda_evaluation(input_data: str) -> str:
     return response_text
 
 
-@tool('rag_search')
+# @tool('rag_search')
 def rag_search(query: str) -> str:
     """
     Responds when asked about an specific topic about the context.
@@ -118,7 +118,7 @@ def points_updater(user_id: str, points: int=1):
     """
     sqlite_utils.update_points(user_id, points)
 
-@tool('points_retrieval')
+# @tool('points_retrieval')
 def points_retrieval(user_id: str) -> int:
     """
     Returns the current points count.

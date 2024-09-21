@@ -1,6 +1,8 @@
 import app.tests.utils as utils
 from app.tests.state import State
-from app.tests.nodes import single_tools_node, single_tools_tool_node, chooser_tool_node, evaluation_tool_node, points_updater_tool_node
+from app.tests.nodes import single_tools_node, single_tools_tool_node, \
+                            chooser_tool_node, evaluation_tool_node,\
+                            points_updater_tool_node
 
 import uuid
 from typing import Literal
@@ -8,8 +10,7 @@ from typing import Literal
 from langgraph.utils.runnable import Runnable
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
-from langchain_core.messages import ToolMessage, HumanMessage, AIMessage
-
+from langchain_core.messages import HumanMessage
 
 single_use_tools = [
     'rag_search',
@@ -81,30 +82,29 @@ questions = [
     '¿cuántos puntos tengo?',
 ]
 
-# while True:
-for query in questions:
-    # query = input("You: ")
+while True:
+# for query in questions:
+    query = input("You: ")
     snapshot = graph.get_state(thread)
     graph.update_state(thread, {"thread_id": thread_id})
     for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
         event['messages'][-1].pretty_print()
-        
-    # prueba de memoria (sí tiene)
-    # user_answer = input('Answer: ')
-    # for event in graph.stream({'messages': [HumanMessage(content=user_answer)]}, thread, stream_mode="values"):
-    #     event['messages'][-1].pretty_print()
 
     tool_used = graph.get_state(thread).values['messages'][-1].name
-    is_not_single_use = len([tool for tool in single_use_tools if tool in tool_used]) != 1
+
+    is_not_single_use = False
+    if tool_used is not None:
+        is_not_single_use = len([tool for tool in single_use_tools if tool in tool_used]) != 1
     
-    if is_not_single_use: # interruption for the quiz evaluation
+    # interrupción para el camino quiz
+    if is_not_single_use:
         user_answer = input('You: ')
         question = event['messages'][-1].content
         
         combined_input = f"{question}|||{user_answer}"
         print(combined_input)
 
-        # Actualizar el estado con la pregunta y la respuesta combinada para que el nodo 'evaluation' lo reciba
+        # actualizar el estado con la pregunta y la respuesta combinada para que el nodo 'evaluation' lo reciba
         graph.update_state(
             thread, 
             {

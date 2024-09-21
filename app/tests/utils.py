@@ -61,7 +61,6 @@ def create_agent(llm, tools, systems_message: str):
         ]
     )
     prompt = prompt.partial(systems_message=systems_message)
-    # print(prompt)
     if tools:
         return prompt | llm.bind_tools(tools)
     else:
@@ -69,8 +68,6 @@ def create_agent(llm, tools, systems_message: str):
     
 def agent_node(state, agent, name):
     result = agent.invoke(state)
-    # print(f"STATE: {state}")
-    # print(f"RESULT: {result}")
     return { # adds to messages because of the add_messages operator
         'messages': [result],
     }
