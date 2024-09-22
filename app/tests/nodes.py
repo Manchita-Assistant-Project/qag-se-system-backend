@@ -29,6 +29,9 @@ def single_tools_tool_node(state):
     
     return {"messages": [user_message]}
 
+def human_interaction(state):
+    pass
+
 def evaluation_tool_node(state):
     """
     Evaluates the user's response.

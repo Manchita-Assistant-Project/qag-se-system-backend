@@ -2,7 +2,7 @@ import app.tests.utils as utils
 from app.tests.state import State
 from app.tests.nodes import single_tools_node, single_tools_tool_node, \
                             chooser_tool_node, evaluation_tool_node,\
-                            points_updater_tool_node
+                            points_updater_tool_node, human_interaction
 
 import uuid
 from typing import Literal
@@ -43,6 +43,7 @@ workflow.add_node("simple_interaction", single_tools_node)
 workflow.add_node("single_tools", single_tools_tool_node)
 workflow.add_node("chooser", chooser_tool_node)
 # workflow.add_node("evaluation", evaluation_node)
+workflow.add_node("human_interaction", human_interaction)
 workflow.add_node("evaluation_tool", evaluation_tool_node)
 workflow.add_node("points_updater_tool", points_updater_tool_node)
 
@@ -54,7 +55,8 @@ workflow.add_conditional_edges(
 )
 
 workflow.add_edge("single_tools", END)
-workflow.add_edge("chooser", "evaluation_tool")
+workflow.add_edge("chooser", "human_interaction")
+workflow.add_edge("human_interaction", "evaluation_tool")
 workflow.add_edge("evaluation_tool", "points_updater_tool")
 workflow.add_edge("points_updater_tool", END)
 
@@ -62,7 +64,7 @@ workflow.add_edge("points_updater_tool", END)
 checkpointer = MemorySaver()
 graph = workflow.compile(
     checkpointer=checkpointer,
-    interrupt_before=["evaluation_tool"],
+    interrupt_before=["human_interaction"],
 )
 
 # generate a graph image
