@@ -7,7 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from IPython.display import Image
 
 def generate_graph_image(runnable):
-    i = runnable.get_graph().draw_png()
+    i = runnable.get_graph().draw_mermaid_png()
     with open("graph.png", "wb") as png:
         png.write(i)
 
