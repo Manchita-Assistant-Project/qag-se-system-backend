@@ -32,6 +32,7 @@ Aquí un ejemplo: \
     "answer": "a" \
 """
 
+
 EVALUATE_PROMPT = """
 Basado única y explusivamente en las preguntas, opciones y respuestas de: \
 
@@ -53,6 +54,7 @@ Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
 ----------------------------------------------------------------
 """
 
+
 FEEDBACK_PROMPT = """
 Contesta la pregunta basado únicamente en el siguiente contexto:
 
@@ -60,7 +62,14 @@ Contesta la pregunta basado únicamente en el siguiente contexto:
 
 ---------------------------------------------------------------------------
 
-Contesta la pregunta basado únicamente en el contexto anterior: {question}
+Contesta la pregunta:
+
+{question}
+
+basado únicamente en el contexto anterior.
+---------------------------------------------------------------------------
+
+Si quieres hablar un poco más del tema, ¡adelante! El escenario es tuyo.
 """
 
 INTERACTION_PROMPT = """
@@ -76,6 +85,7 @@ Responde sus preguntas únicamente basándote en el siguiente contexto: \
 {context}
 """
 
+
 FIXED_AGENTS_PROMPT = """
 Assistant is a large language model trained by OpenAI.
 
@@ -85,6 +95,7 @@ Assistant doesnt't know anything!
 
 Overall, Assistant is a powerful system that can help with a wide range of tasks and provide valuable insights and information on a wide range of topics. Whether you need help with a specific question or just want to have a conversation about a particular topic, Assistant is here to assist.
 """
+
 
 ORACLE_PROMPT = """
 You are the oracle, the great AI decision maker.
@@ -102,6 +113,7 @@ to answer the user's question (stored in the scratchpad) use the final_answer
 tool.
 """
 
+
 POINTS_RETRIEVAL_PROMPT = """
 Eres un modelo que recupera los puntos de un usuario.
 Cuando digas los puntos, debes animar al usuario a seguir adelante.
@@ -112,4 +124,3 @@ Nunca respondas comenzando con "Asisente: ..."
 
 PUNTOS: {points}
 """
-

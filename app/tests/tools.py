@@ -17,7 +17,9 @@ import app.generator.utils as utils
 import app.generator.config as config
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
-from app.tests.prompts import QANDA_PROMPT, EVALUATE_PROMPT, INTERACTION_PROMPT, POINTS_RETRIEVAL_PROMPT
+from app.tests.prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
+                              INTERACTION_PROMPT, POINTS_RETRIEVAL_PROMPT, \
+                              FEEDBACK_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -55,13 +57,12 @@ def qanda_generation() -> str:
     utils.update_json(json_path, response_text.split('\n\n'))
     return response_text
 
-
 # @tool('qanda_evaluation')
 def qanda_evaluation(input_data: str) -> str:
     """
     Evaluates the given answer to a question.
     """
-    json_path: str=utils.JSON_PATH
+    json_path = utils.JSON_PATH
     data = utils.load_json(json_path)       
 
     question, answer = input_data.split('|||')
@@ -76,7 +77,6 @@ def qanda_evaluation(input_data: str) -> str:
     response_text = model.invoke(prompt).content
 
     return response_text
-
 
 # @tool('rag_search')
 def rag_search(query: str) -> str:
@@ -97,9 +97,8 @@ def rag_search(query: str) -> str:
 
     return response_text
 
-
 @tool('qanda_chooser')
-def qanda_chooser() -> str:
+def qanda_chooser() -> str: # ¡¡acá falta el tema del modelo, para que retorne frases más bonitas y no solo la pregunta!!
     """
     It does not generate questions.
     Chooses a random question ONLY from the JSON file.
@@ -110,6 +109,27 @@ def qanda_chooser() -> str:
     random_question = random.choice(questions)  
     
     return random_question
+
+def feedback_provider(question: str) -> str:
+    """
+    Provides feedback based on the given question.
+    """
+    model = AzureChatOpenAI(
+        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+        temperature=0.8
+    )
+
+    json_path = utils.JSON_PATH
+    data = utils.load_json(json_path)
+
+    context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+
+    prompt_template = ChatPromptTemplate.from_template(FEEDBACK_PROMPT)
+    prompt = prompt_template.format(context=context[0], question=question)
+
+    response_text = model.invoke(prompt).content
+
+    return response_text
 
 # @tool('points_updater')
 def points_updater(user_id: str, points: int=1):
@@ -123,7 +143,6 @@ def points_retrieval(user_id: str) -> int:
     """
     Returns the current points count.
     """
-    user_id = 'a1efdbdc-5256-4980-ae8b-e72c2a2f024d'
     current_points = sqlite_utils.get_points(user_id)
     
     prompt_template = ChatPromptTemplate.from_template(POINTS_RETRIEVAL_PROMPT)
@@ -137,4 +156,4 @@ def points_retrieval(user_id: str) -> int:
     response_text = model.invoke(prompt).content
     return response_text
     
-single_tools = [rag_search, qanda_chooser, points_retrieval]
+single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval]

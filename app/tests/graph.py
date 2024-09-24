@@ -15,6 +15,7 @@ from langchain_core.messages import HumanMessage
 single_use_tools = [
     'rag_search',
     'qanda_generation',
+    'feedback_provider',
     'points_retrieval',
 ]
 
@@ -78,10 +79,12 @@ thread = {
 }
 
 questions = [
-    # 'me llamo nicolás'
+    'hola!',
     # 'hazme una pregunta!',
+    # 'hazme otra!',
+    # 'cuántos puntos tengo?',
+    # 'dime la correcta!',
     # 'háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
-    '¿cuántos puntos tengo?',
 ]
 
 while True:
@@ -112,7 +115,8 @@ while True:
             {
                 'messages': [
                     HumanMessage(content=combined_input),
-                ]
+                ],
+                'last_question': question,
             }
         )
         print(f"AFTER: {graph.get_state(thread).next}")

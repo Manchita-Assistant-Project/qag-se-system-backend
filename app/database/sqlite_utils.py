@@ -19,7 +19,7 @@ def update_points(user_id: str, points: int):
     print(f"Adding one point to user {user_id}")
     cursor.execute("""INSERT INTO users (user_id, points) 
                       VALUES (?, ?)
-                      ON CONFLICT(user_id) DO UPDATE SET points = points + excluded.points""", 
+                      ON CONFLICT(user_id) DO UPDATE SET points = 1 + excluded.points""", 
                       (user_id, points))
     conn.commit()
     conn.close()

@@ -3,31 +3,60 @@ import functools
 from app.tests.state import State
 from app.tests.utils import agent_node
 from app.tests.agents import single_tools_agent, qanda_chooser_agent
-from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, points_retrieval, points_updater, rag_search
+from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, \
+                            points_retrieval, points_updater, rag_search, \
+                            feedback_provider
 
 from langgraph.prebuilt import ToolNode
+from langchain_core.messages import AIMessage, HumanMessage
 
 # Funtools
 single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name="Single Tools")
-chooser_node = functools.partial(agent_node, agent=qanda_chooser_agent, name="QandA Chooser")
+# chooser_node = functools.partial(agent_node, agent=qanda_chooser_agent, name="QandA Chooser")
 
 # single_tools_tool_node = ToolNode(single_tools)
 chooser_tool_node = ToolNode([qanda_chooser])
 
-def single_tools_tool_node(state):
+def single_tools_tool_node(state): 
+    # el caso en que falla es cuando va directo a single_tools...
+    # creo que es por lo que estoy retornando instantaneamente el mensaje contenido del
+    # mensaje solamente... en el de chooser_node, estoy retornando lo que saca el LLM...
+    # lo raro es que, cuando se llama solo a single_tools primera, todo bien.
+    # el tema es cuando se llama en a veces en medio de la conversación...
     user_message = state["messages"][0]
     ai_message = state["messages"][-1]
     thread_id = state["thread_id"]
+    last_question = state["last_question"] if "last_question" in state else None
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+        
+    # get last user message
+    for each_message in state["messages"][::-1]:
+        if isinstance(each_message, HumanMessage):
+            user_message = each_message
+            break
+    
+    # get last ai message
+    for each_message in state["messages"][::-1]:
+        if isinstance(each_message, AIMessage):
+            ai_message = each_message
+            break
     
     if tool_call == "points_retrieval":
         result = points_retrieval(thread_id)
         return {"messages": [result]}
+    
     elif tool_call == "rag_search":
-        result = rag_search(user_message.content)
+        print(f"INPUT: {user_message.content + ' ' + ai_message.tool_calls[0]['args']['query']}")
+        result = rag_search(user_message.content + " " + ai_message.tool_calls[0]["args"]["query"])
+        return {"messages": [result]}
+    
+    elif tool_call == "feedback_provider":
+        result = feedback_provider(last_question)
         return {"messages": [result]}
     
     return {"messages": [user_message]}
+
+# FEED BACK NODE!!!!
 
 def human_interaction(state):
     pass
