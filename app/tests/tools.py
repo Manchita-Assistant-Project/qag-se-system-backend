@@ -97,7 +97,7 @@ def rag_search(query: str) -> str:
 
     return response_text
 
-@tool('qanda_chooser')
+# @tool('qanda_chooser')
 def qanda_chooser() -> str: # ¡¡acá falta el tema del modelo, para que retorne frases más bonitas y no solo la pregunta!!
     """
     It does not generate questions.
@@ -123,6 +123,8 @@ def feedback_provider(question: str) -> str:
     data = utils.load_json(json_path)
 
     context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+    
+    print(f"CONTEXT: {context}")
 
     prompt_template = ChatPromptTemplate.from_template(FEEDBACK_PROMPT)
     prompt = prompt_template.format(context=context[0], question=question)
@@ -156,4 +158,4 @@ def points_retrieval(user_id: str) -> int:
     response_text = model.invoke(prompt).content
     return response_text
     
-single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval]
+single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, qanda_evaluation]
