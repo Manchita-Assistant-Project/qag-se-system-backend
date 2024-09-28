@@ -8,7 +8,7 @@ from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, \
                             feedback_provider
 
 from langgraph.prebuilt import ToolNode
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 
 # Funtools
 single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name="Single Tools")
@@ -28,7 +28,8 @@ def single_tools_tool_node(state):
     thread_id = state["thread_id"]
     last_question = state["last_question"] if "last_question" in state else None
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
-        
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
+
     # get last user message
     for each_message in state["messages"][::-1]:
         if isinstance(each_message, HumanMessage):
@@ -43,20 +44,28 @@ def single_tools_tool_node(state):
     
     if tool_call == "points_retrieval":
         result = points_retrieval(thread_id)
-        return {"messages": [result]}
-    
+        print(f"Result from points_retrieval: {result}")
+
     elif tool_call == "rag_search":
-        print(f"INPUT: {user_message.content + ' ' + ai_message.tool_calls[0]['args']['query']}")
-        result = rag_search(user_message.content + " " + ai_message.tool_calls[0]["args"]["query"])
-        return {"messages": [result]}
-    
+        print('RAG SEARCH')
+        result = rag_search(f"{user_message.content} ({ai_message.tool_calls[0]['args']['query']})")
+        print(f"Result from rag_search: {result}")
+
     elif tool_call == "feedback_provider":
         result = feedback_provider(last_question)
-        return {"messages": [result]}
-    
-    return {"messages": [user_message]}
+        print(f"Result from feedback_provider: {result}")
 
-# FEED BACK NODE!!!!
+    else:
+        # Si no hay un tool_call válido, devolvemos un mensaje predeterminado
+        result = AIMessage(content="Lo siento, no pude procesar tu solicitud.")
+        print(f"Fallback result: {result}")
+    
+    # Asegurarse de que siempre haya un mensaje de respuesta válido
+    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = {"messages": [tool_result] if result else {"messages": [user_message]}}
+    print(f"Final response: {response}")
+
+    return response
 
 def human_interaction(state):
     pass

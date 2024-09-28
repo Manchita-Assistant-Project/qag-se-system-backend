@@ -82,7 +82,8 @@ def qanda_evaluation(input_data: str) -> str:
 def rag_search(query: str) -> str:
     """
     Responds when asked about an specific topic about the context.
-    """    
+    """
+    print(f"QUERY: {query}")
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=0.2

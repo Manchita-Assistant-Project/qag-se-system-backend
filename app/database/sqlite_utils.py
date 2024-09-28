@@ -1,6 +1,10 @@
+import os
 import sqlite3
 
-conn = sqlite3.connect('qag_se_system.db')
+db_path = os.path.join(os.path.dirname(__file__), 'sqlite3', 'qag_se_system.db')
+print(f"dirname: {os.path.dirname(__file__)}")
+print(f"db_path: {db_path}")
+conn = sqlite3.connect(db_path)
 
 cursor = conn.cursor()
 
@@ -12,8 +16,8 @@ cursor.execute("""
 
 conn.close()
 
-def update_points(user_id: str, points: int):
-    conn = sqlite3.connect('qag_se_system.db')
+def update_points(user_id: str, points: int, db_path: str=db_path):
+    conn = sqlite3.connect(db_path)
 
     cursor = conn.cursor()
     print(f"Adding one point to user {user_id}")
@@ -24,8 +28,8 @@ def update_points(user_id: str, points: int):
     conn.commit()
     conn.close()
 
-def get_points(user_id: str):
-    conn = sqlite3.connect('qag_se_system.db')
+def get_points(user_id: str, db_path: str=db_path) -> int:
+    conn = sqlite3.connect(db_path)
 
     cursor = conn.cursor()
     cursor.execute("SELECT points FROM users WHERE user_id=?", (user_id,))

@@ -17,13 +17,14 @@ services:
     networks:
       - shared-network
     entrypoint: ["sh", "-c", "
-      docker exec ollama-container ollama pull bge-m3 &&
-      echo 'bge-m3 completed' &&
       docker exec ollama-container ollama pull nomic-embed-text && 
-      echo 'nomic-embed-text completed' &&  
-      docker exec ollama-container ollama pull llama3 &&
-      echo 'llama3 completed'
+      echo 'nomic-embed-text completed'
     "]
+
+      # docker exec ollama-container ollama pull bge-m3 &&
+      # echo 'bge-m3 completed' &&
+      # docker exec ollama-container ollama pull llama3 &&
+      # echo 'llama3 completed'
 
 networks:
   shared-network:
