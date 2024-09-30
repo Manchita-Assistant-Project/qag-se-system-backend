@@ -60,71 +60,73 @@ workflow.add_edge("human_interaction", "evaluation_tool")
 workflow.add_edge("evaluation_tool", "points_updater_tool")
 workflow.add_edge("points_updater_tool", END)
 
-# compile the graph
-checkpointer = MemorySaver()
-graph = workflow.compile(
-    checkpointer=checkpointer,
-    interrupt_before=["human_interaction"],
-)
+def use_graph():
+    # compile the graph
+    checkpointer = MemorySaver()
+    graph = workflow.compile(
+        checkpointer=checkpointer,
+        interrupt_before=["human_interaction"],
+    )
 
-# generate a graph image
-utils.generate_graph_image(graph)
+    # generate a graph image
+    utils.generate_graph_image(graph)
 
-thread_id = str(uuid.uuid4())
-thread = {
-    "configurable": {
-        "thread_id": thread_id,
+    thread_id = str(uuid.uuid4())
+    thread = {
+        "configurable": {
+            "thread_id": thread_id,
+        }
     }
-}
 
-questions = [
-    'hola!',
-    'hazme una pregunta!',
-    # 'hazme otra!',
-    'háblame un poco más sobre eso, por favor.',
-    # 'cuántos puntos tengo?',
-    # 'dime la correcta!',
-    'ahora háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
-    'ahora, hazme otra pregunta!',
-    'cuántos puntos tengo?',
-]
+    questions = [
+        'hola!',
+        'hazme una pregunta!',
+        # 'hazme otra!',
+        'háblame un poco más sobre eso, por favor.',
+        # 'cuántos puntos tengo?',
+        # 'dime la correcta!',
+        'ahora háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
+        'ahora, hazme otra pregunta!',
+        'cuántos puntos tengo?',
+    ]
 
-# while True:
-for query in questions:
-    # query = input("You: ")
-    snapshot = graph.get_state(thread)
-    graph.update_state(thread, {"thread_id": thread_id})
-    # print(f"SNAPSHOT {query}: {snapshot}")
-    for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
-        event['messages'][-1].pretty_print()
-
-    tool_used = graph.get_state(thread).values['messages'][-1].name
-
-    is_not_single_use = False
-    if tool_used is not None:
-        is_not_single_use = len([tool for tool in single_use_tools if tool in tool_used]) != 1
-    
-    print(f"NEXT: {graph.get_state(thread).next}")
-
-    # interrupción para el camino quiz
-    if is_not_single_use:
-        user_answer = input('You: ')
-        question = event['messages'][-1].content
-        
-        combined_input = f"{question}|||{user_answer}"
-        print(combined_input)
-
-        # actualizar el estado con la pregunta y la respuesta combinada para que el nodo 'evaluation' lo reciba
-        graph.update_state(
-            thread, 
-            {
-                'messages': [
-                    HumanMessage(content=combined_input),
-                ],
-                'last_question': question,
-            }
-        )
-        print(f"AFTER: {graph.get_state(thread).next}")
-        
-        for event in graph.stream(None, thread, stream_mode="values"):
+    # while True:
+    for query in questions:
+        # query = input("You: ")
+        graph.update_state(thread, {"thread_id": thread_id})
+        # print(f"SNAPSHOT {query}: {snapshot}")
+        for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
             event['messages'][-1].pretty_print()
+
+        tool_used = graph.get_state(thread).values['messages'][-1].name
+
+        is_not_single_use = False
+        if tool_used is not None:
+            is_not_single_use = len([tool for tool in single_use_tools if tool in tool_used]) != 1
+        
+        print(f"NEXT: {graph.get_state(thread).next}")
+
+        # interrupción para el camino quiz
+        if is_not_single_use:
+            user_answer = input('You: ')
+            question = event['messages'][-1].content
+            
+            combined_input = f"{question}|||{user_answer}"
+            print(combined_input)
+
+            # actualizar el estado con la pregunta y la respuesta combinada para que el nodo 'evaluation' lo reciba
+            graph.update_state(
+                thread, 
+                {
+                    'messages': [
+                        HumanMessage(content=combined_input),
+                    ],
+                    'last_question': question,
+                }
+            )
+            print(f"AFTER: {graph.get_state(thread).next}")
+            
+            for event in graph.stream(None, thread, stream_mode="values"):
+                event['messages'][-1].pretty_print()
+
+# use_graph()

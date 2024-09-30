@@ -1,7 +1,10 @@
-from typing import Optional
 import uuid
+from typing import Optional
+
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
@@ -9,6 +12,32 @@ from langgraph.checkpoint.memory import MemorySaver
 from app.tests.graph import workflow
 
 app = FastAPI()
+
+# CORS Configuration
+
+origins = [
+    'http://localhost:8080',
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.options("/{path:path}")
+async def preflight_handler():
+    return JSONResponse({"message": "CORS preflight OK"}, headers={
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS, POST",
+        "Access-Control-Allow-Headers": "Authorization, Content-Type"
+    })
+    
+@app.get("/")
+def home():
+    return {"message": "Hello World"}
 
 class ChatInput(BaseModel):
     query: str
@@ -84,7 +113,7 @@ async def chat(input_data: ChatInput):
         
         return {
             "thread_id": input_data.thread_id,
-            "evaluation_response": evaluation_response
+            "response": evaluation_response[-1]
         }
     
     # Si es una interacción inicial (sin interrupción todavía)
@@ -97,14 +126,14 @@ async def chat(input_data: ChatInput):
             response.append(event['messages'][-1].content)
 
         # Verificar si el flujo fue interrumpido en 'human_interaction'
-        print(f"NEXT: {graph.get_state(thread).next} | {type(graph.get_state(thread).next)}")
-        next_node = graph.get_state(thread).next
+        last_tool_call = graph.get_state(thread).values['messages'][-1].name
+        print(f"LAST TOOL CALL: {last_tool_call}")
         is_interrupted = False
-        if len(next_node) > 0:
-            is_interrupted = graph.get_state(thread).next[0] == "human_interaction"
+        if last_tool_call:
+            is_interrupted = last_tool_call == "qanda_chooser"
         
         return {
             "thread_id": input_data.thread_id,
-            "response": response,
+            "response": response[-1],
             "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
         }

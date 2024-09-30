@@ -3,7 +3,7 @@ import json
 JSON_PATH = "app/generator/q&as/qs.json"
 
 def load_json(path: str):
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         content = json.load(f)
 
     return content['content']
@@ -16,5 +16,5 @@ def update_json(path: str, data: list):
 
     json_dict.update({"content": parsed_data})
 
-    with open(path, 'w') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         json.dump(json_dict, f, ensure_ascii=False, indent=4)

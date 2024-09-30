@@ -67,13 +67,17 @@ def qanda_evaluation(input_data: str) -> str:
 
     question, answer = input_data.split('|||')
     
+    context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+    
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=0.2
     )
     
+    print(f"CONTEXT: {context}")
+    
     prompt_template = ChatPromptTemplate.from_template(EVALUATE_PROMPT)
-    prompt = prompt_template.format(context=data, answer=answer, question=question)
+    prompt = prompt_template.format(context=context[0], answer=answer, question=question)
     response_text = model.invoke(prompt).content
 
     return response_text

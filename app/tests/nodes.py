@@ -63,6 +63,7 @@ def single_tools_tool_node(state):
     # Asegurarse de que siempre haya un mensaje de respuesta válido
     tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
     response = {"messages": [tool_result] if result else {"messages": [user_message]}}
+    # response = {"messages": [result]}
     print(f"Final response: {response}")
 
     return response
@@ -75,9 +76,10 @@ def evaluation_tool_node(state):
     Evaluates the user's response.
     """
     last_message = state["messages"][-1]
-    print(f"last_message: {last_message.content}")
+    print(f"[EVALUATION_NODE] last_message: {last_message.content}")
 
     evaluation = qanda_evaluation(last_message.content)
+    print(f"[EVALUATION_NODE] response: {last_message.content}")
 
     return {"messages": [evaluation]}
 

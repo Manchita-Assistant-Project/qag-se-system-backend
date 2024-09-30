@@ -3,11 +3,7 @@ PyPDF2
 faiss-cpu
 tiktoken
 chromadb
-pypdf
-pytest
-pysqlite3-binary
-openai==1.32.0
+langchain==0.2.7
 langchain_community==0.2.7
 langchain_openai==0.1.15
-langchain==0.2.7
 langgraph
