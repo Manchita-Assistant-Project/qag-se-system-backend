@@ -1,6 +1,6 @@
 from app.generator import config
-from app.tests.utils import create_agent
-from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, points_updater
+from app.tests.utils import create_agent, create_goblin_agent
+from app.tests.tools import single_tools, qanda_chooser, bridge_goblin, goblin_at_home, castle_goblin
 
 from langchain_openai import AzureChatOpenAI
 
@@ -23,7 +23,12 @@ Always output the exact same as the user input.
 If the what the user said is answering a previous question,
 you have to call the tool `qanda_evaluation`.
 
-Important you acknowledge the user's input:
+It's important you differentiate between wanting questions
+and wanting to play the game.
+If the user wants to continue playing the game, you have to call
+the tool `narrator_tool`.
+
+It's mportant you acknowledge the user's input:
 
 INPUT MESSAGE: {input_message}
 THREAD_ID: {thread_id}
@@ -39,6 +44,12 @@ Always output the exact same as the user input.
 If the output is not in the form {{question}}|||{{answer}}, try again.
 """
 
+goblin_tools_template = """
+Your only purpose is to connect the user with the right tool.
+Don't generate any text.
+You have to call a tool ALWAYS. NO EXCEPTIONS.
+"""
+
 llm = AzureChatOpenAI(
     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
     temperature=0
@@ -46,3 +57,4 @@ llm = AzureChatOpenAI(
 
 single_tools_agent = create_agent(llm, single_tools, single_tools_template)
 qanda_chooser_agent = create_agent(llm, [qanda_chooser], loop_tools_template)
+goblin_agent = create_goblin_agent(llm, [bridge_goblin, goblin_at_home, castle_goblin], goblin_tools_template, ["bridge_goblin", "goblin_at_home", "castle_goblin"])

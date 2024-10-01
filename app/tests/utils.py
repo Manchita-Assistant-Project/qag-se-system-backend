@@ -66,6 +66,25 @@ def create_agent(llm, tools, systems_message: str):
     else:
         return prompt | llm
     
+def create_goblin_agent(llm, tools, systems_message: str, goblins: list):
+    """
+    Creates a goblin agent.
+    """
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "{systems_message}. Select one of: {goblins}",
+            ),
+            MessagesPlaceholder(variable_name="messages"),
+        ]
+    )
+    prompt = prompt.partial(systems_message=systems_message, goblins=goblins)
+    if tools:
+        return prompt | llm.bind_tools(tools)
+    else:
+        return prompt | llm
+    
 def agent_node(state, agent, name):
     result = agent.invoke(state)
     return { # adds to messages because of the add_messages operator

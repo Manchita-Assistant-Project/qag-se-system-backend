@@ -1,11 +1,14 @@
+import re
 import functools
 
 from app.tests.state import State
 from app.tests.utils import agent_node
-from app.tests.agents import single_tools_agent, qanda_chooser_agent
-from app.tests.tools import single_tools, qanda_chooser, qanda_evaluation, \
+from app.tests.agents import single_tools_agent, qanda_chooser_agent, goblin_agent
+from app.tests.tools import qanda_chooser, qanda_evaluation, \
                             points_retrieval, points_updater, rag_search, \
-                            feedback_provider
+                            feedback_provider, narrator_tool, \
+                            bridge_goblin, goblin_at_home, castle_goblin, \
+                            lives_updater, lives_retrieval
 
 from langgraph.prebuilt import ToolNode
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
@@ -13,6 +16,8 @@ from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 # Funtools
 single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name="Single Tools")
 # chooser_node = functools.partial(agent_node, agent=qanda_chooser_agent, name="QandA Chooser")
+
+goblin_node = functools.partial(agent_node, agent=goblin_agent, name="Goblin")
 
 # single_tools_tool_node = ToolNode(single_tools)
 chooser_tool_node = ToolNode([qanda_chooser])
@@ -62,7 +67,7 @@ def single_tools_tool_node(state):
     
     # Asegurarse de que siempre haya un mensaje de respuesta válido
     tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
-    response = {"messages": [tool_result] if result else {"messages": [user_message]}}
+    response = {"messages": [tool_result] if result else {"messages": [user_message]}, "from_goblin": False}
     # response = {"messages": [result]}
     print(f"Final response: {response}")
 
@@ -75,11 +80,12 @@ def evaluation_tool_node(state):
     """
     Evaluates the user's response.
     """
-    last_message = state["messages"][-1]
-    print(f"[EVALUATION_NODE] last_message: {last_message.content}")
-
-    evaluation = qanda_evaluation(last_message.content)
-    print(f"[EVALUATION_NODE] response: {last_message.content}")
+    last_message = state["messages"][-1].content
+    print(f"[EVALUATION_NODE] last_message: {last_message}")
+    
+    evaluation = qanda_evaluation(last_message)    
+        
+    print(f"[EVALUATION_NODE] response: {evaluation}")
 
     return {"messages": [evaluation]}
 
@@ -94,6 +100,95 @@ def points_updater_tool_node(state):
     if "incorrecta" not in (last_message.content).lower():
         points_updater(state["thread_id"], points=1)
     
-    return {"messages": [last_message]} # retorna el mensaje original.
-                                        # esta función no genera mensajes, solo
-                                        # actualiza los puntos del usuario.
+    return {"messages": [last_message], "from_goblin": False} # retorna el mensaje original.
+                                                             # esta función no genera mensajes, solo
+                                                             # actualiza los puntos del usuario.
+
+def narrator_node(state):
+    """
+    Narrates the goblin story.
+    """
+    ai_message = state["messages"][-1]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
+    
+    step = 0
+    if "step" in state:
+        step = state["step"]
+
+    print(f"[NARRATOR_NODE] step: {step}")
+
+    result = narrator_tool(step)
+
+    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = {"messages": [tool_result], "step": step + 1}
+    
+    return response
+
+def bridge_goblin_node(state):
+    """
+    Encounters the first goblin.
+    """
+    ai_message = state["messages"][-1]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
+        
+    result, question = bridge_goblin()
+    
+    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = {"messages": [tool_result], "step": 1, "to_evaluate": question, "from_goblin": True}
+    
+    return response
+
+def goblin_at_home_node(state):
+    """
+    Encounters the second goblin.
+    """
+    ai_message = state["messages"][-1]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
+    
+    result, question = goblin_at_home()
+    
+    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = {"messages": [tool_result], "step": 2, "to_evaluate": question, "from_goblin": True}
+    
+    return response
+
+def castle_goblin_node(state):
+    """
+    Encounters the third goblin.
+    """
+    ai_message = state["messages"][-1]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
+    
+    result, question = castle_goblin()
+    
+    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = {"messages": [tool_result], "step": 3, "to_evaluate": question, "from_goblin": True}
+    
+    return response
+
+def lives_updater_tool_node(state):
+    """
+    Takes the current thread_id and updates the lives of the user.
+    Returns the last message.
+    """
+    last_message = state["messages"][-1]
+    step = state["step"]
+    question = state["to_evaluate"]
+    print(f"[LIVES UPDATER NODE] last_message: {last_message.content}")
+
+    lost_live = False
+    if "incorrecta" in (last_message.content).lower():
+        lives_updater(state["thread_id"])
+        lost_live = True
+        
+    response, current_lives = lives_retrieval(state["thread_id"], question, lost_live, step)
+    print(f"[LIVES UPDATER NODE] response: {response}")
+    
+    if current_lives <= 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
+        step = 0
+    
+    return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": True}

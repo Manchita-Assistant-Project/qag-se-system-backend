@@ -118,6 +118,92 @@ async def chat(input_data: ChatInput):
     
     # Si es una interacción inicial (sin interrupción todavía)
     else:
+        graph.update_state(thread, {"thread_id": input_data.thread_id})
+        
+        # Procesar la interacción inicial
+        response = []
+        for event in graph.stream({"messages": [HumanMessage(content=input_data.query)]}, thread, stream_mode="values"):
+            response.append(event['messages'][-1].content)
+
+        # Verificar si el flujo fue interrumpido en 'human_interaction'
+        last_tool_call = graph.get_state(thread).values['messages'][-1].name
+        print(f"LAST TOOL CALL: {last_tool_call}")
+        is_interrupted = False
+        if last_tool_call:
+            is_interrupted = last_tool_call == "qanda_chooser"
+        
+        return {
+            "thread_id": input_data.thread_id,
+            "response": response[-1],
+            "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
+        }
+
+# IMPORTANTE CAMBIAR EL CÓDIGO A CREAR UN GRAFO POR ENTRADA/LLAMADA AL SERVIDOR!!
+# HAY QUE PENSAR SI QUEREMOS QUE PERSISTAN... CON IP O ASÍ JEJE...
+# EL TEMA ES QUE SE PUEDEN DEMORAR MIENTRAS COMPILAN... PERO NAH, NO ES NUESTRA PREOCUPACIÓN.
+"""
+# Diccionario para almacenar grafos por usuario
+user_graphs = {}
+
+def get_or_create_user_graph(thread_id):
+    if thread_id not in user_graphs:
+        # Si no existe un grafo para este usuario, crearlo
+        checkpointer = MemorySaver()
+        new_graph = workflow.compile(
+            checkpointer=checkpointer,
+            interrupt_before=["human_interaction"],
+        )
+        user_graphs[thread_id] = new_graph
+    
+    return user_graphs[thread_id]
+
+
+@app.post("/chat")
+async def chat(input_data: ChatInput):
+    
+    # Generar o reutilizar el 'thread_id' para cada usuario
+    if input_data.thread_id is None or input_data.thread_id == "":
+        input_data.thread_id = str(uuid.uuid4())
+        
+    print(f"THREAD_ID: {input_data.thread_id}")
+    
+    thread = {
+        "configurable": {
+            "thread_id": input_data.thread_id,
+        }
+    }
+
+    # Obtener o crear el grafo del usuario actual
+    graph = get_or_create_user_graph(input_data.thread_id)
+
+    # Si hay una respuesta del usuario tras la interrupción
+    if input_data.user_answer:
+        last_question = graph.get_state(thread).values['messages'][-1].content
+        combined_input = f"{last_question}|||{input_data.user_answer}"
+        
+        # Actualizar el estado del grafo con la respuesta
+        graph.update_state(
+            thread, 
+            {
+                'messages': [
+                    HumanMessage(content=combined_input),
+                ],
+                'last_question': last_question,
+            }
+        )
+        
+        # Continuar el flujo después de la interrupción
+        evaluation_response = []
+        for event in graph.stream(None, thread, stream_mode="values"):
+            evaluation_response.append(event['messages'][-1].content)
+        
+        return {
+            "thread_id": input_data.thread_id,
+            "response": evaluation_response[-1]
+        }
+    
+    # Si es una interacción inicial (sin interrupción todavía)
+    else:
         graph.update_state(thread, {"thread_id": input_data.thread_id})    
         
         # Procesar la interacción inicial
@@ -137,3 +223,4 @@ async def chat(input_data: ChatInput):
             "response": response[-1],
             "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
         }
+"""
