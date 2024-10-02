@@ -1,10 +1,10 @@
 import re
 import functools
 
-from app.tests.state import State
-from app.tests.utils import agent_node
-from app.tests.agents import single_tools_agent, qanda_chooser_agent, goblin_agent
-from app.tests.tools import qanda_chooser, qanda_evaluation, \
+from app.graph.state import State
+from app.graph.utils import agent_node
+from app.graph.agents import single_tools_agent, qanda_chooser_agent, goblin_agent
+from app.graph.tools import qanda_chooser, qanda_evaluation, \
                             points_retrieval, points_updater, rag_search, \
                             feedback_provider, narrator_tool, \
                             bridge_goblin, goblin_at_home, castle_goblin, \

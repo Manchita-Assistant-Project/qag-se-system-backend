@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
-from app.tests.graph import workflow
+from app.graph.graph import workflow
 
 app = FastAPI()
 

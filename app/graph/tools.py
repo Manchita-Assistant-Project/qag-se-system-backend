@@ -10,13 +10,21 @@ import app.generator.utils as utils
 import app.generator.config as config
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
-from app.tests.prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
-                              INTERACTION_PROMPT, POINTS_RETRIEVAL_PROMPT, \
-                              FEEDBACK_PROMPT, NARRATOR_ZERO_PROMPT, \
-                              NARRATOR_TWO_PROMPT, NARRATOR_THREE_PROMPT, \
-                              NARRATOR_FOUR_PROMPT, BRIDGE_GOBLIN_ONE_PROMPT, \
-                              BRIDGE_GOBLIN_LIVES_LOST_PROMPT, BRIDGE_GOBLIN_SUCCESS_PROMPT, \
-                              BRIDGE_GOBLIN_FAILURE_PROMPT
+
+from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
+                                      INTERACTION_PROMPT, \
+                                      POINTS_RETRIEVAL_PROMPT, \
+                                      FEEDBACK_PROMPT
+
+from app.prompts.stories.goblins.goblins_narrator_prompts import NARRATOR_ZERO_PROMPT, \
+                                                                 NARRATOR_TWO_PROMPT, \
+                                                                 NARRATOR_THREE_PROMPT, \
+                                                                 NARRATOR_FOUR_PROMPT
+
+from app.prompts.stories.goblins.golbins_characters_prompts import BRIDGE_GOBLIN_ONE_PROMPT, \
+                                                                   BRIDGE_GOBLIN_LIVES_LOST_PROMPT, \
+                                                                   BRIDGE_GOBLIN_SUCCESS_PROMPT, \
+                                                                   BRIDGE_GOBLIN_FAILURE_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -255,9 +263,9 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
         temperature=1
     )
     
-    success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT]
-    lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT]
-    failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT]
+    success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT] # agregar los siguientes pasos
+    lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT] # agregar los siguientes pasos
+    failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT] # agregar los siguientes pasos
 
     prompt = success_steps_prompts[step - 1]
     if lost_live:

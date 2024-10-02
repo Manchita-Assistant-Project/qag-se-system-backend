@@ -19,7 +19,7 @@ os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
 load_dotenv()
 
-from app.tests.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT, INTERACTION_PROMPT
+from app.graph.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT, INTERACTION_PROMPT
 
 embedding_function = db_utils.get_embedding_function()
 db = Chroma(persist_directory=db_utils.CHROMA_PATH, embedding_function=embedding_function)

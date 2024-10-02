@@ -1,6 +1,6 @@
-import app.tests.utils as utils
-from app.tests.state import State
-from app.tests.nodes import single_tools_node, single_tools_tool_node, \
+import app.graph.utils as utils
+from app.graph.state import State
+from app.graph.nodes import single_tools_node, single_tools_tool_node, \
                             chooser_tool_node, evaluation_tool_node,\
                             points_updater_tool_node, human_interaction, \
                             narrator_node, goblin_node, bridge_goblin_node, \
@@ -49,12 +49,12 @@ def should_use_single_tool(state) -> Literal["chooser", "single_tools", "narrato
         
     return "__end__"
 
-def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool_node"]:
+def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool"]:
     tool_used = state["from_goblin"] if "from_goblin" in state else False
 
     if tool_used:
-        print("lives_updater_tool_node")
-        return "lives_updater_tool_node"
+        print("lives_updater_tool")
+        return "lives_updater_tool"
     else:
         print("points_updater_tool")
         return "points_updater_tool"
@@ -98,7 +98,7 @@ workflow.add_node("bridge_goblin", bridge_goblin_node)
 workflow.add_node("goblin_at_home", goblin_at_home_node)
 workflow.add_node("castle_goblin", castle_goblin_node)
 
-workflow.add_node("lives_updater_tool_node", lives_updater_tool_node)
+workflow.add_node("lives_updater_tool", lives_updater_tool_node)
 
 # add edges
 workflow.set_entry_point("simple_interaction")
@@ -119,7 +119,7 @@ workflow.add_conditional_edges(
 )
 
 workflow.add_conditional_edges(
-    "lives_updater_tool_node",
+    "lives_updater_tool",
     should_continue_or_another_try
 )
 
@@ -210,7 +210,7 @@ def use_graph():
                 event['messages'][-1].pretty_print()
             
             # interrupción para el camino del juego del goblin cuando tiene una respuesta incorrecta
-            if list(graph.get_state(thread).metadata['writes'].keys())[0] == 'lives_updater_tool_node':
+            if list(graph.get_state(thread).metadata['writes'].keys())[0] == 'lives_updater_tool':
                 if "incorrecta" in graph.get_state(thread).values["messages"][-2].content:
                     snapshot = graph.get_state(thread).values["messages"][-2].content
                     current_lives_snapshot = 3

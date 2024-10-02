@@ -1,6 +1,6 @@
 import app.generator.utils as utils
 import app.generator.config as config
-from app.tests.prompts import FIXED_AGENTS_PROMPT
+from app.graph.prompts import FIXED_AGENTS_PROMPT
 from app.generator.agents import QandAGenerationAgent, QandAChooserTool, QandAEvaluationAgent, InteractionAgent
 
 import os

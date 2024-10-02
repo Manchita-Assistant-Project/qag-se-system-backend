@@ -1,5 +1,5 @@
 import app.generator.config as config
-from app.tests.prompts import ORACLE_PROMPT
+from app.graph.prompts import ORACLE_PROMPT
 from app.generator.agents_graph import QandAGenerationAgent, QandAEvaluationAgent, InteractionAgent, qanda_chooser, final_answer
 
 import os

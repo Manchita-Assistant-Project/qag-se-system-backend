@@ -1,6 +1,7 @@
 from app.generator import config
-from app.tests.utils import create_agent, create_goblin_agent
-from app.tests.tools import single_tools, qanda_chooser, bridge_goblin, goblin_at_home, castle_goblin
+from app.graph.utils import create_agent, create_goblin_agent
+from app.graph.tools import single_tools, qanda_chooser, bridge_goblin, goblin_at_home, castle_goblin
+from app.prompts.agents_prompts import SINGLE_TOOLS_TEMPLATE, LOOP_TOOLS_TEMPLATE, GOBLIN_TOOLS_TEMPLATE
 
 from langchain_openai import AzureChatOpenAI
 
@@ -55,6 +56,6 @@ llm = AzureChatOpenAI(
     temperature=0
 )
 
-single_tools_agent = create_agent(llm, single_tools, single_tools_template)
-qanda_chooser_agent = create_agent(llm, [qanda_chooser], loop_tools_template)
-goblin_agent = create_goblin_agent(llm, [bridge_goblin, goblin_at_home, castle_goblin], goblin_tools_template, ["bridge_goblin", "goblin_at_home", "castle_goblin"])
+single_tools_agent = create_agent(llm, single_tools, SINGLE_TOOLS_TEMPLATE)
+qanda_chooser_agent = create_agent(llm, [qanda_chooser], LOOP_TOOLS_TEMPLATE)
+goblin_agent = create_goblin_agent(llm, [bridge_goblin, goblin_at_home, castle_goblin], GOBLIN_TOOLS_TEMPLATE, ["bridge_goblin", "goblin_at_home", "castle_goblin"])

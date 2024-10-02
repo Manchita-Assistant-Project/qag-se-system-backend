@@ -14,7 +14,7 @@ from langgraph.graph.message import AnyMessage, add_messages
 import app.generator.config as config
 import app.database.db_utils as db_utils
 import app.generator.utils as utils
-from app.tests.prompts import QANDA_PROMPT, EVALUATE_PROMPT, INTERACTION_PROMPT
+from app.graph.prompts import QANDA_PROMPT, EVALUATE_PROMPT, INTERACTION_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
