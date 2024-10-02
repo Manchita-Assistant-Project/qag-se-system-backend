@@ -167,14 +167,14 @@ def use_graph():
 
     questions = [
         'hola!',
-        'quiero jugar el juego del goblin!',
-        'sigue con el juego!',
-        'sigue!',
-        'termina!'
-        # 'hazme una pregunta!',
-        # 'hazme otra!',
-        # 'háblame un poco más sobre eso, por favor.',
-        # 'cuántos puntos tengo?',
+        # 'quiero jugar el juego del goblin!',
+        # 'sigue con el juego!',
+        # 'sigue!',
+        # 'termina!'
+        'hazme una pregunta!',
+        'hazme otra!',
+        'háblame un poco más sobre eso, por favor.',
+        'cuántos puntos tengo?',
         # # 'dime la correcta!',
         # 'ahora háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
         # 'ahora, hazme otra pregunta!',
@@ -217,7 +217,8 @@ def use_graph():
                         HumanMessage(content=combined_input),
                     ],
                     'last_question': question,
-                }
+                },
+                as_node="human_interaction"
             )
             print(f"AFTER: {graph.get_state(thread).next}")
             
@@ -244,8 +245,7 @@ def use_graph():
                             {
                                 'messages': [
                                     HumanMessage(content=combined_input),
-                                ],
-                                'from_goblin': True,
+                                ]
                             },
                             as_node="human_interaction" # acá toca usar ese as_node para que se ejecute como si fuera el nodo 'human_interaction', para que pase bien a evaluar y luego a actualizar vidas
                         )
