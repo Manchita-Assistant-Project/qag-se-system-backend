@@ -21,10 +21,12 @@ from app.prompts.stories.goblins.goblins_narrator_prompts import NARRATOR_ZERO_P
                                                                  NARRATOR_THREE_PROMPT, \
                                                                  NARRATOR_FOUR_PROMPT
 
-from app.prompts.stories.goblins.golbins_characters_prompts import BRIDGE_GOBLIN_ONE_PROMPT, \
-                                                                   BRIDGE_GOBLIN_LIVES_LOST_PROMPT, \
-                                                                   BRIDGE_GOBLIN_SUCCESS_PROMPT, \
-                                                                   BRIDGE_GOBLIN_FAILURE_PROMPT
+from app.prompts.stories.goblins.golbins_characters_prompts import BRIDGE_GOBLIN_ONE_PROMPT, BRIDGE_GOBLIN_LIVES_LOST_PROMPT, \
+                                                                   BRIDGE_GOBLIN_SUCCESS_PROMPT, BRIDGE_GOBLIN_FAILURE_PROMPT, \
+                                                                   GOBLIN_AT_HOME_ONE_PROMPT, GOBLIN_AT_HOME_LIVES_LOST_PROMPT, \
+                                                                   GOBLIN_AT_HOME_SUCCESS_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, \
+                                                                   CASTLE_GOBLIN_ONE_PROMPT, CASTLE_GOBLIN_LIVES_LOST_PROMPT, \
+                                                                   CASTLE_GOBLIN_SUCCESS_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -217,7 +219,7 @@ def goblin_at_home():
         temperature=1
     )
     
-    narrator_prompts = [BRIDGE_GOBLIN_ONE_PROMPT]
+    narrator_prompts = [GOBLIN_AT_HOME_ONE_PROMPT]
     goblin_personality = random.choice(narrator_prompts)
     
     prompt_template = ChatPromptTemplate.from_template(goblin_personality)
@@ -237,7 +239,7 @@ def castle_goblin():
         temperature=1
     )
     
-    narrator_prompts = [BRIDGE_GOBLIN_ONE_PROMPT]
+    narrator_prompts = [CASTLE_GOBLIN_ONE_PROMPT]
     goblin_personality = random.choice(narrator_prompts)
     
     prompt_template = ChatPromptTemplate.from_template(goblin_personality)
@@ -263,17 +265,19 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
         temperature=1
     )
     
-    success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT] # agregar los siguientes pasos
-    lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT] # agregar los siguientes pasos
-    failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT] # agregar los siguientes pasos
+    success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT, GOBLIN_AT_HOME_SUCCESS_PROMPT, CASTLE_GOBLIN_SUCCESS_PROMPT]
+    lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT, GOBLIN_AT_HOME_LIVES_LOST_PROMPT, CASTLE_GOBLIN_LIVES_LOST_PROMPT]
+    failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT]
 
     prompt = success_steps_prompts[step - 1]
     if lost_live:
+        print("User lost a life!")
         if current_lives == 0:
             prompt = failure_steps_prompts[step - 1]
         else:
             prompt = lost_live_steps_prompts[step - 1]
     
+    print(f"INDEX: {step - 1}")
     prompt_template = ChatPromptTemplate.from_template(prompt)
     prompt = prompt_template.format(question=question)
 

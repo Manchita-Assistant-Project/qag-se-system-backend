@@ -178,6 +178,7 @@ def lives_updater_tool_node(state):
     last_message = state["messages"][-1]
     step = state["step"]
     question = state["to_evaluate"]
+    from_goblin = True
     print(f"[LIVES UPDATER NODE] last_message: {last_message.content}")
 
     lost_live = False
@@ -190,5 +191,6 @@ def lives_updater_tool_node(state):
     
     if current_lives <= 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
         step = 0
+        from_goblin = False
     
-    return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": True}
+    return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": from_goblin}

@@ -59,6 +59,14 @@ def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool
         print("points_updater_tool")
         return "points_updater_tool"
 
+def goblin_or_finish(state) -> Literal["goblin", "__end__"]:
+    step = state["step"]
+    
+    if step != 4:
+        return "goblin"
+    else:
+        return END
+
 def which_goblin(state) -> Literal["bridge_goblin", "goblin_at_home", "castle_goblin"]:
     step = state["step"]  
 
@@ -114,6 +122,11 @@ workflow.add_conditional_edges(
 )
 
 workflow.add_conditional_edges(
+    "narrator",
+    goblin_or_finish
+)
+
+workflow.add_conditional_edges(
     "goblin",
     which_goblin
 )
@@ -129,7 +142,7 @@ workflow.add_edge("chooser", "human_interaction")
 workflow.add_edge("human_interaction", "evaluation_tool")
 workflow.add_edge("points_updater_tool", END)
 
-workflow.add_edge("narrator", "goblin")
+# workflow.add_edge("narrator", "goblin")
 workflow.add_edge("bridge_goblin", "human_interaction")
 workflow.add_edge("goblin_at_home", "human_interaction")
 workflow.add_edge("castle_goblin", "human_interaction")
@@ -154,12 +167,14 @@ def use_graph():
 
     questions = [
         'hola!',
-        'quiero jugar el juego del goblin!',     
-        'sigue con el juego!'
+        'quiero jugar el juego del goblin!',
+        'sigue con el juego!',
+        'sigue!',
+        'termina!'
         # 'hazme una pregunta!',
         # 'hazme otra!',
         # 'háblame un poco más sobre eso, por favor.',
-        # # 'cuántos puntos tengo?',
+        # 'cuántos puntos tengo?',
         # # 'dime la correcta!',
         # 'ahora háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
         # 'ahora, hazme otra pregunta!',
@@ -216,7 +231,7 @@ def use_graph():
                     current_lives_snapshot = 3
                     i = 3
                     while "incorrecta" in snapshot and current_lives_snapshot > 0: # si la respuesta es incorrecta y aún tiene vidas
-                        print('LIVES UPDATER TOOL')
+                        print(f'LIVES UPDATER TOOL -> {snapshot}')
                         user_answer = input('You: ')
                         question = graph.get_state(thread).values['to_evaluate']
                         
@@ -235,18 +250,20 @@ def use_graph():
                             as_node="human_interaction" # acá toca usar ese as_node para que se ejecute como si fuera el nodo 'human_interaction', para que pase bien a evaluar y luego a actualizar vidas
                         )
                         
-                        snapshot = graph.get_state(thread).values["messages"][i * -1].content
+                        for event in graph.stream(None, thread, stream_mode="values"):
+                            event['messages'][-1].pretty_print()
+                            
+                        snapshot = graph.get_state(thread).values["messages"][-2].content
                         print(f"SNAPSHOT: {snapshot}")
                         
-                        current_lives_snapshot = int(graph.get_state(thread).values["messages"][-2].content.split('|||')[1])
+                        current_lives_snapshot = int(graph.get_state(thread).values["messages"][-1].content.split('|||')[1])
                         print(f"CURRENT LIVES: {current_lives_snapshot}")
 
                         print(f"AFTER: {graph.get_state(thread).next}")
                         
-                        i += 1
-                        
-                        for event in graph.stream(None, thread, stream_mode="values"):
-                            event['messages'][-1].pretty_print()
+                        # i += 1
+                    for event in graph.stream(None, thread, stream_mode="values"):
+                        event['messages'][-1].pretty_print()
                             
 
 use_graph()
