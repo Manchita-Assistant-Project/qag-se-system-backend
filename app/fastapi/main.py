@@ -44,12 +44,26 @@ class ChatInput(BaseModel):
     thread_id: str = None
     user_answer: Optional[str] = None  # Campo "opcional" para manejar la interrupción
 
-# Crear el flujo con la interrupción en el nodo 'human_interaction'
-checkpointer = MemorySaver()
-graph = workflow.compile(
-    checkpointer=checkpointer,
-    interrupt_before=["human_interaction"],
-)
+goblin_game_tools = [
+    "bridge_goblin",
+    "goblin_at_home",
+    "castle_goblin",
+    "lives_retrieval",
+]
+user_graphs = {}
+
+def get_or_create_user_graph(thread_id):
+    global user_graphs
+    if thread_id not in user_graphs:
+        # Si no existe un grafo para este usuario, crearlo
+        checkpointer = MemorySaver()
+        new_graph = workflow.compile(
+            checkpointer=checkpointer,
+            interrupt_before=["human_interaction"],
+        )
+        user_graphs[thread_id] = new_graph
+    
+    return user_graphs[thread_id]
 
 @app.post("/chat")
 async def chat(input_data: ChatInput):
@@ -89,10 +103,12 @@ async def chat(input_data: ChatInput):
             "thread_id": input_data.thread_id,
         }
     }
+    
+    graph = get_or_create_user_graph(input_data.thread_id)
 
     # Si hay una respuesta del usuario tras la interrupción
     if input_data.user_answer:
-        last_question = graph.get_state(thread).values['messages'][-1].content
+        last_question = graph.get_state(thread).values['messages'][-1].content if graph.get_state(thread).values['messages'][-1].content[0] == '¿' else graph.get_state(thread).values['to_evaluate'] # pregunta sencilla o pregunta de juego goblin
         combined_input = f"{last_question}|||{input_data.user_answer}"
         
         # Actualizar el estado del grafo con la respuesta
@@ -103,7 +119,8 @@ async def chat(input_data: ChatInput):
                     HumanMessage(content=combined_input),
                 ],
                 'last_question': last_question,
-            }
+            },
+            as_node="human_interaction"
         )
         
         # Continuar el flujo después de la interrupción
@@ -130,7 +147,7 @@ async def chat(input_data: ChatInput):
         print(f"LAST TOOL CALL: {last_tool_call}")
         is_interrupted = False
         if last_tool_call:
-            is_interrupted = last_tool_call == "qanda_chooser"
+            is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in goblin_game_tools
         
         return {
             "thread_id": input_data.thread_id,

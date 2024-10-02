@@ -132,10 +132,14 @@ def bridge_goblin_node(state):
     ai_message = state["messages"][-1]
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
-        
+
+    narrator_message = state["messages"][-2].content
+    
     result, question = bridge_goblin()
     
-    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = f"{narrator_message}\n\n{result}"
+    
+    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
     response = {"messages": [tool_result], "step": 1, "to_evaluate": question, "from_goblin": True}
     
     return response
@@ -148,9 +152,13 @@ def goblin_at_home_node(state):
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
     
+    narrator_message = state["messages"][-2].content
+    
     result, question = goblin_at_home()
     
-    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = f"{narrator_message}\n\n{result}"
+    
+    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
     response = {"messages": [tool_result], "step": 2, "to_evaluate": question, "from_goblin": True}
     
     return response
@@ -163,9 +171,13 @@ def castle_goblin_node(state):
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
     
+    narrator_message = state["messages"][-2].content
+    
     result, question = castle_goblin()
     
-    tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
+    response = f"{narrator_message}\n\n{result}"
+    
+    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
     response = {"messages": [tool_result], "step": 3, "to_evaluate": question, "from_goblin": True}
     
     return response

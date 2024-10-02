@@ -167,14 +167,14 @@ def use_graph():
 
     questions = [
         'hola!',
-        # 'quiero jugar el juego del goblin!',
+        'quiero jugar el juego del goblin!',
         # 'sigue con el juego!',
         # 'sigue!',
         # 'termina!'
-        'hazme una pregunta!',
-        'hazme otra!',
-        'háblame un poco más sobre eso, por favor.',
-        'cuántos puntos tengo?',
+        # 'hazme una pregunta!',
+        # 'hazme otra!',
+        # 'háblame un poco más sobre eso, por favor.',
+        # 'cuántos puntos tengo?',
         # # 'dime la correcta!',
         # 'ahora háblame un poco sobre la Resolución No. 051 de junio 24 de 2008',
         # 'ahora, hazme otra pregunta!',
@@ -266,7 +266,7 @@ def use_graph():
                         event['messages'][-1].pretty_print()
                             
 
-use_graph()
+# use_graph()
 
 """
 Para el juego de duendes:
