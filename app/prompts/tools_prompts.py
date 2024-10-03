@@ -49,6 +49,10 @@ es la respuesta correcta o incorrecta a la pregunta: \
 
 Pregunta: {question}
 ----------------------------------------------------------------
+La respuesta no tiene que ser exacta, pero puede ser similar. \
+Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
+una respuesta similar sería `saber programar`. \
+
 
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
 
