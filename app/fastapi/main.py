@@ -10,10 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
+from app.graph.utils import JSON_PATH
 from app.graph.graph import workflow
-from app.graph.tools import qanda_chooser, qanda_evaluation
-
-qandas_path = 'app/generator/q&as/qs.json'
+from app.graph.tools import qanda_evaluation
 
 app = FastAPI()
 
@@ -191,7 +190,7 @@ class QuestionEvaluation(BaseModel):
 
 @app.get('/questions')
 def get_questions():    
-    with open(qandas_path, encoding='utf-8') as f:
+    with open(JSON_PATH, encoding='utf-8') as f:
         data = json.load(f)
     
     questions = {question["question"] for question in data["content"][0]["questions"]}
