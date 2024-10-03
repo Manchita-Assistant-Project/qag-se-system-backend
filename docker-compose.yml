@@ -4,6 +4,8 @@ services:
     container_name: ollama-container
     ports:
       - "11434:11434"
+    volumes:
+      - models-volume:/root/.ollama/models # Monta un volumen donde se guardarán los modelos
     networks:
       - shared-network
 
@@ -14,16 +16,26 @@ services:
       - ollama
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - models-volume:/root/.ollama/models # Monta el mismo volumen
     networks:
       - shared-network
     entrypoint: ["sh", "-c", "
-      docker exec ollama-container ollama pull bge-m3 &&
-      echo 'bge-m3 completed' &&
-      docker exec ollama-container ollama pull nomic-embed-text && 
-      echo 'nomic-embed-text completed' &&  
-      docker exec ollama-container ollama pull llama3 &&
-      echo 'llama3 completed'
+      if [ ! -f /root/.ollama/models/nomic-embed-text ]; then 
+        docker exec ollama-container ollama pull nomic-embed-text && 
+        echo 'nomic-embed-text completed'; 
+      else 
+        echo 'Model nomic-embed-text already exists'; 
+      fi
     "]
+
+      # docker exec ollama-container ollama pull bge-m3 &&
+      # echo 'bge-m3 completed' &&
+      # docker exec ollama-container ollama pull llama3 &&
+      # echo 'llama3 completed'
+
+volumes:
+  models-volume:
+    driver: local
 
 networks:
   shared-network:

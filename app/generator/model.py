@@ -2,7 +2,7 @@ import os
 import json
 from typing import Callable
 import app.generator.config as config
-import app.database.db_utils as db_utils
+import app.database.chroma_utils as chroma_utils
 from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
@@ -15,15 +15,15 @@ os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
 load_dotenv()
 
-from app.generator.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT
+from app.graph.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT
 
 def main_load():
     # Create (or update) the data store.
-    documents = db_utils.load_documents()
+    documents = chroma_utils.load_documents()
     print(f"📚 Loaded {len(documents)} documents")
-    chunks = db_utils.split_documents(documents)
+    chunks = chroma_utils.split_documents(documents)
     print(f"🔪 Split into {len(chunks)} chunks")
-    db_utils.add_to_chroma(chunks)
+    chroma_utils.add_to_chroma(chunks)
     print("🚀 Data loaded successfully!")
 
 def load_json(path: str):
@@ -45,8 +45,8 @@ def update_json(path: str, data: list):
 
 def QAndAGeneration(json_path: str):
     # Prepare the DB.
-    embedding_function = db_utils.get_embedding_function()
-    db = Chroma(persist_directory=db_utils.CHROMA_PATH, embedding_function=embedding_function)
+    embedding_function = chroma_utils.get_embedding_function()
+    db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
 
     query_text = ""
 
@@ -98,8 +98,8 @@ def EvaluateAs(json_path: str, question: str, answer: str, feedback: Callable = 
     return response_text
 
 def ProvideFeedback(question: str):
-    embedding_function = db_utils.get_embedding_function()
-    db = Chroma(persist_directory=db_utils.CHROMA_PATH, embedding_function=embedding_function)
+    embedding_function = chroma_utils.get_embedding_function()
+    db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
 
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -160,6 +160,12 @@ def main():
     # If asked, call this function to provide feedback.
     response = EvaluateAs('app/generator/q&as/qs.json', question, answer, ProvideFeedback)
     print(response)
+
+    # ========================================== #
+    # 4. Continue with supplementary interaction #
+    # ========================================== #
+
+    ...
 
 if __name__ == "__main__":
     main()
