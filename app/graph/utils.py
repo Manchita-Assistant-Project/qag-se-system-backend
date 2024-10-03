@@ -1,10 +1,29 @@
+import json
+from IPython.display import Image
+
 from langgraph.prebuilt import ToolNode
 from langchain_core.messages import ToolMessage
 from langchain_core.runnables import RunnableLambda
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
+JSON_PATH = "app/generator/q&as/qs.json"
 
-from IPython.display import Image
+def load_json(path: str):
+    with open(path, 'r', encoding='utf-8') as f:
+        content = json.load(f)
+
+    return content['content']
+
+def update_json(path: str, data: list):
+    with open(path, 'r') as f:
+        json_dict = json.load(f)
+
+    parsed_data = [json.loads(item) for item in data]
+
+    json_dict.update({"content": parsed_data})
+
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(json_dict, f, ensure_ascii=False, indent=4)
 
 def generate_graph_image(runnable):
     i = runnable.get_graph().draw_mermaid_png()
@@ -23,7 +42,6 @@ def handle_tool_error(state) -> dict:
             for tc in tool_calls
         ]
     }
-
 
 def create_tool_node_with_fallback(tools: list) -> dict:
     return ToolNode(tools).with_fallbacks(
@@ -90,3 +108,8 @@ def agent_node(state, agent, name):
     return { # adds to messages because of the add_messages operator
         'messages': [result],
     }
+
+def define_context_string(context):
+    answer_choice = context[0]["answer"]
+    answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
+    return f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string}"

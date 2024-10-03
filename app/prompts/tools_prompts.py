@@ -36,24 +36,23 @@ Aquí un ejemplo: \
 
 
 EVALUATE_PROMPT = """
-Basado única y explusivamente en las preguntas, opciones y respuestas de: \
+Basado única y exclusivamente en las preguntas, opciones y respuesta única de: \
 
 {context}
 ----------------------------------------------------------------
-No inventes cosas, es importante que solo uses para evaluar la respuesta: \
 
-{context}
-----------------------------------------------------------------
 Responde de forma corta si la respuesta: \
 
-{answer} \
+Respuesta: {answer} \
 
 es la respuesta correcta o incorrecta a la pregunta: \
 
-{question}
+Pregunta: {question}
 ----------------------------------------------------------------
+
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
-----------------------------------------------------------------
+
+Si la respuesta `answer` es `****`, responde "La respuesta es incorrecta...".
 """
 
 

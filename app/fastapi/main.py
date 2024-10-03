@@ -1,3 +1,4 @@
+import json
 import uuid
 from typing import Optional
 
@@ -10,6 +11,9 @@ from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
 from app.graph.graph import workflow
+from app.graph.tools import qanda_chooser, qanda_evaluation
+
+qandas_path = 'app/generator/q&as/qs.json'
 
 app = FastAPI()
 
@@ -180,3 +184,21 @@ async def chat(input_data: ChatInput):
 # IMPORTANTE CAMBIAR EL CÓDIGO A CREAR UN GRAFO POR ENTRADA/LLAMADA AL SERVIDOR!!
 # HAY QUE PENSAR SI QUEREMOS QUE PERSISTAN... CON IP O ASÍ JEJE...
 # EL TEMA ES QUE SE PUEDEN DEMORAR MIENTRAS COMPILAN... PERO NAH, NO ES NUESTRA PREOCUPACIÓN.
+
+class QuestionEvaluation(BaseModel):
+    question: str
+    answer: str
+
+@app.get('/questions')
+def get_questions():    
+    with open(qandas_path, encoding='utf-8') as f:
+        data = json.load(f)
+    
+    questions = {question["question"] for question in data["content"][0]["questions"]}
+    return questions
+
+@app.post('/evaluate')
+def evaluate_query(input: QuestionEvaluation):
+    evaluation = qanda_evaluation(f"{input.question}|||{input.answer}")
+    return {"evaluation": False if "incorrecta" in evaluation else True}
+    
