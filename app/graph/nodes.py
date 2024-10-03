@@ -204,5 +204,6 @@ def lives_updater_tool_node(state):
     if current_lives <= 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
         step = 0
         from_goblin = False
+        lives_updater(state["thread_id"], reset=True)
     
     return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": from_goblin}

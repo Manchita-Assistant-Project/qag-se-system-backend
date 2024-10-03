@@ -248,11 +248,11 @@ def castle_goblin():
     response_text = model.invoke(prompt).content
     return f"🧌 {response_text}", question  
 
-def lives_updater(user_id: str):
+def lives_updater(user_id: str, reset: bool=False):
     """
     Updates the lives of the user in the goblin game.
     """
-    sqlite_utils.update_lives(user_id)
+    sqlite_utils.update_lives(user_id, reset)
 
 def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> Tuple[str, int]:
     """
@@ -279,7 +279,7 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
     
     print(f"INDEX: {step - 1}")
     prompt_template = ChatPromptTemplate.from_template(prompt)
-    prompt = prompt_template.format(question=question)
+    prompt = prompt_template.format(question=question, lifes=current_lives)
 
     response_text = model.invoke(prompt).content
-    return response_text, current_lives
+    return f"🧌 {response_text}", current_lives

@@ -46,19 +46,30 @@ def get_points(user_id: str, db_path: str=db_path) -> int:
     
     return the_one
 
-def update_lives(user_id: str, db_path: str=db_path):
+def update_lives(user_id: str, reset: bool = False, db_path: str = db_path):
     conn = sqlite3.connect(db_path)
-
     cursor = conn.cursor()
     print(f"Updating lives of user {user_id}")
 
-    cursor.execute("""INSERT INTO users (user_id, points, lives) 
-                      VALUES (?, ?, ?)
-                      ON CONFLICT(user_id) DO UPDATE SET lives = lives - 1
-                      WHERE lives > 0""", 
-                      (user_id, 0, 2))
+    if reset:
+        # Si reset es True, actualiza siempre los 'lives' a 2
+        cursor.execute("""
+            INSERT INTO users (user_id, points, lives) 
+            VALUES (?, ?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET lives = 3
+            """, 
+            (user_id, 0, 2))
+    else:
+        # Si reset es False, actualiza solo los 'lives' mayores a 0
+        cursor.execute("""
+            INSERT INTO users (user_id, points, lives) 
+            VALUES (?, ?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET lives = lives - 1
+            WHERE lives > 0
+            """, 
+            (user_id, 0, 2))
+
     conn.commit()
-    
     print(f"LIVES: {get_lives(user_id)}")
     conn.close()
     
