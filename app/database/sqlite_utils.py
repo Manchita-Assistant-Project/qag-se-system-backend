@@ -35,7 +35,13 @@ def get_points(user_id: str, db_path: str=db_path) -> int:
 
     cursor = conn.cursor()
     cursor.execute("SELECT points FROM users WHERE user_id=?", (user_id,))
-    the_one = cursor.fetchone()[0]
+    the_one = cursor.fetchone()
+    if the_one is not None: # if the user is found
+        the_one = the_one[0]
+    else:
+        print("User not found")
+        the_one = 0
+        
     conn.close()
     
     return the_one
