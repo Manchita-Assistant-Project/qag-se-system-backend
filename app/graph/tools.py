@@ -271,17 +271,20 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=1
     )
-    
+        
     success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT, GOBLIN_AT_HOME_SUCCESS_PROMPT, CASTLE_GOBLIN_SUCCESS_PROMPT]
     lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT, GOBLIN_AT_HOME_LIVES_LOST_PROMPT, CASTLE_GOBLIN_LIVES_LOST_PROMPT]
     failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT]
 
+    kind = 1
     prompt = success_steps_prompts[step - 1]
     if lost_live:
         print("User lost a life!")
         if current_lives == 0:
+            kind = 1
             prompt = failure_steps_prompts[step - 1]
         else:
+            kind = 2
             prompt = lost_live_steps_prompts[step - 1]
     
     print(f"INDEX: {step - 1}")
@@ -289,4 +292,4 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
     prompt = prompt_template.format(question=question, lifes=current_lives)
 
     response_text = model.invoke(prompt).content
-    return f"🧌 {response_text}", current_lives
+    return f"🧌 {response_text}", current_lives, kind

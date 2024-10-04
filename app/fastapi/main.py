@@ -148,7 +148,7 @@ async def chat(input_data: ChatInput):
         
         return {
             "thread_id": input_data.thread_id,
-            "response": evaluation_response[-1],
+            "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
             "is_interrupted": graph.get_state(thread).values["from_goblin"] and "incorrecta" in evaluation_response[-2]
         }
     

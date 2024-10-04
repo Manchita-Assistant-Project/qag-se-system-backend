@@ -198,14 +198,15 @@ def lives_updater_tool_node(state):
         lives_updater(state["thread_id"])
         lost_live = True
         
-    response, current_lives = lives_retrieval(state["thread_id"], question, lost_live, step)
+    response, current_lives, kind = lives_retrieval(state["thread_id"], question, lost_live, step)
     print(f"[LIVES UPDATER NODE] response: {response}")
     
     if current_lives <= 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
         step = 0
         from_goblin = False
         lives_updater(state["thread_id"], reset=True)
-    else:
+    elif kind == 1: # si hubo success en la pregunta
         response += '\n\n¡Escribe "Sigue!" para continuar con la historia!'
+        from_goblin = False # esto es por si el usuario quiere preguntas normales u otra cosa en lugar de seguir con el juego
     
     return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": from_goblin}
