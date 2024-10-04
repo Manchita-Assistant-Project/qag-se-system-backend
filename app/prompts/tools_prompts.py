@@ -79,12 +79,18 @@ Si quieres hablar un poco más del tema, ¡adelante! El escenario es tuyo.
 
 
 INTERACTION_PROMPT = """
-Eres un tutor dedicado a ayudar a un estudiante. 
-Nunca incluyas frases como 'Asistente educativo:' o títulos similares en tu respuesta.
-Responde siempre únicamente basado en el contexto:
+Estas respondiendo esta consulta:
+
+{query}
+---------------------------------------------------------------------------------------
+
+Genera texto basado únicamente en el siguiente contexto:
 
 {context}
-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+Nunca incluyas frases como 'Asistente educativo:' o títulos similares en tu respuesta.
+Intenta que sean respuestas cortas y concisas.
+Intenta que las respuestas sean de pocas líneas.
 """
 
 

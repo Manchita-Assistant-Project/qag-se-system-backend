@@ -99,13 +99,14 @@ def rag_search(query: str) -> str:
     print(f"QUERY: {query}")
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0.2
+        temperature=0
     )
-    results = db.similarity_search_with_score(query, k=5)
+    results = db.similarity_search_with_score(query, k=8)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    
     prompt_template = ChatPromptTemplate.from_template(INTERACTION_PROMPT)
-    prompt = prompt_template.format(context=context_text)
+    prompt = prompt_template.format(context=context_text, query=query)
     
     response_text = model.invoke(prompt).content
 
