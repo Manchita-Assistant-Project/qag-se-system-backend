@@ -205,5 +205,7 @@ def lives_updater_tool_node(state):
         step = 0
         from_goblin = False
         lives_updater(state["thread_id"], reset=True)
+    else:
+        response += '\n\n¡Escribe "Sigue!" para continuar con la historia!'
     
     return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": from_goblin}
