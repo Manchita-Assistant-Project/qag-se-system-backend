@@ -1,14 +1,9 @@
-import app.graph.utils as utils
-from app.graph.state import State
-from app.graph.nodes import single_tools_node, single_tools_tool_node, \
-                            chooser_tool_node, evaluation_tool_node,\
-                            points_updater_tool_node, human_interaction, \
-                            narrator_node, character_node, first_character_node, \
-                            second_character_node, third_character_node, \
-                            lifes_updater_tool_node
-
 import uuid
 from typing import Literal
+
+import app.graph.utils as utils
+import app.graph.nodes as nodes
+from app.graph.state import State
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END
@@ -67,15 +62,18 @@ def character_or_finish(state) -> Literal["character", "__end__"]:
     else:
         return END
 
-def which_character(state) -> Literal["first_character", "second_character", "third_character"]:
+def which_character(state) -> Literal["character", "first_character", "second_character", "third_character"]:
     step = state["current_story"]["step"]
 
-    if step == 1:
-        return "first_character"
-    elif step == 2:
-        return "second_character"
-    elif step == 3:
-        return "third_character"
+    if hasattr(state["messages"][-1], 'additional_kwargs') and 'tool_calls' in state["messages"][-1].additional_kwargs:  
+        if step == 1:
+            return "first_character"
+        elif step == 2:
+            return "second_character"
+        elif step == 3:
+            return "third_character"
+    else:
+        return "character"
     
 def should_continue_or_another_try(state) -> Literal["human_interaction", "__end__"]:
     last_evaluation_message = state["messages"][-2].content
@@ -91,21 +89,21 @@ def should_continue_or_another_try(state) -> Literal["human_interaction", "__end
 workflow = StateGraph(State)
 
 # add nodes
-workflow.add_node("simple_interaction", single_tools_node)
-workflow.add_node("single_tools", single_tools_tool_node)
+workflow.add_node("simple_interaction", nodes.single_tools_node)
+workflow.add_node("single_tools", nodes.single_tools_tool_node)
 
-workflow.add_node("chooser", chooser_tool_node)
-workflow.add_node("human_interaction", human_interaction)
-workflow.add_node("evaluation_tool", evaluation_tool_node)
-workflow.add_node("points_updater_tool", points_updater_tool_node)
+workflow.add_node("chooser", nodes.chooser_tool_node)
+workflow.add_node("human_interaction", nodes.human_interaction)
+workflow.add_node("evaluation_tool", nodes.evaluation_tool_node)
+workflow.add_node("points_updater_tool", nodes.points_updater_tool_node)
 
-workflow.add_node("narrator", narrator_node)
-workflow.add_node("character", character_node)
-workflow.add_node("first_character", first_character_node)
-workflow.add_node("second_character", second_character_node)
-workflow.add_node("third_character", third_character_node)
+workflow.add_node("narrator", nodes.narrator_node)
+workflow.add_node("character", nodes.character_node)
+workflow.add_node("first_character", nodes.first_character_node)
+workflow.add_node("second_character", nodes.second_character_node)
+workflow.add_node("third_character", nodes.third_character_node)
 
-workflow.add_node("lifes_updater_tool", lifes_updater_tool_node)
+workflow.add_node("lifes_updater_tool", nodes.lifes_updater_tool_node)
 
 # add edges
 workflow.set_entry_point("simple_interaction")

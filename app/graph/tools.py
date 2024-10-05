@@ -8,28 +8,15 @@ from langchain_core.messages import AIMessage
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-from app.graph.state import Story
-import app.graph.utils as utils
 import app.config as config
+import app.graph.utils as utils
+from app.graph.state import Story
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
-
 from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
                                       INTERACTION_PROMPT, \
                                       POINTS_RETRIEVAL_PROMPT, \
                                       FEEDBACK_PROMPT
-
-# from app.prompts.stories.goblins.goblins_narrator_prompts import NARRATOR_ZERO_PROMPT, \
-#                                                                  NARRATOR_TWO_PROMPT, \
-#                                                                  NARRATOR_THREE_PROMPT, \
-#                                                                  NARRATOR_FOUR_PROMPT
-
-# from app.prompts.stories.goblins.goblins_characters_prompts import BRIDGE_GOBLIN_ONE_PROMPT, BRIDGE_GOBLIN_LIFES_LOST_PROMPT, \
-#                                                                    BRIDGE_GOBLIN_SUCCESS_PROMPT, BRIDGE_GOBLIN_FAILURE_PROMPT, \
-#                                                                    GOBLIN_AT_HOME_ONE_PROMPT, GOBLIN_AT_HOME_LIFES_LOST_PROMPT, \
-#                                                                    GOBLIN_AT_HOME_SUCCESS_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, \
-#                                                                    CASTLE_GOBLIN_ONE_PROMPT, CASTLE_GOBLIN_LIFES_LOST_PROMPT, \
-#                                                                    CASTLE_GOBLIN_SUCCESS_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -190,10 +177,8 @@ def narrator_tool(current_story: str, step: int) -> str:
 
     # construye el path dinámico según la carpeta seleccionada
     story_module_path = f"app.prompts.stories.{current_story}.{current_story}_narrator_prompts"
-    #  = f"app.prompts.stories.{random_story}.{random_story}_characters_prompts"
 
     narrator_prompts_module = importlib.import_module(story_module_path)
-    # characters_prompts_module = importlib.import_module()
 
     # accede a los prompts como si estuvieran importados estáticamente
     narrator_prompts = [getattr(narrator_prompts_module, 'NARRATOR_ZERO_PROMPT'),
@@ -243,6 +228,8 @@ def first_character(current_story: str):
     
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
     prompt = prompt_template.format(personality=character_personality, question=question)
+
+    print(f"CHARACTER PROMPT: {prompt}")
 
     response_text = model.invoke(prompt).content
     return f"{character_emoji}  {response_text}", character_personality, question

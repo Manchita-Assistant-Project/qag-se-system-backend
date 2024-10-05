@@ -34,10 +34,12 @@ If the output is not in the form {{question}}|||{{answer}}, try again.
 
 CHARACTER_TOOLS_TEMPLATE = """
 ¡ALWAYS DO A FUNCTION CALL!
+¡ALWAYS DO A TOOL CALL!
 
 ¡NO EXCEPTIONS!
 
 ALWAYS DO A FUNCTION CALL.
+ALWAYS DO A TOOL CALL.
 
 NO EXCEPTIONS.
 """
