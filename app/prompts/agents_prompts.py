@@ -32,8 +32,12 @@ Always output the exact same as the user input.
 If the output is not in the form {{question}}|||{{answer}}, try again.
 """
 
-GOBLIN_TOOLS_TEMPLATE = """
-Your only purpose is to connect the user with the right tool.
-Don't generate any text.
-You have to call a tool ALWAYS. NO EXCEPTIONS.
+CHARACTER_TOOLS_TEMPLATE = """
+¡ALWAYS DO A FUNCTION CALL!
+
+¡NO EXCEPTIONS!
+
+ALWAYS DO A FUNCTION CALL.
+
+NO EXCEPTIONS.
 """

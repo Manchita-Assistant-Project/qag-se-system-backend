@@ -51,7 +51,7 @@ goblin_game_tools = [
     "bridge_goblin",
     "goblin_at_home",
     "castle_goblin",
-    "lives_retrieval",
+    "lifes_retrieval",
 ]
 user_graphs = {}
 
@@ -123,7 +123,7 @@ async def chat(input_data: ChatInput):
     if input_data.user_answer:
         state = graph.get_state(thread)
 
-        to_evaluate = state.values.get('to_evaluate', '')
+        to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
         last_question = state.values['messages'][-1].content if state.values['messages'][-1].content.startswith('¿') else to_evaluate  # pregunta sencilla o pregunta de juego goblin
         combined_input = f"{last_question}|||{input_data.user_answer}"
         
@@ -149,7 +149,7 @@ async def chat(input_data: ChatInput):
         return {
             "thread_id": input_data.thread_id,
             "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
-            "is_interrupted": graph.get_state(thread).values["from_goblin"] and "incorrecta" in evaluation_response[-2]
+            "is_interrupted": graph.get_state(thread).values["from_story"] and "incorrecta" in evaluation_response[-2]
         }
     
     # Si es una interacción inicial (sin interrupción todavía)

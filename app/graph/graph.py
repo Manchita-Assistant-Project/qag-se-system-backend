@@ -3,9 +3,9 @@ from app.graph.state import State
 from app.graph.nodes import single_tools_node, single_tools_tool_node, \
                             chooser_tool_node, evaluation_tool_node,\
                             points_updater_tool_node, human_interaction, \
-                            narrator_node, goblin_node, bridge_goblin_node, \
-                            goblin_at_home_node, castle_goblin_node, \
-                            lives_updater_tool_node
+                            narrator_node, character_node, first_character_node, \
+                            second_character_node, third_character_node, \
+                            lifes_updater_tool_node
 
 import uuid
 from typing import Literal
@@ -21,14 +21,14 @@ single_use_tools = [
     'points_retrieval',
 ]
 
-goblin_game_tools = [
+character_game_tools = [
     'narrator_tool',
-    'bridge_goblin',
-    'goblin_at_home',
-    'castle_goblin',
+    'first_character',
+    'second_character',
+    'third_character',
 ]
 
-# routing function
+# routing functions
 def should_use_single_tool(state) -> Literal["chooser", "single_tools", "narrator", "__end__"]:
     messages = state["messages"]
     last_message = messages[-1]
@@ -49,44 +49,43 @@ def should_use_single_tool(state) -> Literal["chooser", "single_tools", "narrato
         
     return "__end__"
 
-def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool"]:
-    tool_used = state["from_goblin"] if "from_goblin" in state else False
+def points_or_lifes(state) -> Literal["points_updater_tool", "lifes_updater_tool"]:
+    tool_used = state["from_story"] if "from_story" in state else False
 
     if tool_used:
-        print("lives_updater_tool")
-        return "lives_updater_tool"
+        print("lifes_updater_tool")
+        return "lifes_updater_tool"
     else:
         print("points_updater_tool")
         return "points_updater_tool"
 
-def goblin_or_finish(state) -> Literal["goblin", "__end__"]:
-    step = state["step"]
+def character_or_finish(state) -> Literal["character", "__end__"]:
+    step = state["current_story"]["step"]
     
     if step != 4:
-        return "goblin"
+        return "character"
     else:
         return END
 
-def which_goblin(state) -> Literal["bridge_goblin", "goblin_at_home", "castle_goblin"]:
-    step = state["step"]  
+def which_character(state) -> Literal["first_character", "second_character", "third_character"]:
+    step = state["current_story"]["step"]
 
     if step == 1:
-        return "bridge_goblin"
+        return "first_character"
     elif step == 2:
-        return "goblin_at_home"
+        return "second_character"
     elif step == 3:
-        return "castle_goblin"
+        return "third_character"
     
 def should_continue_or_another_try(state) -> Literal["human_interaction", "__end__"]:
     last_evaluation_message = state["messages"][-2].content
-    current_lives = state["messages"][-1].content.split("|||")[1]
+    current_lifes = state["messages"][-1].content.split("|||")[1]
     
-    if "incorrecta" in last_evaluation_message and int(current_lives) > 0:
+    if "incorrecta" in last_evaluation_message and int(current_lifes) > 0:
         print("Another try")
         return "human_interaction"
     else:
         return END    
-
 
 # building the graph
 workflow = StateGraph(State)
@@ -101,12 +100,12 @@ workflow.add_node("evaluation_tool", evaluation_tool_node)
 workflow.add_node("points_updater_tool", points_updater_tool_node)
 
 workflow.add_node("narrator", narrator_node)
-workflow.add_node("goblin", goblin_node)
-workflow.add_node("bridge_goblin", bridge_goblin_node)
-workflow.add_node("goblin_at_home", goblin_at_home_node)
-workflow.add_node("castle_goblin", castle_goblin_node)
+workflow.add_node("character", character_node)
+workflow.add_node("first_character", first_character_node)
+workflow.add_node("second_character", second_character_node)
+workflow.add_node("third_character", third_character_node)
 
-workflow.add_node("lives_updater_tool", lives_updater_tool_node)
+workflow.add_node("lifes_updater_tool", lifes_updater_tool_node)
 
 # add edges
 workflow.set_entry_point("simple_interaction")
@@ -118,21 +117,21 @@ workflow.add_conditional_edges(
 
 workflow.add_conditional_edges(
     "evaluation_tool",
-    points_or_lives
+    points_or_lifes
 )
 
 workflow.add_conditional_edges(
     "narrator",
-    goblin_or_finish
+    character_or_finish
 )
 
 workflow.add_conditional_edges(
-    "goblin",
-    which_goblin
+    "character",
+    which_character
 )
 
 workflow.add_conditional_edges(
-    "lives_updater_tool",
+    "lifes_updater_tool",
     should_continue_or_another_try
 )
 
@@ -142,10 +141,10 @@ workflow.add_edge("chooser", "human_interaction")
 workflow.add_edge("human_interaction", "evaluation_tool")
 workflow.add_edge("points_updater_tool", END)
 
-# workflow.add_edge("narrator", "goblin")
-workflow.add_edge("bridge_goblin", "human_interaction")
-workflow.add_edge("goblin_at_home", "human_interaction")
-workflow.add_edge("castle_goblin", "human_interaction")
+# workflow.add_edge("narrator", "character")
+workflow.add_edge("first_character", "human_interaction")
+workflow.add_edge("second_character", "human_interaction")
+workflow.add_edge("third_character", "human_interaction")
 
 def use_graph():
     # compile the graph
@@ -167,10 +166,10 @@ def use_graph():
 
     questions = [
         'hola!',
-        'quiero jugar el juego del goblin!',
-        # 'sigue con el juego!',
-        # 'sigue!',
-        # 'termina!'
+        'quiero jugar las historias!',
+        'sigue con el juego!',
+        'sigue!',
+        'termina!'
         # 'hazme una pregunta!',
         # 'hazme otra!',
         # 'háblame un poco más sobre eso, por favor.',
@@ -195,16 +194,16 @@ def use_graph():
         if tool_used is not None:
             is_not_single_use = len([tool for tool in single_use_tools if tool in tool_used]) != 1
         
-        is_not_goblin_game = False
+        is_not_character_game = False
         if tool_used is not None:
-            is_not_goblin_game = tool_used != 'narrator_tool'
+            is_not_character_game = tool_used != 'narrator_tool'
         
         print(f"NEXT: {graph.get_state(thread).next}")
 
         # interrupción para el camino quiz
-        if (is_not_single_use and is_not_goblin_game):
+        if (is_not_single_use and is_not_character_game):
             user_answer = input('You: ')
-            question = event['messages'][-1].content if event['messages'][-1].content[0] == '¿' else graph.get_state(thread).values['to_evaluate'] # pregunta sencilla o pregunta de juego goblin
+            question = event["messages"][-1].content if event["messages"][-1].content[0] == '¿' else graph.get_state(thread).values["current_story"]["to_evaluate"] # pregunta sencilla o pregunta de juego character
             
             combined_input = f"{question}|||{user_answer}"
             print(combined_input)
@@ -225,16 +224,16 @@ def use_graph():
             for event in graph.stream(None, thread, stream_mode="values"):
                 event['messages'][-1].pretty_print()
             
-            # interrupción para el camino del juego del goblin cuando tiene una respuesta incorrecta
-            if list(graph.get_state(thread).metadata['writes'].keys())[0] == 'lives_updater_tool':
+            # interrupción para el camino del juego del character cuando tiene una respuesta incorrecta
+            if list(graph.get_state(thread).metadata['writes'].keys())[0] == 'lifes_updater_tool':
                 if "incorrecta" in graph.get_state(thread).values["messages"][-2].content:
                     snapshot = graph.get_state(thread).values["messages"][-2].content
-                    current_lives_snapshot = 3
+                    current_lifes_snapshot = 3
                     i = 3
-                    while "incorrecta" in snapshot and current_lives_snapshot > 0: # si la respuesta es incorrecta y aún tiene vidas
-                        print(f'LIVES UPDATER TOOL -> {snapshot}')
+                    while "incorrecta" in snapshot and current_lifes_snapshot > 0: # si la respuesta es incorrecta y aún tiene vidas
+                        print(f'LIFES UPDATER TOOL -> {snapshot}')
                         user_answer = input('You: ')
-                        question = graph.get_state(thread).values['to_evaluate']
+                        question = graph.get_state(thread).values['current_story']["to_evaluate"]
                         
                         combined_input = f"{question}|||{user_answer}"
                         print(f"COMBINED: {combined_input}")
@@ -256,8 +255,8 @@ def use_graph():
                         snapshot = graph.get_state(thread).values["messages"][-2].content
                         print(f"SNAPSHOT: {snapshot}")
                         
-                        current_lives_snapshot = int(graph.get_state(thread).values["messages"][-1].content.split('|||')[1])
-                        print(f"CURRENT LIVES: {current_lives_snapshot}")
+                        current_lifes_snapshot = int(graph.get_state(thread).values["messages"][-1].content.split('|||')[1])
+                        print(f"CURRENT LIFES: {current_lifes_snapshot}")
 
                         print(f"AFTER: {graph.get_state(thread).next}")
                         
@@ -266,7 +265,7 @@ def use_graph():
                         event['messages'][-1].pretty_print()
                             
 
-# use_graph()
+use_graph()
 
 """
 Para el juego de duendes:

@@ -1,11 +1,14 @@
 import os
 import random
+import importlib
 from typing import Tuple
 
 from langchain_openai import AzureChatOpenAI
+from langchain_core.messages import AIMessage
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
+from app.graph.state import Story
 import app.graph.utils as utils
 import app.config as config
 import app.database.chroma_utils as chroma_utils
@@ -16,17 +19,17 @@ from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
                                       POINTS_RETRIEVAL_PROMPT, \
                                       FEEDBACK_PROMPT
 
-from app.prompts.stories.goblins.goblins_narrator_prompts import NARRATOR_ZERO_PROMPT, \
-                                                                 NARRATOR_TWO_PROMPT, \
-                                                                 NARRATOR_THREE_PROMPT, \
-                                                                 NARRATOR_FOUR_PROMPT
+# from app.prompts.stories.goblins.goblins_narrator_prompts import NARRATOR_ZERO_PROMPT, \
+#                                                                  NARRATOR_TWO_PROMPT, \
+#                                                                  NARRATOR_THREE_PROMPT, \
+#                                                                  NARRATOR_FOUR_PROMPT
 
-from app.prompts.stories.goblins.golbins_characters_prompts import BRIDGE_GOBLIN_ONE_PROMPT, BRIDGE_GOBLIN_LIVES_LOST_PROMPT, \
-                                                                   BRIDGE_GOBLIN_SUCCESS_PROMPT, BRIDGE_GOBLIN_FAILURE_PROMPT, \
-                                                                   GOBLIN_AT_HOME_ONE_PROMPT, GOBLIN_AT_HOME_LIVES_LOST_PROMPT, \
-                                                                   GOBLIN_AT_HOME_SUCCESS_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, \
-                                                                   CASTLE_GOBLIN_ONE_PROMPT, CASTLE_GOBLIN_LIVES_LOST_PROMPT, \
-                                                                   CASTLE_GOBLIN_SUCCESS_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT
+# from app.prompts.stories.goblins.goblins_characters_prompts import BRIDGE_GOBLIN_ONE_PROMPT, BRIDGE_GOBLIN_LIFES_LOST_PROMPT, \
+#                                                                    BRIDGE_GOBLIN_SUCCESS_PROMPT, BRIDGE_GOBLIN_FAILURE_PROMPT, \
+#                                                                    GOBLIN_AT_HOME_ONE_PROMPT, GOBLIN_AT_HOME_LIFES_LOST_PROMPT, \
+#                                                                    GOBLIN_AT_HOME_SUCCESS_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, \
+#                                                                    CASTLE_GOBLIN_ONE_PROMPT, CASTLE_GOBLIN_LIFES_LOST_PROMPT, \
+#                                                                    CASTLE_GOBLIN_SUCCESS_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -169,10 +172,10 @@ def points_retrieval(user_id: str) -> str:
 
     response_text = model.invoke(prompt).content
     return response_text
-    
-def narrator_tool(step: str) -> str:
+
+def narrator_tool(current_story: str, step: int) -> str:
     """
-    Narrates the goblin story.
+    Narrates a story based on the chosen prompts.
     """
     print(f"Current step: {step}")
     
@@ -180,24 +183,50 @@ def narrator_tool(step: str) -> str:
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=1
     )
-    
-    narrator_prompts = [NARRATOR_ZERO_PROMPT, NARRATOR_TWO_PROMPT, NARRATOR_THREE_PROMPT, NARRATOR_FOUR_PROMPT]
-    
-    prompt_template = ChatPromptTemplate.from_template(narrator_prompts[int(step)])
+
+    # si ya se escogió una historia
+    if current_story is None:
+        current_story = utils.choose_random_story()
+
+    # construye el path dinámico según la carpeta seleccionada
+    story_module_path = f"app.prompts.stories.{current_story}.{current_story}_narrator_prompts"
+    #  = f"app.prompts.stories.{random_story}.{random_story}_characters_prompts"
+
+    narrator_prompts_module = importlib.import_module(story_module_path)
+    # characters_prompts_module = importlib.import_module()
+
+    # accede a los prompts como si estuvieran importados estáticamente
+    narrator_prompts = [getattr(narrator_prompts_module, 'NARRATOR_ZERO_PROMPT'),
+                        getattr(narrator_prompts_module, 'NARRATOR_TWO_PROMPT'),
+                        getattr(narrator_prompts_module, 'NARRATOR_THREE_PROMPT'),
+                        getattr(narrator_prompts_module, 'NARRATOR_FOUR_PROMPT')]
+
+    prompt_template = ChatPromptTemplate.from_template(narrator_prompts[step])
     prompt = prompt_template.format(step=step)
 
     response_text = model.invoke(prompt).content
-    return f"🍀 {response_text}"
+    return f"✒️  {response_text}", current_story
+
+def verify_tool_call(message: AIMessage) -> bool:
+    """
+    Verifies if there was a tool call.
+    """
+    if isinstance(message, AIMessage):
+        if message.additional_kwargs:
+            if message.additional_kwargs["tool_calls"]:
+                return True
+            
+    return False
 
 single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, qanda_evaluation, narrator_tool]    
 
-# ================= #
-# GOBLIN GAME TOOLS #
-# ================= #
+# ================== #
+# STORIES GAME TOOLS #
+# ================== #
 
-def bridge_goblin():
+def first_character(current_story: str):
     """
-    Calls the bridge goblin and returns it's response.
+    Calls the first character and returns it's response.
     """
     question = qanda_chooser()
     
@@ -206,18 +235,21 @@ def bridge_goblin():
         temperature=1
     )
     
-    narrator_prompts = [BRIDGE_GOBLIN_ONE_PROMPT]
-    goblin_personality = random.choice(narrator_prompts)
+    character_personality_prompts = utils.load_character_personalities(current_story, 'FIRST')
+    character_prompt = utils.load_character_prompt(current_story, 'FIRST')[0]
+    character_emoji = utils.find_character_emoji(current_story)
     
-    prompt_template = ChatPromptTemplate.from_template(goblin_personality)
-    prompt = prompt_template.format(question=question)
+    character_personality = random.choice(character_personality_prompts)
     
-    response_text = model.invoke(prompt).content
-    return f"🧌 {response_text}", question
+    prompt_template = ChatPromptTemplate.from_template(character_prompt)
+    prompt = prompt_template.format(personality=character_personality, question=question)
 
-def goblin_at_home():
+    response_text = model.invoke(prompt).content
+    return f"{character_emoji}  {response_text}", character_personality, question
+
+def second_character(current_story: str):
     """
-    Calls the goblin at home and returns it's response.
+    Calls the second character and returns it's response.
     """
     question = qanda_chooser()
     
@@ -226,18 +258,21 @@ def goblin_at_home():
         temperature=1
     )
     
-    narrator_prompts = [GOBLIN_AT_HOME_ONE_PROMPT]
-    goblin_personality = random.choice(narrator_prompts)
+    character_personality_prompts = utils.load_character_personalities(current_story, 'SECOND')
+    character_prompt = utils.load_character_prompt(current_story, 'SECOND')[0]
+    character_emoji = utils.find_character_emoji(current_story)
     
-    prompt_template = ChatPromptTemplate.from_template(goblin_personality)
-    prompt = prompt_template.format(question=question)
+    character_personality = random.choice(character_personality_prompts)
+    
+    prompt_template = ChatPromptTemplate.from_template(character_prompt)
+    prompt = prompt_template.format(personality=character_personality, question=question)
     
     response_text = model.invoke(prompt).content
-    return f"🧌 {response_text}", question
+    return f"{character_emoji}  {response_text}", character_personality, question
 
-def castle_goblin():
+def third_character(current_story: str):
     """
-    Calls the castle goblin and returns it's response.
+    Calls the third character and returns it's response.
     """
     question = qanda_chooser()
     
@@ -246,50 +281,63 @@ def castle_goblin():
         temperature=1
     )
     
-    narrator_prompts = [CASTLE_GOBLIN_ONE_PROMPT]
-    goblin_personality = random.choice(narrator_prompts)
+    character_personality_prompts = utils.load_character_personalities(current_story, 'THIRD')
+    character_prompt = utils.load_character_prompt(current_story, 'THIRD')[0]
+    character_emoji = utils.find_character_emoji(current_story)
     
-    prompt_template = ChatPromptTemplate.from_template(goblin_personality)
-    prompt = prompt_template.format(question=question)
+    character_personality = random.choice(character_personality_prompts)
+    
+    prompt_template = ChatPromptTemplate.from_template(character_prompt)
+    prompt = prompt_template.format(personality=character_personality, question=question)
     
     response_text = model.invoke(prompt).content
-    return f"🧌 {response_text}", question  
+    return f"{character_emoji}  {response_text}", character_personality, question 
 
-def lives_updater(user_id: str, reset: bool=False):
+def lifes_updater(user_id: str, reset: bool=False):
     """
-    Updates the lives of the user in the goblin game.
+    Updates the lifes of the user in the story game.
     """
-    sqlite_utils.update_lives(user_id, reset)
+    sqlite_utils.update_lifes(user_id, reset)
 
-def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> Tuple[str, int]:
+def lifes_retrieval(user_id: str, current_story: Story, lost_live: bool) -> Tuple[str, int]:
     """
-    Returns the current lives count of the user in the goblin game.
+    Returns the current lifes count of the user in the story game.
     """
-    current_lives = sqlite_utils.get_lives(user_id)
+    current_lifes = sqlite_utils.get_lifes(user_id)
+    
+    name = current_story["name"]
+    question = current_story["to_evaluate"]
+    step = current_story["step"]
+    personality = current_story["character_personality"]
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=1
     )
-        
-    success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT, GOBLIN_AT_HOME_SUCCESS_PROMPT, CASTLE_GOBLIN_SUCCESS_PROMPT]
-    lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT, GOBLIN_AT_HOME_LIVES_LOST_PROMPT, CASTLE_GOBLIN_LIVES_LOST_PROMPT]
-    failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT]
+    
+    character_emoji = utils.find_character_emoji(name)
+    auxiliar_prompts = utils.load_character_auxiliar_prompts(name, step)    
+    # success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT, GOBLIN_AT_HOME_SUCCESS_PROMPT, CASTLE_GOBLIN_SUCCESS_PROMPT]
+    # lost_life_steps_prompts = [BRIDGE_GOBLIN_LIFES_LOST_PROMPT, GOBLIN_AT_HOME_LIFES_LOST_PROMPT, CASTLE_GOBLIN_LIFES_LOST_PROMPT]
+    # failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT]
+    success_steps_prompts = [auxiliar_prompts['SUCCESS'], auxiliar_prompts['SUCCESS'], auxiliar_prompts['SUCCESS']]
+    lost_life_steps_prompts = [auxiliar_prompts['LIFES_LOST'], auxiliar_prompts['LIFES_LOST'], auxiliar_prompts['LIFES_LOST']]
+    failure_steps_prompts = [auxiliar_prompts['FAILURE'], auxiliar_prompts['FAILURE'], auxiliar_prompts['FAILURE']]
 
     kind = 1
     prompt = success_steps_prompts[step - 1]
     if lost_live:
         print("User lost a life!")
-        if current_lives == 0:
+        if current_lifes == 0:
             kind = 1
             prompt = failure_steps_prompts[step - 1]
         else:
             kind = 2
-            prompt = lost_live_steps_prompts[step - 1]
+            prompt = lost_life_steps_prompts[step - 1]
     
     print(f"INDEX: {step - 1}")
     prompt_template = ChatPromptTemplate.from_template(prompt)
-    prompt = prompt_template.format(question=question, lifes=current_lives)
+    prompt = prompt_template.format(personality=personality, question=question, lifes=current_lifes)
 
     response_text = model.invoke(prompt).content
-    return f"🧌 {response_text}", current_lives, kind
+    return f"{character_emoji}  {response_text}", current_lifes, kind

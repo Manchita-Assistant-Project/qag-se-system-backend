@@ -1,14 +1,14 @@
 import re
 import functools
 
-from app.graph.state import State
+from app.graph.state import State, Story
 from app.graph.utils import agent_node
-from app.graph.agents import single_tools_agent, qanda_chooser_agent, goblin_agent
+from app.graph.agents import single_tools_agent, character_agent
 from app.graph.tools import qanda_chooser, qanda_evaluation, \
                             points_retrieval, points_updater, rag_search, \
-                            feedback_provider, narrator_tool, \
-                            bridge_goblin, goblin_at_home, castle_goblin, \
-                            lives_updater, lives_retrieval
+                            feedback_provider, narrator_tool, verify_tool_call, \
+                            first_character, second_character, third_character, \
+                            lifes_updater, lifes_retrieval
 
 from langgraph.prebuilt import ToolNode
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
@@ -17,17 +17,12 @@ from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name="Single Tools")
 # chooser_node = functools.partial(agent_node, agent=qanda_chooser_agent, name="QandA Chooser")
 
-goblin_node = functools.partial(agent_node, agent=goblin_agent, name="Goblin")
+character_node = functools.partial(agent_node, agent=character_agent, name="Character")
 
 # single_tools_tool_node = ToolNode(single_tools)
 chooser_tool_node = ToolNode([qanda_chooser])
 
 def single_tools_tool_node(state): 
-    # el caso en que falla es cuando va directo a single_tools...
-    # creo que es por lo que estoy retornando instantaneamente el mensaje contenido del
-    # mensaje solamente... en el de chooser_node, estoy retornando lo que saca el LLM...
-    # lo raro es que, cuando se llama solo a single_tools primera, todo bien.
-    # el tema es cuando se llama en a veces en medio de la conversación...
     user_message = state["messages"][0]
     ai_message = state["messages"][-1]
     thread_id = state["thread_id"]
@@ -67,7 +62,7 @@ def single_tools_tool_node(state):
     
     # Asegurarse de que siempre haya un mensaje de respuesta válido
     tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
-    response = {"messages": [tool_result] if result else {"messages": [user_message]}, "from_goblin": False}
+    response = {"messages": [tool_result] if result else {"messages": [user_message]}, "from_story": False}
     # response = {"messages": [result]}
     print(f"Final response: {response}")
 
@@ -100,7 +95,7 @@ def points_updater_tool_node(state):
     if "incorrecta" not in (last_message.content).lower():
         points_updater(state["thread_id"], points=1)
     
-    return {"messages": [last_message], "from_goblin": False} # retorna el mensaje original.
+    return {"messages": [last_message], "from_story": False} # retorna el mensaje original.
                                                              # esta función no genera mensajes, solo
                                                              # actualiza los puntos del usuario.
 
@@ -112,101 +107,144 @@ def narrator_node(state):
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
     
-    step = 0
-    if "step" in state:
-        step = state["step"]
+    current_story = state["current_story"] if "current_story" in state else None
+    
+    current_story_name = current_story["name"] if "current_story" in state else None
+    
+    # step = state["step"] if "step" in state else 0
+    step = current_story["step"] if "current_story" in state else 0
+    print(f"[NARRATOR_NODE] step: {step} | {type(step)}")
 
-    print(f"[NARRATOR_NODE] step: {step}")
-
-    result = narrator_tool(step)
+    result, story_name = narrator_tool(current_story_name, step)
+    
+    if current_story_name:
+        current_story["name"] = story_name if step <= 4 else None
+        current_story["step"] = step + 1
+        current_story["to_evaluate"] = None
+        current_story["character_personality"] = None
+    else:
+        current_story = Story(
+            name=story_name,
+            step=step + 1,
+            to_evaluate=None,
+            character_personality=None
+        )
 
     tool_result = ToolMessage(content=result, name=tool_call, tool_call_id=tool_call_id)
-    response = {"messages": [tool_result], "step": step + 1}
     
-    return response
+    return { "messages": [tool_result], "current_story": current_story }
 
-def bridge_goblin_node(state):
+def verify_tool_call_node(state):
     """
-    Encounters the first goblin.
+    Verifies if there was a tool call.
+    """
+    last_message = state["message"][-1]
+    was_tool_call = verify_tool_call(last_message)
+    
+    return { "messages": [last_message.content], "was_tool_call": was_tool_call }
+    
+
+def first_character_node(state):
+    """
+    Encounters the first character.
     """
     ai_message = state["messages"][-1]
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
 
+    current_story = state["current_story"]
     narrator_message = state["messages"][-2].content
     
-    result, question = bridge_goblin()
+    result, personality, question = first_character(current_story["name"])
     
     response = f"{narrator_message}\n\n{result}"
     
-    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
-    response = {"messages": [tool_result], "step": 1, "to_evaluate": question, "from_goblin": True}
+    current_story["step"] = 1
+    current_story["to_evaluate"] = question
+    current_story["character_personality"] = personality
     
-    return response
+    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
+    
+    return { "messages": [tool_result], "current_story": current_story, "from_story": True }
 
-def goblin_at_home_node(state):
+def second_character_node(state):
     """
-    Encounters the second goblin.
+    Encounters the second character.
     """
     ai_message = state["messages"][-1]
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
     
+    current_story = state["current_story"]
     narrator_message = state["messages"][-2].content
     
-    result, question = goblin_at_home()
+    result, personality, question = second_character(current_story["name"])
     
     response = f"{narrator_message}\n\n{result}"
     
-    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
-    response = {"messages": [tool_result], "step": 2, "to_evaluate": question, "from_goblin": True}
+    current_story["step"] = 2
+    current_story["to_evaluate"] = question
+    current_story["character_personality"] = personality
     
-    return response
+    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
+    
+    return { "messages": [tool_result], "current_story": current_story, "from_story": True }
 
-def castle_goblin_node(state):
+def third_character_node(state):
     """
-    Encounters the third goblin.
+    Encounters the third character.
     """
     ai_message = state["messages"][-1]
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
     
+    current_story = state["current_story"]
     narrator_message = state["messages"][-2].content
     
-    result, question = castle_goblin()
+    result, personality, question = third_character(current_story["name"])
     
     response = f"{narrator_message}\n\n{result}"
     
-    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
-    response = {"messages": [tool_result], "step": 3, "to_evaluate": question, "from_goblin": True}
+    current_story["step"] = 3
+    current_story["to_evaluate"] = question
+    current_story["character_personality"] = personality
     
-    return response
+    tool_result = ToolMessage(content=response, name=tool_call, tool_call_id=tool_call_id)
+    
+    return { "messages": [tool_result], "current_story": current_story, "from_story": True }
 
-def lives_updater_tool_node(state):
+def lifes_updater_tool_node(state):
     """
-    Takes the current thread_id and updates the lives of the user.
+    Takes the current thread_id and updates the lifes of the user.
     Returns the last message.
     """
     last_message = state["messages"][-1]
-    step = state["step"]
-    question = state["to_evaluate"]
-    from_goblin = True
-    print(f"[LIVES UPDATER NODE] last_message: {last_message.content}")
+    current_story = state["current_story"]
+    # step = state["step"]
+    # question = state["to_evaluate"]
+    step = current_story["step"]
+    question = current_story["to_evaluate"]
+    from_story = True
+    print(f"[LIFES UPDATER NODE] last_message: {last_message.content}")
 
     lost_live = False
     if "incorrecta" in (last_message.content).lower():
-        lives_updater(state["thread_id"])
+        lifes_updater(state["thread_id"])
         lost_live = True
         
-    response, current_lives, kind = lives_retrieval(state["thread_id"], question, lost_live, step)
-    print(f"[LIVES UPDATER NODE] response: {response}")
+    response, current_lifes, kind = lifes_retrieval(state["thread_id"], current_story, lost_live)
+    print(f"[LIFES UPDATER NODE] response: {response}")
     
-    if current_lives <= 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
+    if current_lifes <= 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
         step = 0
-        from_goblin = False
-        lives_updater(state["thread_id"], reset=True)
+        from_story = False
+        lifes_updater(state["thread_id"], reset=True)
+        current_story["name"] = None
     elif kind == 1: # si hubo success en la pregunta
         response += '\n\n¡Escribe "Sigue!" para continuar con la historia!'
-        from_goblin = False # esto es por si el usuario quiere preguntas normales u otra cosa en lugar de seguir con el juego
+        from_story = False # esto es por si el usuario quiere preguntas normales u otra cosa en lugar de seguir con el juego
     
-    return {"messages": [f"{response}|||{current_lives}"], "step": step, "from_goblin": from_goblin}
+    current_story["step"] = step
+    current_story["to_evaluate"] = question
+    
+    return { "messages": [f"{response}|||{current_lifes}"], "current_story": current_story, "from_story": from_story }

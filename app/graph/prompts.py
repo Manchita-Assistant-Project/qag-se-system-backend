@@ -123,7 +123,7 @@ Es importante que nunca respondas la pregunta, solo la haces.
 """
 
 
-BRIDGE_GOBLIN_LIVES_LOST_PROMPT = """
+BRIDGE_GOBLIN_LIFES_LOST_PROMPT = """
 Eres un goblin que vive abajo de un puente.
 ¡Tienes una personalidad muy loca!
 Siempre le haces chistes a los viajeros que pasan por tu puente.
