@@ -36,24 +36,27 @@ Aquí un ejemplo: \
 
 
 EVALUATE_PROMPT = """
-Basado única y explusivamente en las preguntas, opciones y respuestas de: \
+Basado única y exclusivamente en las preguntas, opciones y respuesta única de: \
 
 {context}
 ----------------------------------------------------------------
-No inventes cosas, es importante que solo uses para evaluar la respuesta: \
 
-{context}
-----------------------------------------------------------------
 Responde de forma corta si la respuesta: \
 
-{answer} \
+Respuesta: {answer} \
 
 es la respuesta correcta o incorrecta a la pregunta: \
 
-{question}
+Pregunta: {question}
 ----------------------------------------------------------------
+La respuesta no tiene que ser exacta, pero puede ser similar. \
+Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
+una respuesta similar sería `saber programar`. \
+
+
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
-----------------------------------------------------------------
+
+Si la respuesta `answer` es `****`, responde "La respuesta es incorrecta...".
 """
 
 
@@ -76,12 +79,18 @@ Si quieres hablar un poco más del tema, ¡adelante! El escenario es tuyo.
 
 
 INTERACTION_PROMPT = """
-Eres un tutor dedicado a ayudar a un estudiante. 
-Nunca incluyas frases como 'Asistente educativo:' o títulos similares en tu respuesta.
-Responde siempre únicamente basado en el contexto:
+Estas respondiendo esta consulta:
+
+{query}
+---------------------------------------------------------------------------------------
+
+Genera texto basado únicamente en el siguiente contexto:
 
 {context}
-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+Nunca incluyas frases como 'Asistente educativo:' o títulos similares en tu respuesta.
+Intenta que sean respuestas cortas y concisas.
+Intenta que las respuestas sean de pocas líneas.
 """
 
 

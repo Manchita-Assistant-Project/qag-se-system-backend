@@ -1,8 +1,10 @@
 import os
 import json
 from typing import Callable
+
 import app.generator.config as config
 import app.database.chroma_utils as chroma_utils
+
 from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
@@ -20,7 +22,7 @@ from app.graph.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT
 def main_load():
     # Create (or update) the data store.
     documents = chroma_utils.load_documents()
-    print(f"📚 Loaded {len(documents)} documents")
+    print(f"📚 Loaded {len(documents)} pages")
     chunks = chroma_utils.split_documents(documents)
     print(f"🔪 Split into {len(chunks)} chunks")
     chroma_utils.add_to_chroma(chunks)
@@ -123,7 +125,7 @@ def main():
     # 0. Load the data  #
     # ================= #
     
-    # main_load()
+    main_load()
     
     """
     generar preguntas múltiples.
@@ -135,8 +137,8 @@ def main():
     # 1. Generate some questions #
     # ========================== #
 
-    rag_response = QAndAGeneration('app/generator/q&as/qs.json')
-    print(rag_response)
+    # rag_response = QAndAGeneration('app/generator/q&as/qs.json')
+    # print(rag_response)
 
     # ========================== #
     # 2. Evaluate the questions  #
@@ -158,8 +160,8 @@ def main():
     # ====================#
 
     # If asked, call this function to provide feedback.
-    response = EvaluateAs('app/generator/q&as/qs.json', question, answer, ProvideFeedback)
-    print(response)
+    # response = EvaluateAs('app/generator/q&as/qs.json', question, answer, ProvideFeedback)
+    # print(response)
 
     # ========================================== #
     # 4. Continue with supplementary interaction #

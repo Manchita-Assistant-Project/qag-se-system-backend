@@ -45,6 +45,9 @@ El viajer no hace preguntas, solo responde las tuyas.
 Integra la pregunta dentro de tu respuesta.
 Nunca la muestres de primera.
 NUNCA PONGAS LA PREGUNTA AL INICIO DE TU RESPUESTA.
+
+NUNCA TE INVENTES PREGUNTAS.
+SIEMPRE DEBES USAR LA PREGUNTA QUE SE TE DA.
 """
 
 
@@ -90,6 +93,9 @@ El viajer no hace preguntas, solo responde las tuyas.
 Integra la pregunta dentro de tu respuesta.
 Nunca la muestres de primera.
 NUNCA PONGAS LA PREGUNTA AL INICIO DE TU RESPUESTA.
+
+NUNCA TE INVENTES PREGUNTAS.
+SIEMPRE DEBES USAR LA PREGUNTA QUE SE TE DA.
 """
 
 
@@ -137,6 +143,9 @@ El viajer no hace preguntas, solo responde las tuyas.
 Integra la pregunta dentro de tu respuesta.
 Nunca la muestres de primera.
 NUNCA PONGAS LA PREGUNTA AL INICIO DE TU RESPUESTA.
+
+NUNCA TE INVENTES PREGUNTAS.
+SIEMPRE DEBES USAR LA PREGUNTA QUE SE TE DA.
 """
 
 
@@ -155,7 +164,7 @@ El acertijo con el que TÚ desafías al viajero es:
 
 BRIDGE_GOBLIN_LIVES_LOST_PROMPT = BRIDGE_GOBLIN_ONE + """
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
-Le tienes que decir que ha perdido una vida y que debe intentarlo de nuevo si quiere pasar el puente.
+Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere pasar el puente.
 ¡No le vuelvas a hacer un nuevo acertijo!
 Solo dile que ha perdido una vida y le recuerdas la pregunta:
 
@@ -165,7 +174,11 @@ Las vidas aún le quedan al viajero:
 
 {lifes}
 
+Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
+
 Recuerda que inicia con 3.
+Si las vidas que le quedan al viajero = 2, entonces quedan 2 vidas y pones 2 emojis (💖💖).
+Si las vidas que le quedan al viajero = 1, entonces queda 1 vida y pones 1 emoji (💖).
 """ + BRIDGE_GOBLIN_ACLARATION
 
 
@@ -204,7 +217,7 @@ El acertijo con el que TÚ desafías al viajero es:
 
 GOBLIN_AT_HOME_LIVES_LOST_PROMPT = GOBLIN_AT_HOME_ONE + """
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
-Le tienes que decir que ha perdido una vida y que debe intentarlo de nuevo si quiere que le des las necesitadas indicaciones.
+Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que le des las necesitadas indicaciones.
 ¡No le vuelvas a hacer un nuevo acertijo!
 No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuerdas la pregunta:
 
@@ -214,7 +227,11 @@ Las vidas aún le quedan al viajero:
 
 {lifes}
 
+Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
+
 Recuerda que inicia con 3.
+Si las vidas que le quedan al viajero = 2, entonces quedan 2 vidas y pones 2 emojis (💖💖).
+Si las vidas que le quedan al viajero = 1, entonces queda 1 vida y pones 1 emoji (💖).
 """ + GOBLIN_AT_HOME_ACLARATION
 
 
@@ -254,7 +271,7 @@ El acertijo con el que TÚ desafías al viajero es:
 
 CASTLE_GOBLIN_LIVES_LOST_PROMPT = CASTE_GOBLIN_ONE + """
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
-Le tienes que decir que ha perdido una vida y que debe intentarlo de nuevo si quiere que lo dejes pasar.
+Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
 No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuerdas la pregunta:
 No le ofrezcas más acertijos, solo dale el permiso.
 {question}
@@ -263,7 +280,11 @@ Las vidas aún le quedan al viajero:
 
 {lifes}
 
+Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
+
 Recuerda que inicia con 3.
+Si las vidas que le quedan al viajero = 2, entonces quedan 2 vidas y pones 2 emojis (💖💖).
+Si las vidas que le quedan al viajero = 1, entonces queda 1 vida y pones 1 emoji (💖).
 """ + CASTLE_GOBLIN_ACLARATION
 
 

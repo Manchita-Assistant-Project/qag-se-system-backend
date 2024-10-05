@@ -6,7 +6,7 @@ from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-import app.generator.utils as utils
+import app.graph.utils as utils
 import app.generator.config as config
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
@@ -80,10 +80,16 @@ def qanda_evaluation(input_data: str) -> str:
         temperature=0.2
     )
     
+    context_string = utils.define_context_string(context)
+    print(f"CONTEXT STRING: {context_string}")
+    
+    answer = answer if answer != '' else "****"
+    
     prompt_template = ChatPromptTemplate.from_template(EVALUATE_PROMPT)
-    prompt = prompt_template.format(context=context[0], answer=answer, question=question)
+    prompt = prompt_template.format(context=context_string, answer=answer, question=question)
     response_text = model.invoke(prompt).content
-
+    
+    print(f"RESPONSE: {response_text}")
     return response_text
 
 def rag_search(query: str) -> str:
@@ -93,13 +99,14 @@ def rag_search(query: str) -> str:
     print(f"QUERY: {query}")
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0.2
+        temperature=0
     )
-    results = db.similarity_search_with_score(query, k=5)
+    results = db.similarity_search_with_score(query, k=8)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    
     prompt_template = ChatPromptTemplate.from_template(INTERACTION_PROMPT)
-    prompt = prompt_template.format(context=context_text)
+    prompt = prompt_template.format(context=context_text, query=query)
     
     response_text = model.invoke(prompt).content
 
@@ -264,17 +271,20 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=1
     )
-    
+        
     success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT, GOBLIN_AT_HOME_SUCCESS_PROMPT, CASTLE_GOBLIN_SUCCESS_PROMPT]
     lost_live_steps_prompts = [BRIDGE_GOBLIN_LIVES_LOST_PROMPT, GOBLIN_AT_HOME_LIVES_LOST_PROMPT, CASTLE_GOBLIN_LIVES_LOST_PROMPT]
     failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT]
 
+    kind = 1
     prompt = success_steps_prompts[step - 1]
     if lost_live:
         print("User lost a life!")
         if current_lives == 0:
+            kind = 1
             prompt = failure_steps_prompts[step - 1]
         else:
+            kind = 2
             prompt = lost_live_steps_prompts[step - 1]
     
     print(f"INDEX: {step - 1}")
@@ -282,4 +292,4 @@ def lives_retrieval(user_id: str, question: str, lost_live: bool, step: int) -> 
     prompt = prompt_template.format(question=question, lifes=current_lives)
 
     response_text = model.invoke(prompt).content
-    return f"🧌 {response_text}", current_lives
+    return f"🧌 {response_text}", current_lives, kind

@@ -1,3 +1,4 @@
+import json
 import uuid
 from typing import Optional
 
@@ -9,7 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
+from app.graph.utils import JSON_PATH
 from app.graph.graph import workflow
+from app.graph.tools import qanda_evaluation
 
 app = FastAPI()
 
@@ -145,7 +148,7 @@ async def chat(input_data: ChatInput):
         
         return {
             "thread_id": input_data.thread_id,
-            "response": evaluation_response[-1],
+            "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
             "is_interrupted": graph.get_state(thread).values["from_goblin"] and "incorrecta" in evaluation_response[-2]
         }
     
@@ -180,3 +183,21 @@ async def chat(input_data: ChatInput):
 # IMPORTANTE CAMBIAR EL CÓDIGO A CREAR UN GRAFO POR ENTRADA/LLAMADA AL SERVIDOR!!
 # HAY QUE PENSAR SI QUEREMOS QUE PERSISTAN... CON IP O ASÍ JEJE...
 # EL TEMA ES QUE SE PUEDEN DEMORAR MIENTRAS COMPILAN... PERO NAH, NO ES NUESTRA PREOCUPACIÓN.
+
+class QuestionEvaluation(BaseModel):
+    question: str
+    answer: str
+
+@app.get('/questions')
+def get_questions():    
+    with open(JSON_PATH, encoding='utf-8') as f:
+        data = json.load(f)
+    
+    questions = {question["question"] for question in data["content"][0]["questions"]}
+    return questions
+
+@app.post('/evaluate')
+def evaluate_query(input: QuestionEvaluation):
+    evaluation = qanda_evaluation(f"{input.question}|||{input.answer}")
+    return {"evaluation": False if "incorrecta" in evaluation else True}
+    

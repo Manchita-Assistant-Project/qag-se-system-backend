@@ -1,5 +1,6 @@
 python-dotenv
 PyPDF2
+pypdf
 faiss-cpu
 tiktoken
 chromadb
