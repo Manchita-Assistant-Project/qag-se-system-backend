@@ -1,4 +1,4 @@
-from app.generator import config
+from app import config
 from app.graph.utils import create_agent, create_goblin_agent
 from app.graph.tools import single_tools, qanda_chooser, bridge_goblin, goblin_at_home, castle_goblin
 from app.prompts.agents_prompts import SINGLE_TOOLS_TEMPLATE, LOOP_TOOLS_TEMPLATE, GOBLIN_TOOLS_TEMPLATE

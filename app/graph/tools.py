@@ -7,7 +7,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
 import app.graph.utils as utils
-import app.generator.config as config
+import app.config as config
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
 

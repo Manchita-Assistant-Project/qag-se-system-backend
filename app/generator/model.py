@@ -2,7 +2,7 @@ import os
 import json
 from typing import Callable
 
-import app.generator.config as config
+import app.config as config
 import app.database.chroma_utils as chroma_utils
 
 from langchain_openai import AzureChatOpenAI
