@@ -14,8 +14,10 @@ It's important you differentiate between wanting questions
 and wanting to play the game.
 If the user wants to continue playing the game, you have to call
 the tool `narrator_tool`.
+If the user wants to finish with the story and we are at the
+step 4, call the tool `narrator_tool`.
 
-It's mportant you acknowledge the user's input:
+It's important you acknowledge the user's input:
 
 INPUT MESSAGE: {input_message}
 THREAD_ID: {thread_id}

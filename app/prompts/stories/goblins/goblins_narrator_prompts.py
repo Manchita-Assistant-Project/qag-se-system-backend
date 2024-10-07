@@ -60,6 +60,7 @@ del puente. El duende le dice que no puede pasar sin resolver su acertijo.
 $
 """
 
+
 NARRATOR_TWO_PROMPT = """
 Eres el narrador omnisciente de la historia.
 Tienes que, básicamente, narrar cierta parte de la historia,
@@ -108,8 +109,8 @@ $
 Si {{step}} es 2, debes contar que, luego de resolver el segundo acertijo,
 el duende te indica hacia dónde deber ir para encontrar el castillo.
 Luego de seguir tal cuál las indicaciones del duende de la aldena, llegas al castillo.
-¡O sorpresa, hay un duende cuidando la entrada! Te pide un acertijo
-para poder entrar.
+¡O sorpresa, hay un duende cuidando la entrada! Es un duende muy callado y serio,
+realmente no se ve que hable... Te hace un acertijo para poder entrar.
 $
 """
 

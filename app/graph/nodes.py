@@ -1,8 +1,8 @@
 import re
 import functools
 
-from app.graph.state import State, Story
-from app.graph.utils import agent_node
+from app.graph.state import Story
+from app.graph.utils import agent_node, agent_w_tools_node
 from app.graph.agents import single_tools_agent, character_agent
 import app.graph.tools as tools
 
@@ -13,7 +13,7 @@ from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name="Single Tools")
 # chooser_node = functools.partial(agent_node, agent=qanda_chooser_agent, name="QandA Chooser")
 
-character_node = functools.partial(agent_node, agent=character_agent, name="Character")
+character_node = functools.partial(agent_w_tools_node, agent=character_agent, name="Character")
 
 # single_tools_tool_node = ToolNode(single_tools)
 chooser_tool_node = ToolNode([tools.qanda_chooser])

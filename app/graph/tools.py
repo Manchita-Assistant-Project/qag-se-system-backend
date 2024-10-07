@@ -229,8 +229,6 @@ def first_character(current_story: str):
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
     prompt = prompt_template.format(personality=character_personality, question=question)
 
-    print(f"CHARACTER PROMPT: {prompt}")
-
     response_text = model.invoke(prompt).content
     return f"{character_emoji}  {response_text}", character_personality, question
 

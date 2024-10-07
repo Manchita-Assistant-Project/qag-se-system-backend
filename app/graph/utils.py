@@ -114,6 +114,19 @@ def agent_node(state, agent, name):
     return { # adds to messages because of the add_messages operator
         'messages': [result],
     }
+    
+def agent_w_tools_node(state, agent, name):
+    while True:
+        result = agent.invoke(state)
+        # verifica si se hizo un tool call
+        if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
+            break
+        
+        print(f"Waiting for agent {name} to do a tool call...")
+
+    return {
+        'messages': [result],
+    }
 
 def define_context_string(context):
     answer_choice = context[0]["answer"]

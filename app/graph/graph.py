@@ -62,18 +62,15 @@ def character_or_finish(state) -> Literal["character", "__end__"]:
     else:
         return END
 
-def which_character(state) -> Literal["character", "first_character", "second_character", "third_character"]:
+def which_character(state) -> Literal["first_character", "second_character", "third_character"]:
     step = state["current_story"]["step"]
 
-    if hasattr(state["messages"][-1], 'additional_kwargs') and 'tool_calls' in state["messages"][-1].additional_kwargs:  
-        if step == 1:
-            return "first_character"
-        elif step == 2:
-            return "second_character"
-        elif step == 3:
-            return "third_character"
-    else:
-        return "character"
+    if step == 1:
+        return "first_character"
+    elif step == 2:
+        return "second_character"
+    elif step == 3:
+        return "third_character"
     
 def should_continue_or_another_try(state) -> Literal["human_interaction", "__end__"]:
     last_evaluation_message = state["messages"][-2].content
@@ -167,7 +164,7 @@ def use_graph():
         'quiero jugar las historias!',
         'sigue con el juego!',
         'sigue!',
-        'termina!'
+        'termina!',
         # 'hazme una pregunta!',
         # 'hazme otra!',
         # 'háblame un poco más sobre eso, por favor.',
