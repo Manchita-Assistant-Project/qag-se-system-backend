@@ -116,13 +116,22 @@ def agent_node(state, agent, name):
     }
     
 def agent_w_tools_node(state, agent, name):
+    instruction_message = {"role": "user", "content": "ÓYEME BOBO, HAZ LA LLAMADA!!"}
+
     while True:
         result = agent.invoke(state)
         print(f"RESULT: {result}")
+
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
+            # si hubo tool_call, elimina el mensaje de regaño
+            if instruction_message in state["messages"]:
+                state["messages"].remove(instruction_message)
             break
-        
+
+        # si no hizo el tool call, agrega la instrucción para que lo haga
+        if instruction_message not in state["messages"]:
+            state["messages"].append(instruction_message)
         print(f"Waiting for agent {name} to do a tool call...")
 
     return {
