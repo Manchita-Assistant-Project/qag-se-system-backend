@@ -260,7 +260,7 @@ def use_graph():
                         event['messages'][-1].pretty_print()
                             
 
-use_graph()
+# use_graph()
 
 """
 Para el juego de duendes:

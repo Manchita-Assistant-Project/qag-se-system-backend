@@ -118,6 +118,7 @@ def agent_node(state, agent, name):
 def agent_w_tools_node(state, agent, name):
     while True:
         result = agent.invoke(state)
+        print(f"RESULT: {result}")
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
             break

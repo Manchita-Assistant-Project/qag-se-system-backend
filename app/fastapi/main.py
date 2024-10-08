@@ -47,10 +47,10 @@ class ChatInput(BaseModel):
     thread_id: str = None
     user_answer: Optional[str] = None  # Campo "opcional" para manejar la interrupción
 
-goblin_game_tools = [
-    "bridge_goblin",
-    "goblin_at_home",
-    "castle_goblin",
+story_game_tools = [
+    "first_character",
+    "second_character",
+    "third_character",
     "lifes_retrieval",
 ]
 user_graphs = {}
@@ -118,9 +118,12 @@ async def chat(input_data: ChatInput):
     
     graph = get_or_create_user_graph(input_data.thread_id)
 
+    print(f"INPUT DATA: {input_data}")
+
     # try:
     # Si hay una respuesta del usuario tras la interrupción
     if input_data.user_answer:
+        print("USER ANSWER")
         state = graph.get_state(thread)
 
         to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
@@ -154,6 +157,7 @@ async def chat(input_data: ChatInput):
     
     # Si es una interacción inicial (sin interrupción todavía)
     else:
+        print("SIMPLE INTERACTION")
         # graph.update_state(thread, {"thread_id": input_data.thread_id})
         
         # Procesar la interacción inicial
@@ -166,7 +170,7 @@ async def chat(input_data: ChatInput):
         print(f"LAST TOOL CALL: {last_tool_call}")
         is_interrupted = False
         if last_tool_call:
-            is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in goblin_game_tools
+            is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in story_game_tools
         
         return {
             "thread_id": input_data.thread_id,
