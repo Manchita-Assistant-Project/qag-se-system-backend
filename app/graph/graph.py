@@ -161,11 +161,12 @@ def use_graph():
 
     questions = [
         'hola!',
+        'hazme una pregunta!',
         'quiero jugar las historias!',
-        'sigue con el juego!',
-        'sigue!',
-        'termina!',
-        # 'hazme una pregunta!',
+        'cuántos puntos tengo?',
+        # 'sigue con el juego!',
+        # 'sigue!',
+        # 'termina!',
         # 'hazme otra!',
         # 'háblame un poco más sobre eso, por favor.',
         # 'cuántos puntos tengo?',

@@ -12,7 +12,7 @@ from langgraph.checkpoint.memory import MemorySaver
 
 from app.graph.utils import JSON_PATH
 from app.graph.graph import workflow
-from app.graph.tools import qanda_evaluation
+import app.graph.tools as tools
 
 app = FastAPI()
 
@@ -42,6 +42,10 @@ async def preflight_handler():
 def home():
     return {"message": "Hello World"}
 
+# ========================= #
+# Función de Chat principal #
+# ========================= #
+
 class ChatInput(BaseModel):
     query: str
     thread_id: str = None
@@ -53,6 +57,7 @@ story_game_tools = [
     "third_character",
     "lifes_retrieval",
 ]
+
 user_graphs = {}
 
 def get_or_create_user_graph(thread_id):
@@ -120,73 +125,72 @@ async def chat(input_data: ChatInput):
 
     print(f"INPUT DATA: {input_data}")
 
-    # try:
-    # Si hay una respuesta del usuario tras la interrupción
-    if input_data.user_answer:
-        print("USER ANSWER")
-        state = graph.get_state(thread)
+    try:
+        # Si hay una respuesta del usuario tras la interrupción
+        if input_data.user_answer:
+            print("USER ANSWER")
+            state = graph.get_state(thread)
 
-        to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
-        last_question = state.values['messages'][-1].content if state.values['messages'][-1].content.startswith('¿') else to_evaluate  # pregunta sencilla o pregunta de juego goblin
-        combined_input = f"{last_question}|||{input_data.user_answer}"
+            to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
+            last_question = state.values['messages'][-1].content if state.values['messages'][-1].content.startswith('¿') else to_evaluate  # pregunta sencilla o pregunta de juego goblin
+            combined_input = f"{last_question}|||{input_data.user_answer}"
+            
+            # Actualizar el estado del grafo con la respuesta
+            graph.update_state(
+                thread, 
+                {
+                    'messages': [
+                        HumanMessage(content=combined_input),
+                    ],
+                    'last_question': last_question,
+                },
+                as_node="human_interaction"
+            )
+            
+            # Continuar el flujo después de la interrupción
+            evaluation_response = []
+            for event in graph.stream(None, thread, stream_mode="values"):
+                evaluation_response.append(event['messages'][-1].content)
+            
+            print(f"EVALUATION RESPONSE: {evaluation_response}")
+            
+            return {
+                "thread_id": input_data.thread_id,
+                "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
+                "is_interrupted": graph.get_state(thread).values["from_story"] and "incorrecta" in evaluation_response[-2]
+            }
         
-        # Actualizar el estado del grafo con la respuesta
-        graph.update_state(
-            thread, 
-            {
-                'messages': [
-                    HumanMessage(content=combined_input),
-                ],
-                'last_question': last_question,
-            },
-            as_node="human_interaction"
-        )
-        
-        # Continuar el flujo después de la interrupción
-        evaluation_response = []
-        for event in graph.stream(None, thread, stream_mode="values"):
-            evaluation_response.append(event['messages'][-1].content)
-        
-        print(f"EVALUATION RESPONSE: {evaluation_response}")
-        
+        # Si es una interacción inicial (sin interrupción todavía)
+        else:
+            print("SIMPLE INTERACTION")
+            
+            # Procesar la interacción inicial
+            response = []
+            for event in graph.stream({"messages": [HumanMessage(content=input_data.query)]}, thread, stream_mode="values"):
+                response.append(event['messages'][-1].content)
+
+            # Verificar si el flujo fue interrumpido en 'human_interaction'
+            last_tool_call = graph.get_state(thread).values['messages'][-1].name
+            print(f"LAST TOOL CALL: {last_tool_call}")
+            is_interrupted = False
+            if last_tool_call:
+                is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in story_game_tools
+            
+            return {
+                "thread_id": input_data.thread_id,
+                "response": response[-1],
+                "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
+            }
+    except Exception as e:
+        print(f"ERROR: {e}")
         return {
             "thread_id": input_data.thread_id,
-            "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
-            "is_interrupted": graph.get_state(thread).values["from_story"] and "incorrecta" in evaluation_response[-2]
+            "response": "Lo siento, no pude procesar tu solicitud."
         }
-    
-    # Si es una interacción inicial (sin interrupción todavía)
-    else:
-        print("SIMPLE INTERACTION")
-        # graph.update_state(thread, {"thread_id": input_data.thread_id})
-        
-        # Procesar la interacción inicial
-        response = []
-        for event in graph.stream({"messages": [HumanMessage(content=input_data.query)]}, thread, stream_mode="values"):
-            response.append(event['messages'][-1].content)
 
-        # Verificar si el flujo fue interrumpido en 'human_interaction'
-        last_tool_call = graph.get_state(thread).values['messages'][-1].name
-        print(f"LAST TOOL CALL: {last_tool_call}")
-        is_interrupted = False
-        if last_tool_call:
-            is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in story_game_tools
-        
-        return {
-            "thread_id": input_data.thread_id,
-            "response": response[-1],
-            "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
-        }
-    # except Exception as e:
-    #     print(f"ERROR: {e}")
-    #     return {
-    #         "thread_id": input_data.thread_id,
-    #         "response": "Lo siento, no pude procesar tu solicitud."
-    #     }
-
-# IMPORTANTE CAMBIAR EL CÓDIGO A CREAR UN GRAFO POR ENTRADA/LLAMADA AL SERVIDOR!!
-# HAY QUE PENSAR SI QUEREMOS QUE PERSISTAN... CON IP O ASÍ JEJE...
-# EL TEMA ES QUE SE PUEDEN DEMORAR MIENTRAS COMPILAN... PERO NAH, NO ES NUESTRA PREOCUPACIÓN.
+# ========================================== #
+# Endpoints para Juego de Construir la Torre #
+# ========================================== #
 
 class QuestionEvaluation(BaseModel):
     question: str
@@ -202,6 +206,17 @@ def get_questions():
 
 @app.post('/evaluate')
 def evaluate_query(input: QuestionEvaluation):
-    evaluation = qanda_evaluation(f"{input.question}|||{input.answer}")
+    evaluation = tools.qanda_evaluation(f"{input.question}|||{input.answer}")
     return {"evaluation": False if "incorrecta" in evaluation else True}
-    
+
+# ======================================= #
+# Endpoints para los contadores de puntos #
+# ======================================= #
+
+@app.get('/user_points_counter/{user_id}')
+def get_user_asked_questions(user_id: str):
+    print(f"GETTING POINTS COUNTER FOR USER_ID: {user_id}")
+    return {
+        'asked_questions': tools.asked_questions_retrieval(user_id),
+        'current_points': tools.points_only_retrieval(user_id)
+    }

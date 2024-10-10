@@ -90,6 +90,10 @@ def points_updater_tool_node(state):
 
     if "incorrecta" not in (last_message.content).lower():
         tools.points_updater(state["thread_id"], points=1)
+        print(f"CURRENT POINTS: {tools.points_retrieval(state['thread_id'])}")
+        
+    # en cualquier caso, aumentar 1 al número de preguntas hechas.
+    tools.asked_questions_updater(state["thread_id"])
     
     return {"messages": [last_message], "from_story": False} # retorna el mensaje original.
                                                              # esta función no genera mensajes, solo

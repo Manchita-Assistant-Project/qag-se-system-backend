@@ -145,7 +145,7 @@ def points_updater(user_id: str, points: int=1):
 
 def points_retrieval(user_id: str) -> str:
     """
-    Returns the current points count.
+    Returns the current points count with a message from the LLM.
     """
     current_points = sqlite_utils.get_points(user_id)
     
@@ -159,6 +159,27 @@ def points_retrieval(user_id: str) -> str:
 
     response_text = model.invoke(prompt).content
     return response_text
+
+def points_only_retrieval(user_id: str) -> str:
+    """
+    Returns the current points count.
+    """
+    return sqlite_utils.get_points(user_id)
+
+def asked_questions_updater(user_id: str):
+    """
+    Updates the number of questions asked to the user.
+    """
+    print(f"Current number of questions asked: {sqlite_utils.get_asked_questions(user_id)}")
+    sqlite_utils.update_asked_questions(user_id)
+    print("Asked questions updated!")
+    print(f"Current number of questions asked: {sqlite_utils.get_asked_questions(user_id)}")
+    
+def asked_questions_retrieval(user_id: str) -> int:
+    """
+    Returns the current number of questions asked to the user.
+    """
+    return sqlite_utils.get_asked_questions(user_id)
 
 def narrator_tool(current_story: str, step: int) -> str:
     """
