@@ -52,6 +52,9 @@ Pregunta: {question}
 La respuesta no tiene que ser exacta, pero puede ser similar. \
 Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
 una respuesta similar sería `saber programar`. \
+    
+¡No tiene que ser la respuesta tal cuál! \
+Puede ser una respuesta similar o una respuesta que implique la respuesta correcta. \
 
 
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
