@@ -3,7 +3,7 @@ import app.generator.tools as tools
 def context_generator_node(state):
     question = state.get("question", None)
     
-    if question["question"] is not None:
+    if question["question"] is not None: # se genera un contexto basado en la pregunta generada
         result = tools.get_context_tool(question["question"], k=5)
     else:
         result = tools.get_context_tool()
