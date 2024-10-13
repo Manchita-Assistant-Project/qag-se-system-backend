@@ -115,9 +115,19 @@ def agent_node(state, agent, name):
         'messages': [result],
     }
     
-def agent_w_tools_node(state, agent, name):
-    instruction_message = {"role": "user", "content": "ÓYEME BOBO, HAZ LA LLAMADA!!"}
-
+def agent_w_tools_node(state, agent, name): # TO-DO: ARREGLAR ESTA LÓGICA!!
+    ai_message = state["messages"][-1]
+    tool_calls = state["messages"][-1].tool_calls
+    
+    messages = [
+            ToolMessage(
+                content=f"HAZ LA LLAMADA!!",
+                tool_call_id=tc["id"],
+            )
+            for tc in tool_calls
+    ]
+    
+    instruction_message = "HAZ LA LLAMADA!!"
     while True:
         result = agent.invoke(state)
         print(f"RESULT: {result}")
@@ -125,12 +135,12 @@ def agent_w_tools_node(state, agent, name):
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
             # si hubo tool_call, elimina el mensaje de regaño
-            if instruction_message in state["messages"]:
+            if instruction_message in state["messages"][-1].content:
                 state["messages"].remove(instruction_message)
             break
 
         # si no hizo el tool call, agrega la instrucción para que lo haga
-        if instruction_message not in state["messages"]:
+        if instruction_message not in state["messages"][-1].content:
             state["messages"].append(instruction_message)
         print(f"Waiting for agent {name} to do a tool call...")
 

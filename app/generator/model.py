@@ -17,7 +17,7 @@ os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
 load_dotenv()
 
-from app.graph.prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT
+from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, FEEDBACK_PROMPT
 
 def main_load():
     # Create (or update) the data store.
@@ -149,8 +149,8 @@ def main():
     # Ask one of the questions in the JSON.
     # Evaluate the answer based on the JSON.
 
-    question = '¿Qué se valora y fomenta en el programa de diseño gráfico?'
-    answer = 'La facultad de matematicas de la Universidad de Antioquia'
+    # question = '¿Qué se valora y fomenta en el programa de diseño gráfico?'
+    # answer = 'La facultad de matematicas de la Universidad de Antioquia'
     # answer = 'La iniciativa individual de los estudiantes'
     # response = EvaluateAs('questions/qs2.json', question, answer)
     # print(response)

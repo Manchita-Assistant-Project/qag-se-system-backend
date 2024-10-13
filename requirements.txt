@@ -10,3 +10,5 @@ langchain_openai==0.1.15
 langgraph
 fastapi
 uvicorn
+pandas
+scikit-learn

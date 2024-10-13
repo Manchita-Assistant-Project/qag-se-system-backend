@@ -35,6 +35,59 @@ Aquí un ejemplo: \
 """
 
 
+Q_MCQ_PROMPT = """
+Eres un modelo que genera preguntas de opción múltiple a partir \
+únicamente de: \
+
+{context}
+
+---------------------------------------------------------------------------------
+Debes siempre generar una (1) pregunta. \
+    
+---------------------------------------------------------------------------------
+La pregunta debe ser de nivel: "{difficulty}"
+"""
+
+A_MCQ_PROMPT = """
+Eres un modelo que genera respuestas de opción múltiple a partir \
+únicamente de: \
+
+{context}
+
+---------------------------------------------------------------------------------
+Una de las respuestas que generes debe responder la pregunta:
+
+"{question}"
+
+---------------------------------------------------------------------------------
+Las respuestas que hagas, generalas todas en un formato de varias opciones. \
+Un ejemplo de esto sería: \
+a.) Posible respuesta 1 \
+b.) Posible respuesta 2 \
+c.) Posible respuesta 3 \
+d.) Posible respuesta 4 \
+
+---------------------------------------------------------------------------------
+Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
+    
+---------------------------------------------------------------------------------
+Las respuestas debe ser de nivel: "{difficulty}"
+
+---------------------------------------------------------------------------------
+Debes retornar la pregunta ("{question}"), opciones y respuesta correcta en formato JSON. \
+Aquí un ejemplo: \
+
+    "question": "¿Cuál es la capital de Colombia?", \
+    "choices": ( \
+        "a": "Bogotá", \
+        "b": "Medellín", \
+        "c": "Cali", \
+        "d": "Barranquilla" \
+    ), \
+    "answer": "a" \
+"""
+
+
 EVALUATE_PROMPT = """
 Basado única y exclusivamente en las preguntas, opciones y respuesta única de: \
 

@@ -80,7 +80,7 @@ def should_continue_or_another_try(state) -> Literal["human_interaction", "__end
         print("Another try")
         return "human_interaction"
     else:
-        return END    
+        return END
 
 # building the graph
 workflow = StateGraph(State)

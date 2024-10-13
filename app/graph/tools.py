@@ -58,7 +58,7 @@ def qanda_evaluation(input_data: str) -> str:
     Evaluates the given answer to a question.
     """
     json_path = utils.JSON_PATH
-    data = utils.load_json(json_path)       
+    data = utils.load_json(json_path) 
 
     question, answer = input_data.split('|||')
     print(f"QUESTION: {question} | ANSWER: {answer}")
