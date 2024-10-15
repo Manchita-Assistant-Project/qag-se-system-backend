@@ -77,7 +77,11 @@ def use_graph():
     
     # question_type = int(input("Enter question type: "))
     # question_difficulty_int = int(input("Enter question difficulty: "))
-    question_type = 1
+    # 1 -> Opción Múltiple
+    # 2 -> Respuesta Abierta
+    # 3 -> Verdadero o Falso
+    # 4 -> Completar Espacios (idea)
+    question_type = 3
     question_difficulty_int = 2
     question_difficulty = ""
     

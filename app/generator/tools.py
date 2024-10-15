@@ -51,8 +51,7 @@ def get_context_tool(query: str="", k: int=90):
 def question_generator_tool(question_type: int, difficulty: str, context: str):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
-    correct_file_path = os.path.join(QANDAS_JSONS, f"{correct_file}.json")
-    generated_questions_list = utils.load_json(correct_file_path)
+    generated_questions_list = utils.load_json(correct_file)
 
     generated_questions = [question["question"] for question in generated_questions_list]
 
@@ -75,8 +74,13 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
         rand_int = random.randint(2, 5) # cinco niveles de dificultad
         print(f"rand_int: {rand_int}")
         harder_prompt_template = ChatPromptTemplate.from_template(HARDER_Q_PROMPT)
+        question_type_to_string = {
+            1: "Opción Múltiple",
+            2: "Respuesta Abierta",
+            3: "Verdadero o Falso"
+        }
         for _ in range(rand_int): # iterar para hacer la pregunta para hacerla más difícil
-            harder_prompt = harder_prompt_template.format(question=response_text, context=context)
+            harder_prompt = harder_prompt_template.format(question=response_text, context=context, question_type=question_type_to_string[question_type])
             response_text = llm.invoke(harder_prompt).content
             print(f"response_text: {response_text}")
     

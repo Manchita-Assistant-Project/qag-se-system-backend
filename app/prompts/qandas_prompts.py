@@ -51,6 +51,10 @@ Eres un modelo que genera preguntas de respuesta VERDADERA o FALSA a partir \
 {context}
 
 ---------------------------------------------------------------------------------
+Es importante que la pregunta que generes sólo se pueda responder \
+con "Verdadero" o "Falso".
+
+---------------------------------------------------------------------------------
 Debes siempre generar una (1) pregunta. \
     
 ---------------------------------------------------------------------------------
@@ -75,6 +79,11 @@ Genera una pregunta más compleja basada en la pregunta:
 Y única y exclusivamente en el contexto:
 
 "{context}"
+---------------------------------------------------------------------------------
+No cambies el tipo de pregunta. El tipo de pregunta es:
+
+"{question_type}"
+
 ---------------------------------------------------------------------------------
 Hacer una pregunta más compleja significa que la pregunta debe ser más difícil de responder,
 no necesariamente más larga ni más palabras.
@@ -169,7 +178,7 @@ dentro de un diccionario Python.
 """
 
 
-A_MCQ_PROMPT = """
+A_TFQ_PROMPT = """
 Eres un modelo que genera respuestas de opción VERDADERO y FALSO a partir \
 únicamente de: \
 

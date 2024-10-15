@@ -62,7 +62,7 @@ def data_saver_tool(state):
     question = state["question"]
     question_format = question["question_answers"]
     
-    if question_format is None:
+    if question_format is None or question_format == "ERROR":
         return
     
     question_format_dict = json.loads(question_format)

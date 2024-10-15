@@ -35,6 +35,16 @@
             "answer": "b",
             "type": "MCQ",
             "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas cumple con una resolución distinta a la Resolución No. 051 del 24 de junio de 2008 del Sistema de práctica social, que promueva la investigación y formación integral de los estudiantes?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Difícil"
         }
     ]
 }
