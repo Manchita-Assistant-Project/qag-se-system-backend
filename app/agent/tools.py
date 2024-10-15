@@ -9,8 +9,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
 import app.config as config
-import app.graph.utils as utils
-from app.graph.state import Story
+import app.agent.utils as utils
+from app.agent.state import Story
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
 from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \

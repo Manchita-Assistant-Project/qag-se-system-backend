@@ -1,6 +1,6 @@
 from app import config
-from app.graph.utils import create_agent, create_character_agent
-from app.graph.tools import single_tools, qanda_chooser, first_character, second_character, third_character
+from app.agent.utils import create_agent, create_character_agent
+from app.agent.tools import single_tools, qanda_chooser, first_character, second_character, third_character
 from app.prompts.agents_prompts import SINGLE_TOOLS_TEMPLATE, LOOP_TOOLS_TEMPLATE, CHARACTER_TOOLS_TEMPLATE
 
 from langchain_openai import AzureChatOpenAI
@@ -60,3 +60,4 @@ single_tools_agent = create_agent(llm, single_tools, SINGLE_TOOLS_TEMPLATE)
 qanda_chooser_agent = create_agent(llm, [qanda_chooser], LOOP_TOOLS_TEMPLATE)
 # goblin_agent = create_goblin_agent(llm, [bridge_goblin, goblin_at_home, castle_goblin], GOBLIN_TOOLS_TEMPLATE, ["bridge_goblin", "goblin_at_home", "castle_goblin"])
 character_agent = create_character_agent(llm, [first_character, second_character, third_character], CHARACTER_TOOLS_TEMPLATE, ["first_character", "second_character", "third_character"])
+# character_agent = create_character_agent(llm, [], CHARACTER_TOOLS_TEMPLATE, ["BABABOOII", "second_character", "third_character"]) # first_character

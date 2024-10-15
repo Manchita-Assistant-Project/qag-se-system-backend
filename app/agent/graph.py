@@ -1,9 +1,9 @@
 import uuid
 from typing import Literal
 
-import app.graph.utils as utils
-import app.graph.nodes as nodes
-from app.graph.state import State
+import app.agent.utils as utils
+import app.agent.nodes as nodes
+from app.agent.state import State
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END
@@ -161,9 +161,9 @@ def use_graph():
 
     questions = [
         'hola!',
-        'hazme una pregunta!',
+        # 'hazme una pregunta!',
         'quiero jugar las historias!',
-        'cuántos puntos tengo?',
+        # 'cuántos puntos tengo?',
         # 'sigue con el juego!',
         # 'sigue!',
         # 'termina!',
@@ -261,7 +261,7 @@ def use_graph():
                         event['messages'][-1].pretty_print()
                             
 
-# use_graph()
+use_graph()
 
 """
 Para el juego de duendes:

@@ -98,12 +98,14 @@ def create_character_agent(llm, tools, systems_message: str, characters: list):
         [
             (
                 "system",
-                "{systems_message}. Select one of: {characters}",
+                # "{systems_message}. Select one of: {characters}",
+                "{systems_message}.",
             ),
             MessagesPlaceholder(variable_name="messages"),
         ]
     )
-    prompt = prompt.partial(systems_message=systems_message, characters=characters)
+    # prompt = prompt.partial(systems_message=systems_message, characters=characters)
+    prompt = prompt.partial(systems_message=systems_message)
     if tools:
         return prompt | llm.bind_tools(tools)
     else:
@@ -115,33 +117,25 @@ def agent_node(state, agent, name):
         'messages': [result],
     }
     
-def agent_w_tools_node(state, agent, name): # TO-DO: ARREGLAR ESTA LÓGICA!!
-    ai_message = state["messages"][-1]
-    tool_calls = state["messages"][-1].tool_calls
-    
-    messages = [
-            ToolMessage(
-                content=f"HAZ LA LLAMADA!!",
-                tool_call_id=tc["id"],
-            )
-            for tc in tool_calls
-    ]
-    
-    instruction_message = "HAZ LA LLAMADA!!"
+def agent_w_tools_node(state, agent, name):
+    # mensaje de regaño si no se hizo un tool call
+    instruction_message = """
+    ¡No hiciste un tool call! ¡Haz el respectivo tool call! No generes texto, solo haz el tool call.
+    """
     while True:
         result = agent.invoke(state)
-        print(f"RESULT: {result}")
 
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
             # si hubo tool_call, elimina el mensaje de regaño
             if instruction_message in state["messages"][-1].content:
-                state["messages"].remove(instruction_message)
+                # elimina todos los posibles mensajes de regaño
+                state["messages"] = [msg for msg in state["messages"] if msg != instruction_message]
             break
 
         # si no hizo el tool call, agrega la instrucción para que lo haga
-        if instruction_message not in state["messages"][-1].content:
-            state["messages"].append(instruction_message)
+        state["messages"].append(instruction_message)
+           
         print(f"Waiting for agent {name} to do a tool call...")
 
     return {

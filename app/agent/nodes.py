@@ -1,10 +1,10 @@
 import re
 import functools
 
-from app.graph.state import Story
-from app.graph.utils import agent_node, agent_w_tools_node
-from app.graph.agents import single_tools_agent, character_agent
-import app.graph.tools as tools
+import app.agent.tools as tools
+from app.agent.state import Story
+from app.agent.utils import agent_node, agent_w_tools_node
+from app.agent.agents import single_tools_agent, character_agent
 
 from langgraph.prebuilt import ToolNode
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
