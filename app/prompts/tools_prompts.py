@@ -46,6 +46,19 @@ Debes siempre generar una (1) pregunta. \
     
 ---------------------------------------------------------------------------------
 La pregunta debe ser de nivel: "{difficulty}"
+
+{harder_prompt}
+"""
+
+HARDER_Q_PROMPT = """
+---------------------------------------------------------------------------------
+Genera una pregunta más compleja basada en la pregunta:
+
+"{question}"
+
+y en el contexto:
+
+"{context}"
 """
 
 A_MCQ_PROMPT = """

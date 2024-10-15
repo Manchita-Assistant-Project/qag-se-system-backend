@@ -1,5 +1,6 @@
 import os
 import re
+import random
 import pandas as pd
 
 import app.config as config
@@ -11,7 +12,7 @@ from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-from app.prompts.tools_prompts import Q_MCQ_PROMPT, A_MCQ_PROMPT 
+from app.prompts.tools_prompts import Q_MCQ_PROMPT, HARDER_Q_PROMPT, A_MCQ_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -53,9 +54,18 @@ def question_generator_tool(q_type: int, difficulty: str, context: str):
     # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
     
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
-    prompt = prompt_template.format(context=context, difficulty=difficulty)
+    prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="")
 
     response_text = llm.invoke(prompt).content
+    print(f"response_text: {response_text}")
+    
+    if difficulty == 'Difícil':
+        rand_int = random.randint(1, 5) # cinco niveles de dificultad
+        print(f"rand_int: {rand_int}")
+        harder_prompt_template = ChatPromptTemplate.from_template(HARDER_Q_PROMPT)
+        for _ in range(rand_int): # iterar para hacer la pregunta para hacerla más difícil
+            harder_prompt = harder_prompt_template.format(question=response_text, context=context)
+            response_text = llm.invoke(harder_prompt).content
     
     return response_text
 
@@ -184,7 +194,7 @@ def refine_question(human_questions: str, generated_question: str, feedback: str
     
     "{human_questions}"
     
-    Modify the generated question, so that the metrics in the feedback average 0.75.
+    Modify the generated question, so that the metrics in the feedback average 0.8.
     
     ¡Never translate the improved question! ¡Always return it in spanish!
     

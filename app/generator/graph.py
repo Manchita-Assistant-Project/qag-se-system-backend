@@ -22,7 +22,7 @@ def question_or_answer_path(state) -> Literal["question_generator", "answer_gene
 def refine_or_classify_path(state) -> Literal["question_refiner", "context_generator"]:
     similarity = state["messages"][-1].content.split("|||")[1]
 
-    if float(similarity) < 0.7: # ajustar threshold
+    if float(similarity) < 0.8: # ajustar threshold
         return "question_refiner"
     else:
         return "context_generator"
@@ -74,9 +74,16 @@ def use_graph():
     }
     
     # question_type = int(input("Enter question type: "))
-    # question_difficulty = int(input("Enter question difficulty: "))
+    # question_difficulty_int = int(input("Enter question difficulty: "))
     question_type = 1
-    question_difficulty = 'Difícil'
+    question_difficulty_int = 2
+    question_difficulty = ""
+    
+    if question_difficulty_int == 1:
+        question_difficulty = "Fácil"
+    elif question_difficulty_int == 2:
+        question_difficulty = "Difícil"
+
     question = Question(
         question=None,
         question_type=question_type,
@@ -86,7 +93,7 @@ def use_graph():
     
     for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, thread, stream_mode="values"):
         print(f"NEXT: {graph.get_state(thread).next}")
-        if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 100:
+        if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
             event['messages'][-1].pretty_print()
 
 use_graph()
