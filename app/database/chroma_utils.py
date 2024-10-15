@@ -12,11 +12,11 @@ from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
 # import sys
 # sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 base_dir_files = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+base_dir_app = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DATA_PATH = os.path.join(base_dir, 'files')
-CHROMA_PATH = os.path.join(base_dir, 'database', 'chroma')
+DATA_PATH = os.path.join(base_dir_files, 'files')
+CHROMA_PATH = os.path.join(base_dir_app, 'database', 'chroma')
 
 class StreamingCallbackHandler(BaseCallbackHandler):
     def __init__(self):
