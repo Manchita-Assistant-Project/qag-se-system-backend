@@ -1,3 +1,6 @@
+import os
+import json
+
 import app.generator.tools as tools
 
 def context_generator_node(state):
@@ -54,3 +57,22 @@ def question_refiner_node(state):
     response = tools.refine_question_tool(question["question"], feedback)
     
     return { "messages": [response] }
+
+def data_saver_tool(state):
+    question = state["question"]
+    question_format = question["question_answers"]
+    
+    if question_format is None:
+        return
+    
+    question_format_dict = json.loads(question_format)
+
+    type_to_string = {
+        1: "MCQ",
+        2: "OAQ",
+        3: "TFQ"
+    }
+    question_format_dict["type"] = type_to_string[question["question_type"]]
+    question_format_dict["difficulty"] = question["question_difficulty"]
+
+    tools.save_question_tool(question_format_dict)

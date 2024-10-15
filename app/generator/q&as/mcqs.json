@@ -1,0 +1,40 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es el enfoque principal de la investigación en el programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas?",
+            "choices": {
+                "a": "Investigar la interacción entre la pieza gráfica, el usuario y el contexto",
+                "b": "Investigar la creación, estructuración y ordenamiento de códigos, lenguajes y medios visuales",
+                "c": "Investigar la historia y momentos relevantes del Diseño Gráfico",
+                "d": "Investigar la pertinencia y los propósitos del programa de Diseño Gráfico"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el impacto de las líneas de investigación desarrolladas en el programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas en la transformación de su entorno y en la práctica artística contemporánea?",
+            "choices": {
+                "a": "Generación de nuevas técnicas y enfoques en el diseño gráfico contemporáneo",
+                "b": "Mejoramiento de la calidad y la relevancia de las prácticas artísticas en el entorno",
+                "c": "Promoción de la interdisciplinariedad y la colaboración en la investigación y creación artística",
+                "d": "Contribución a la reflexión y análisis de problemáticas sociales a través del diseño gráfico"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las principales líneas de investigación que se desarrollan en el programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas y cómo contribuyen en la formación de los estudiantes y en la transformación social?",
+            "choices": {
+                "a": "Investigación en educación artística y su incidencia en la transformación social",
+                "b": "Investigación en relaciones entre prácticas artísticas contemporáneas y diseño social",
+                "c": "Investigación en las particularidades del programa de Diseño Gráfico y su relación con la transformación social",
+                "d": "Investigación en estrategias pedagógicas del plan de estudios y su impacto en la formación de los estudiantes"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

@@ -14,7 +14,9 @@ from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-from app.prompts.tools_prompts import Q_MCQ_PROMPT, HARDER_Q_PROMPT, A_MCQ_PROMPT
+from app.prompts.tools_prompts import Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT, \
+                                      HARDER_Q_PROMPT, \
+                                      A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -26,6 +28,7 @@ load_dotenv()
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QANDAS_EVALUATION_DATASET = os.path.join(base_dir, 'generator', 'datasets', 'qandas_dataset.csv')
+QANDAS_JSONS = os.path.join(base_dir, 'generator', 'q&as')
 
 def load_dataset(path: str) -> pd.DataFrame:
     return pd.read_csv(path, sep=";")
@@ -45,18 +48,24 @@ def get_context_tool(query: str="", k: int=90):
     context = get_context(query, k)
     return context
 
-def question_generator_tool(q_type: int, difficulty: str, context: str):
-    generated_questions = utils.load_json("app/generator/q&as/qs.json")
+def question_generator_tool(question_type: int, difficulty: str, context: str):
+    files = ['mcqs', 'oaqs', 'tfqs']
+    correct_file = files[question_type - 1]
+    correct_file_path = os.path.join(QANDAS_JSONS, f"{correct_file}.json")
+    generated_questions_list = utils.load_json(correct_file_path)
+
+    generated_questions = [question["question"] for question in generated_questions_list]
+
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=0.7,
         max_tokens=200
     )
     
-    types = [Q_MCQ_PROMPT]
+    types = [Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT]
     # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
     
-    prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
+    prompt_template = ChatPromptTemplate.from_template(types[question_type - 1])
     prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="", generated_questions=generated_questions)
 
     response_text = llm.invoke(prompt).content
@@ -69,6 +78,7 @@ def question_generator_tool(q_type: int, difficulty: str, context: str):
         for _ in range(rand_int): # iterar para hacer la pregunta para hacerla más difícil
             harder_prompt = harder_prompt_template.format(question=response_text, context=context)
             response_text = llm.invoke(harder_prompt).content
+            print(f"response_text: {response_text}")
     
     return response_text
 
@@ -79,25 +89,35 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
         max_tokens=200
     )
     
-    types = [A_MCQ_PROMPT]
+    types = [A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT]
     # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
     print(f'PREGUNTA: {question}')
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
     prompt = prompt_template.format(context=context, question=question, difficulty=difficulty)
 
-    while True:
+    for _ in range(10):
         try:
             response_text = llm.invoke(prompt).content
+            print(response_text)
             response_dict = json.loads(response_text)  # intentamos convertir el texto a dict
             return response_text
         except json.JSONDecodeError:
             print("Error al convertir response_text a dict. Regenerando el texto...")
+            prompt += f"""
+            ---------------------------------------------------------------------------------
+            [UPDATE PROMPT] No generaste el formato correcto de respuestas.
+            Por favor, genera las respuestas en un formato JSON.
+
+            Habías generado:
+
+            "{response_text}"
+            """
             continue  # vuelve a intentar si hay error
         except Exception as e:
             print(f"Otro error ocurrió: {e}")
             break  # rompe el loop si ocurre un error inesperado no relacionado con JSON
 
-    return None
+    return "ERROR"
 
 def evaluate_with_embeddings(human_questions, generated_question):
     embeddings = chroma_utils.get_embedding_function()
@@ -255,3 +275,6 @@ def classify_question_tool(generated_question: str, context: str):
     response = classify_question(generated_question, context)
     
     return response
+
+def save_question_tool(question: dict):
+    utils.update_json("mcqs", question)
