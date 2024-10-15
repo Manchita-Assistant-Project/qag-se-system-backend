@@ -2,7 +2,9 @@ import os
 import re
 import json
 import random
+import string
 import pandas as pd
+from typing import Dict, List, TypedDict
 
 import app.config as config
 import app.generator.utils as utils
@@ -29,6 +31,11 @@ load_dotenv()
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QANDAS_EVALUATION_DATASET = os.path.join(base_dir, 'generator', 'datasets', 'qandas_dataset.csv')
 QANDAS_JSONS = os.path.join(base_dir, 'generator', 'q&as')
+
+class QuestionOutput(TypedDict):
+    question: str
+    choices: List[str]
+    answer: str
 
 def load_dataset(path: str) -> pd.DataFrame:
     return pd.read_csv(path, sep=";")
@@ -94,34 +101,41 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
     )
     
     types = [A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT]
-    # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
+    
     print(f'PREGUNTA: {question}')
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
     prompt = prompt_template.format(context=context, question=question, difficulty=difficulty)
+    structured_llm = llm.with_structured_output(QuestionOutput)
+    response_text = structured_llm.invoke(prompt)
+    
+    choices_dict = utils.choices_list_to_dict(response_text["choices"])
+    response_text["choices"] = choices_dict       
 
-    for _ in range(10):
-        try:
-            response_text = llm.invoke(prompt).content
-            print(response_text)
-            response_dict = json.loads(response_text)  # intentamos convertir el texto a dict
-            return response_text
-        except json.JSONDecodeError:
-            print("Error al convertir response_text a dict. Regenerando el texto...")
-            prompt += f"""
-            ---------------------------------------------------------------------------------
-            [UPDATE PROMPT] No generaste el formato correcto de respuestas.
-            Por favor, genera las respuestas en un formato JSON.
+    return str(response_text)
+    
+    # for _ in range(10):
+    #     try:
+    #         response_text = structured_llm.invoke(prompt)
+    #         print(response_text)
+    #         response_dict = json.loads(response_text)  # intentamos convertir el texto a dict
+    #         return response_text
+    #     except json.JSONDecodeError:
+    #         print("Error al convertir response_text a dict. Regenerando el texto...")
+    #         prompt += f"""
+    #         ---------------------------------------------------------------------------------
+    #         [UPDATE PROMPT] No generaste el formato correcto de respuestas.
+    #         Por favor, genera las respuestas en un formato JSON.
 
-            Habías generado:
+    #         Habías generado:
 
-            "{response_text}"
-            """
-            continue  # vuelve a intentar si hay error
-        except Exception as e:
-            print(f"Otro error ocurrió: {e}")
-            break  # rompe el loop si ocurre un error inesperado no relacionado con JSON
+    #         "{response_text}"
+    #         """
+    #         continue  # vuelve a intentar si hay error
+    #     except Exception as e:
+    #         print(f"Otro error ocurrió: {e}")
+    #         break  # rompe el loop si ocurre un error inesperado no relacionado con JSON
 
-    return "ERROR"
+    # return "ERROR"
 
 def evaluate_with_embeddings(human_questions, generated_question):
     embeddings = chroma_utils.get_embedding_function()
@@ -280,5 +294,5 @@ def classify_question_tool(generated_question: str, context: str):
     
     return response
 
-def save_question_tool(question: dict):
-    utils.update_json("mcqs", question)
+def save_question_tool(question: dict, question_type: str):
+    utils.update_json(question_type, question)

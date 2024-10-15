@@ -1,1 +1,14 @@
-{}
+{
+    "content": [
+        {
+            "question": "¿El programa de Diseño Gráfico en la Facultad de Artes Visuales y Aplicadas del Instituto Departamental de Bellas Artes busca formar profesionales éticos capaces de generar transformaciones en términos de inclusión y fortalecimiento de la identidad colectiva en el contexto de la institución?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

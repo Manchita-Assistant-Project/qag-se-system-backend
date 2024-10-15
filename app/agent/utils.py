@@ -54,7 +54,6 @@ def create_tool_node_with_fallback(tools: list) -> dict:
         [RunnableLambda(handle_tool_error)], exception_key="error"
     )
 
-
 def _print_event(event: dict, _printed: set, max_length=1500):
     current_state = event.get("dialog_state")
     if current_state:
@@ -107,7 +106,7 @@ def create_character_agent(llm, tools, systems_message: str, characters: list):
     # prompt = prompt.partial(systems_message=systems_message, characters=characters)
     prompt = prompt.partial(systems_message=systems_message)
     if tools:
-        return prompt | llm.bind_tools(tools)
+        return prompt | llm.bind_tools(tools, tool_choice="any")
     else:
         return prompt | llm
     

@@ -52,7 +52,9 @@ Eres un modelo que genera preguntas de respuesta VERDADERA o FALSA a partir \
 
 ---------------------------------------------------------------------------------
 Es importante que la pregunta que generes sólo se pueda responder \
-con "Verdadero" o "Falso".
+con únicamente con opciones "Verdadero" o "Falso".
+
+Nunca pongas una opción "No se menciona en el texto" o similar.
 
 ---------------------------------------------------------------------------------
 Debes siempre generar una (1) pregunta. \
@@ -79,18 +81,35 @@ Genera una pregunta más compleja basada en la pregunta:
 Y única y exclusivamente en el contexto:
 
 "{context}"
+
+---------------------------------------------------------------------------------
+Hacer una pregunta más compleja significa que la pregunta debe ser más difícil \
+de responder, no necesariamente más larga ni más palabras.
+
+Lo importante es el nivel del contenido de la pregunta. ¡Hazla más difícil, \
+no la hagas solamente más larga.
+
+Solo debes generar una pregunta. No hagas ningún "Además, ..." ni nada del estilo.
+
 ---------------------------------------------------------------------------------
 No cambies el tipo de pregunta. El tipo de pregunta es:
 
 "{question_type}"
 
+ES MUY IMPORTANTE QUE LA PREGUNTA QUE GENERES SEA DEL MISMO TIPO QUE LA \
+PREGUNTA ORIGINAL.
+
+SI LA PREGUNTA ORIGINAL ERA DE OPCIÓN MÚLTIPLE, RETORNAS UNA PREGUNTA DE \
+OPCIÓN MÚLTIPLE.
+SI LA PREGUNTA ORIGINAL ERA DE RESPUESTA ABIERTA, RETORNAS UNA PREGUNTA DE \
+RESPUESTA ABIERTA.
+SI LA PREGUNTA ORIGINAL ERA DE VERDADER Y FALSO, RETORNAS UNA PREGUNTA DE \
+VERDADERO Y FALSO.
+
 ---------------------------------------------------------------------------------
-Hacer una pregunta más compleja significa que la pregunta debe ser más difícil de responder,
-no necesariamente más larga ni más palabras.
+NO INCLUYAS EL TIPO DE PREGUNTA EN LA PREGUNTA QUE GENERES.
 
-Lo importante es el nivel del contenido de la pregunta. ¡Hazla más difícil!
-
-Solo debes generar una pregunta. No hagas ningún "Además, ..." ni nada del estilo.
+No tienes por qué poner el tipo de la pregunta en la pregunta que generes.
 """
 
 

@@ -65,7 +65,8 @@ def data_saver_tool(state):
     if question_format is None or question_format == "ERROR":
         return
     
-    question_format_dict = json.loads(question_format)
+    double_quotes_string = question_format.replace("'", '"')
+    question_format_dict = json.loads(double_quotes_string)
 
     type_to_string = {
         1: "MCQ",
@@ -75,4 +76,4 @@ def data_saver_tool(state):
     question_format_dict["type"] = type_to_string[question["question_type"]]
     question_format_dict["difficulty"] = question["question_difficulty"]
 
-    tools.save_question_tool(question_format_dict)
+    tools.save_question_tool(question_format_dict, type_to_string[question["question_type"]].lower() + 's')

@@ -102,7 +102,7 @@ def rag_search(query: str) -> str:
 
     return response_text
 
-def qanda_chooser() -> str: # ¡¡acá falta el tema del modelo, para que retorne frases más bonitas y no solo la pregunta!!
+def qanda_chooser() -> str:
     """
     It does not generate questions.
     Chooses a random question ONLY from the JSON file.

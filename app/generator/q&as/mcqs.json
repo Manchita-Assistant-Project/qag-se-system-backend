@@ -1,49 +1,27 @@
 {
     "content": [
         {
-            "question": "¿Cuál es el enfoque principal de la investigación en el programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas?",
+            "question": "¿Cuál es el objetivo principal del programa de Diseño Gráfico en la Universidad?",
             "choices": {
-                "a": "Investigar la interacción entre la pieza gráfica, el usuario y el contexto",
-                "b": "Investigar la creación, estructuración y ordenamiento de códigos, lenguajes y medios visuales",
-                "c": "Investigar la historia y momentos relevantes del Diseño Gráfico",
-                "d": "Investigar la pertinencia y los propósitos del programa de Diseño Gráfico"
+                "a": "Formar profesionales en la comunicación visual con una perspectiva crítica",
+                "b": "Desarrollar proyectos interdisciplinarios en el ámbito del diseño",
+                "c": "Proponer soluciones innovadoras a las necesidades de ciudadanos y comunidades",
+                "d": "Investigar los principios pedagógicos y las ramas del conocimiento"
             },
             "answer": "a",
             "type": "MCQ",
-            "difficulty": "Difícil"
+            "difficulty": "Fácil"
         },
         {
-            "question": "¿Cuál es el impacto de las líneas de investigación desarrolladas en el programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas en la transformación de su entorno y en la práctica artística contemporánea?",
+            "question": "¿Cuáles son las líneas de investigación específicas que se desarrollan en el programa de Diseño Gráfico en la Universidad y cómo se relacionan de manera única con proyectos de comunicación visual y la transformación del entorno?",
             "choices": {
-                "a": "Generación de nuevas técnicas y enfoques en el diseño gráfico contemporáneo",
-                "b": "Mejoramiento de la calidad y la relevancia de las prácticas artísticas en el entorno",
-                "c": "Promoción de la interdisciplinariedad y la colaboración en la investigación y creación artística",
-                "d": "Contribución a la reflexión y análisis de problemáticas sociales a través del diseño gráfico"
+                "a": "Investigación en diseño de interfaces digitales para promover la accesibilidad en entornos virtuales",
+                "b": "Investigación en diseño editorial para fortalecer la difusión de contenidos educativos",
+                "c": "Investigación en diseño de marca y branding para impulsar el posicionamiento de productos y servicios",
+                "d": "Investigación en diseño de empaques sostenibles para fomentar la responsabilidad ambiental"
             },
             "answer": "c",
             "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuáles son las principales líneas de investigación que se desarrollan en el programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas y cómo contribuyen en la formación de los estudiantes y en la transformación social?",
-            "choices": {
-                "a": "Investigación en educación artística y su incidencia en la transformación social",
-                "b": "Investigación en relaciones entre prácticas artísticas contemporáneas y diseño social",
-                "c": "Investigación en las particularidades del programa de Diseño Gráfico y su relación con la transformación social",
-                "d": "Investigación en estrategias pedagógicas del plan de estudios y su impacto en la formación de los estudiantes"
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El programa de Diseño Gráfico de la Facultad de Artes Visuales y Aplicadas cumple con una resolución distinta a la Resolución No. 051 del 24 de junio de 2008 del Sistema de práctica social, que promueva la investigación y formación integral de los estudiantes?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "a",
-            "type": "TFQ",
             "difficulty": "Difícil"
         }
     ]
