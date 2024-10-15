@@ -63,7 +63,7 @@ def question_generator_tool(q_type: int, difficulty: str, context: str):
     print(f"response_text: {response_text}")
     
     if difficulty == 'Difícil':
-        rand_int = random.randint(1, 5) # cinco niveles de dificultad
+        rand_int = random.randint(2, 5) # cinco niveles de dificultad
         print(f"rand_int: {rand_int}")
         harder_prompt_template = ChatPromptTemplate.from_template(HARDER_Q_PROMPT)
         for _ in range(rand_int): # iterar para hacer la pregunta para hacerla más difícil
