@@ -14,9 +14,9 @@ from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-from app.prompts.tools_prompts import Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT, \
-                                      HARDER_Q_PROMPT, \
-                                      A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT
+from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT, \
+                                       HARDER_Q_PROMPT, \
+                                       A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY

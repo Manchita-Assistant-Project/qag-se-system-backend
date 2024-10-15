@@ -33,7 +33,7 @@ def update_json(path: str, data: list):
 
 def generate_graph_image(runnable):
     i = runnable.get_graph().draw_mermaid_png()
-    with open("graph.png", "wb") as png:
+    with open("app/agent/graph.png", "wb") as png:
         png.write(i)
 
 def handle_tool_error(state) -> dict:

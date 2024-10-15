@@ -37,7 +37,7 @@ workflow.add_node("answer_generator", nodes.answer_generator_node)
 workflow.add_node("question_evaluator", nodes.question_evaluator_node)
 workflow.add_node("question_refiner", nodes.question_refiner_node)
 # workflow.add_node("question_classifier", nodes.question_classifier_node)
-workflow.add_node("q&a_saver", nodes.data_saver_tool)
+workflow.add_node("qanda_saver", nodes.data_saver_tool)
 
 # add edges
 workflow.set_entry_point("context_generator")
@@ -55,8 +55,8 @@ workflow.add_conditional_edges(
 workflow.add_edge("question_generator", "question_evaluator")
 workflow.add_edge("question_refiner", "question_evaluator")
 # workflow.add_edge("question_classifier", "context_generator")
-workflow.add_edge("answer_generator", "q&a_saver")
-workflow.add_edge("q&a_saver", END)
+workflow.add_edge("answer_generator", "qanda_saver")
+workflow.add_edge("qanda_saver", END)
 
 def use_graph():
     # compile the graph
