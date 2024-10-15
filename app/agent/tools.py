@@ -63,7 +63,7 @@ def qanda_evaluation(input_data: str) -> str:
     question, answer = input_data.split('|||')
     print(f"QUESTION: {question} | ANSWER: {answer}")
     
-    context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+    context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -109,7 +109,7 @@ def qanda_chooser() -> str:
     """
     json_path = utils.JSON_PATH
     data = utils.load_json(json_path)
-    questions = [each_qandas["question"] for each_qandas in data[0]['questions']]
+    questions = [item["question"] for item in data]
     random_question = random.choice(questions)  
     
     return random_question
@@ -126,7 +126,7 @@ def feedback_provider(question: str) -> str:
     json_path = utils.JSON_PATH
     data = utils.load_json(json_path)
 
-    context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+    context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
     
     print(f"CONTEXT: {context}")
 

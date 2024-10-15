@@ -10,7 +10,6 @@ from langchain_core.messages import ToolMessage
 from langchain_core.runnables import RunnableLambda
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-# JSON_PATH = "app/generator/q&as/qs.json"
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JSON_PATH = os.path.join(base_dir, "generator", "q&as", "qs.json")
 
@@ -106,7 +105,7 @@ def create_character_agent(llm, tools, systems_message: str, characters: list):
     # prompt = prompt.partial(systems_message=systems_message, characters=characters)
     prompt = prompt.partial(systems_message=systems_message)
     if tools:
-        return prompt | llm.bind_tools(tools, tool_choice="any")
+        return prompt | llm.bind_tools(tools, tool_choice="auto")
     else:
         return prompt | llm
     
@@ -117,24 +116,32 @@ def agent_node(state, agent, name):
     }
     
 def agent_w_tools_node(state, agent, name):
+    
     # mensaje de regaño si no se hizo un tool call
     instruction_message = """
     ¡No hiciste un tool call! ¡Haz el respectivo tool call! No generes texto, solo haz el tool call.
     """
+    contador_regaño = 0  # Inicializamos un contador para los mensajes de regaño
+    
     while True:
         result = agent.invoke(state)
 
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
-            # si hubo tool_call, elimina el mensaje de regaño
-            if instruction_message in state["messages"][-1].content:
-                # elimina todos los posibles mensajes de regaño
-                state["messages"] = [msg for msg in state["messages"] if msg != instruction_message]
+            # si hubo tool_call, eliminar exactamente el número de mensajes de regaño
+            print(f"MESSAGES: {state['messages']}")
+
+            # Elimina los últimos 'contador_regaño' mensajes de regaño
+            while contador_regaño > 0 and state["messages"][-1] == instruction_message:
+                state["messages"].pop()
+                contador_regaño -= 1  # Decrementa el contador
+
             break
 
         # si no hizo el tool call, agrega la instrucción para que lo haga
         state["messages"].append(instruction_message)
-           
+        contador_regaño += 1  # Incrementamos el contador por cada iteración sin tool call
+
         print(f"Waiting for agent {name} to do a tool call...")
 
     return {

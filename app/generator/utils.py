@@ -11,11 +11,11 @@ from langchain_core.runnables import RunnableLambda
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JSONS_PATH = os.path.join(base_dir, "generator", "q&as")
+JSON_PATH = os.path.join(base_dir, "generator", "q&as", "qs.json")
 
 def load_json(filename: str):
-    path = os.path.join(JSONS_PATH, filename + '.json')
-    with open(path, 'r', encoding='utf-8') as f:
+    path = os.path.join(JSON_PATH, filename + '.json')
+    with open(JSON_PATH, 'r', encoding='utf-8') as f:
         json_dict = json.load(f)
 
     if "content" not in json_dict or not isinstance(json_dict["content"], list):
@@ -24,8 +24,8 @@ def load_json(filename: str):
     return json_dict['content']
 
 def update_json(filename: str, data: dict):
-    path = os.path.join(JSONS_PATH, filename + '.json')
-    with open(path, 'r', encoding='utf-8') as f:
+    path = os.path.join(JSON_PATH, filename + '.json')
+    with open(JSON_PATH, 'r', encoding='utf-8') as f:
         json_dict = json.load(f)
 
     print(f"DATA: {data}")
@@ -35,7 +35,7 @@ def update_json(filename: str, data: dict):
 
     json_dict["content"].append(data)
 
-    with open(path, 'w', encoding='utf-8') as f:
+    with open(JSON_PATH, 'w', encoding='utf-8') as f:
         json.dump(json_dict, f, ensure_ascii=False, indent=4)
 
 def generate_graph_image(runnable):

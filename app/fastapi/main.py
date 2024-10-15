@@ -10,9 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
-from app.graph.utils import JSON_PATH
-from app.graph.graph import workflow
-import app.graph.tools as tools
+import app.agent.tools as tools
+from app.agent.graph import workflow
+from app.agent.utils import JSON_PATH, load_json
 
 app = FastAPI()
 
@@ -198,10 +198,10 @@ class QuestionEvaluation(BaseModel):
 
 @app.get('/questions')
 def get_questions():    
-    with open(JSON_PATH, encoding='utf-8') as f:
-        data = json.load(f)
+    data = load_json(JSON_PATH)
     
-    questions = {question["question"] for question in data["content"][0]["questions"]}
+    # solo para preguntas de "Verdadero o Falso"
+    questions = {index + 1: item["question"] for index, item in enumerate(data) if item.get("type") == "TFQ"}
     return questions
 
 @app.post('/evaluate')
