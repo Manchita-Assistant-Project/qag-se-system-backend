@@ -1,9 +1,11 @@
 import os
 import re
+import json
 import random
 import pandas as pd
 
 import app.config as config
+import app.generator.utils as utils
 import app.database.chroma_utils as chroma_utils
 
 from sklearn.metrics.pairwise import cosine_similarity
@@ -44,6 +46,7 @@ def get_context_tool(query: str="", k: int=90):
     return context
 
 def question_generator_tool(q_type: int, difficulty: str, context: str):
+    generated_questions = utils.load_json("app/generator/q&as/qs.json")
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=0.7,
@@ -54,7 +57,7 @@ def question_generator_tool(q_type: int, difficulty: str, context: str):
     # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
     
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
-    prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="")
+    prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="", generated_questions=generated_questions)
 
     response_text = llm.invoke(prompt).content
     print(f"response_text: {response_text}")
@@ -82,9 +85,19 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
     prompt = prompt_template.format(context=context, question=question, difficulty=difficulty)
 
-    response_text = llm.invoke(prompt).content
-    
-    return response_text
+    while True:
+        try:
+            response_text = llm.invoke(prompt).content
+            response_dict = json.loads(response_text)  # intentamos convertir el texto a dict
+            return response_text
+        except json.JSONDecodeError:
+            print("Error al convertir response_text a dict. Regenerando el texto...")
+            continue  # vuelve a intentar si hay error
+        except Exception as e:
+            print(f"Otro error ocurrió: {e}")
+            break  # rompe el loop si ocurre un error inesperado no relacionado con JSON
+
+    return None
 
 def evaluate_with_embeddings(human_questions, generated_question):
     embeddings = chroma_utils.get_embedding_function()
@@ -114,11 +127,7 @@ def conditional_evaluation(human_questions, generated_question, threshold=0.6):
     # print(f"[C. E. Function] Similarity: {similarity}")
     if similarity < threshold:  # Si la similitud es baja, pedirle al LLM una evaluación más profunda
         evaluation_prompt = f"""
-        Evaluate the following generated question against the list of human-reviewed questions.
-
-        Human-reviewed questions:
-        
-        "{human_questions}"
+        Evaluate the following generated question.
         
         Generated question: "{generated_question}"
 
@@ -182,19 +191,15 @@ def evaluate_similarity_tool(generated_question: str, dataset_path: str=QANDAS_E
 
 def refine_question(human_questions: str, generated_question: str, feedback: str):
     refinement_prompt = f"""
-    Modify the following generated question based on the feedback provided and some example questions.
+    Modify the following generated question based on the feedback provided.
     
     Generated question: "{generated_question}"
     
     Use this feedback to improve the generated question:
     
     "{feedback}"
-    
-    Example questions:
-    
-    "{human_questions}"
-    
-    Modify the generated question, so that the metrics in the feedback average 0.8.
+        
+    Modify the generated question, so that the metrics in the feedback average 0.75.
     
     ¡Never translate the improved question! ¡Always return it in spanish!
     

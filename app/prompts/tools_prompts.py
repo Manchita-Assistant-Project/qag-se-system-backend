@@ -48,6 +48,12 @@ Debes siempre generar una (1) pregunta. \
 La pregunta debe ser de nivel: "{difficulty}"
 
 {harder_prompt}
+
+---------------------------------------------------------------------------------
+Es muy importante que la pregunta que generes no sea igual a la ninguna pregunta
+en este arreglo de preguntas:
+
+"{generated_questions}"
 """
 
 HARDER_Q_PROMPT = """
@@ -98,6 +104,8 @@ Aquí un ejemplo: \
         "d": "Barranquilla" \
     ), \
     "answer": "a" \
+        
+dentro de un diccionario Python.
 """
 
 

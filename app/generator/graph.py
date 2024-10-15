@@ -22,7 +22,7 @@ def question_or_answer_path(state) -> Literal["question_generator", "answer_gene
 def refine_or_classify_path(state) -> Literal["question_refiner", "context_generator"]:
     similarity = state["messages"][-1].content.split("|||")[1]
 
-    if float(similarity) < 0.8: # ajustar threshold
+    if float(similarity) < 0.75: # ajustar threshold
         return "question_refiner"
     else:
         return "context_generator"
