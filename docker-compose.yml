@@ -42,6 +42,9 @@ services:
       - ./client_secrets.json:/code/client_secrets.json
       - ./credentials.json:/code/credentials.json
       - ./:/code  # Para otros archivos que estés usando
+      - chroma-db-volume:/code/app/database/chroma   # Volumen para Chroma
+      - sqlite3-db-volume:/code/app/database/sqlite3 # Volumen para SQLite3
+      - questions-volume:/code/app/generator/q&as    # Volumen para las preguntas
     networks:
       - shared-network
     environment:
@@ -49,6 +52,12 @@ services:
 
 volumes:
   models-volume:
+    driver: local
+  chroma-db-volume:        # Volumen persistente para Chroma
+    driver: local
+  sqlite3-db-volume:       # Volumen persistente para SQLite3
+    driver: local
+  questions-volume:        # Volumen persistente para las preguntas
     driver: local
 
 networks:

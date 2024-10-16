@@ -1,6 +1,8 @@
 import app.generator.graph as graph
 
 if __name__ == "__main__":
+
+    # preguntas "Opción Múltiple"
     for i in range(1, 51):
         question_type = 1
         if (i % 3 == 0):
@@ -9,7 +11,8 @@ if __name__ == "__main__":
             question_difficulty_int = 2
     
         graph.use_graph(question_type, question_difficulty_int)
-        
+    
+    # preguntas "Verdadero o Falso"
     for i in range(1, 51):
         question_type = 3
         if (i % 3 == 0):
