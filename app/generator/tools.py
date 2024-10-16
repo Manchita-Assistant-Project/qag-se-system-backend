@@ -157,7 +157,7 @@ def evaluate_with_embeddings(human_questions, generated_question):
     return avg_similarity
 
 # Usar LLM solo si la similitud cae por debajo de un umbral
-def conditional_evaluation(human_questions, generated_question, threshold=0.6):
+def conditional_evaluation(generated_question, threshold=0.6):
     context = get_context()
     print("Got context")
     # similarity = evaluate_with_embeddings(human_questions, generated_question)
@@ -217,17 +217,17 @@ def structure_output_metrics(evaluation: str) -> float:
 
     return average
 
-def evaluate_similarity_tool(generated_question: str, dataset_path: str=QANDAS_EVALUATION_DATASET, threshold: float=0.8):
-    dataset = load_dataset(dataset_path)
-    human_questions = dataset["Pregunta"].to_list()
+def evaluate_similarity_tool(generated_question: str, threshold: float=0.75):
+    # dataset = load_dataset(dataset_path)
+    # human_questions = dataset["Pregunta"].to_list()
        
-    response = conditional_evaluation(human_questions, generated_question, threshold)
+    response = conditional_evaluation(generated_question, threshold)
     similarity = structure_output_metrics(response)
     
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(human_questions: str, generated_question: str, feedback: str):
+def refine_question(generated_question: str, feedback: str):
     refinement_prompt = f"""
     Modify the following generated question based on the feedback provided.
     
@@ -255,10 +255,10 @@ def refine_question(human_questions: str, generated_question: str, feedback: str
     return response
 
 def refine_question_tool(generated_question: str, feedback: str, dataset_path: str=QANDAS_EVALUATION_DATASET):
-    dataset = load_dataset(dataset_path)
-    human_questions = dataset["Pregunta"].to_list()
+    # dataset = load_dataset(dataset_path)
+    # human_questions = dataset["Pregunta"].to_list()
     
-    response = refine_question(human_questions, generated_question, feedback)
+    response = refine_question(generated_question, feedback)
     
     return response
 
