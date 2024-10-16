@@ -260,19 +260,4 @@ def use_graph():
                     for event in graph.stream(None, thread, stream_mode="values"):
                         event['messages'][-1].pretty_print()
                             
-
-use_graph()
-
-"""
-Para el juego de duendes:
-- definir cómo se pasa de un duende a otro, es decir, si se pasa el duende del puente,
-  qué debe decir el usuario para seguir? o debería ser secuencial:
-  narrador -> puente -> H-I-L -> evaluation -> update tries -> casa -> H-I-L -> evaluation -> update tries -> castillo H-I-L -> evaluation -> update tries -> fin
-- arísta condicional desde evaluation a points_updater_tool_node. si venía del juego de duendes, debe ir por el lado de un nuevo nodo que
-  lleve cuenta de los corazones (sería chévere mostrarlos siempre con emojis -> siempre me refiero luego de cada duende o cuando pierde uno) (no creo que se necesite bd
-  porque la idea es que si se inicia el juego, se termine en la misma sesión; ya sea ganando o perdiendo).
-  
-Para el frontend:
-- Opción para que el usuario cargue el o los PDFs con los que quiera trabajar.
-
-"""
+# use_graph()

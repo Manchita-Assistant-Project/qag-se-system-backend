@@ -3,6 +3,8 @@ PyPDF2
 PyDrive2
 IPython
 unstructured
+python-docx
+networkx
 pypdf
 faiss-cpu
 tiktoken

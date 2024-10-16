@@ -58,7 +58,7 @@ workflow.add_edge("question_refiner", "question_evaluator")
 workflow.add_edge("answer_generator", "qanda_saver")
 workflow.add_edge("qanda_saver", END)
 
-def use_graph():
+def use_graph(question_type: int, question_difficulty_int: int):
     # compile the graph
     checkpointer = MemorySaver()
     graph = workflow.compile(
@@ -83,12 +83,12 @@ def use_graph():
     # 3 -> Verdadero o Falso
     # 4 -> Completar Espacios (idea)
     
-    question_type = 1
+    # question_type = 1
     
     # 1 -> Fácil
     # 2 -> Difícil
     
-    question_difficulty_int = 2
+    # question_difficulty_int = 2
     question_difficulty = ""
     
     if question_difficulty_int == 1:
@@ -108,4 +108,4 @@ def use_graph():
         if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
             event['messages'][-1].pretty_print()
 
-use_graph()
+# use_graph()
