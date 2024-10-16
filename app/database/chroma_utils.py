@@ -42,16 +42,18 @@ def load_documents():
 
     ext = os.path.splitext(file_names[0])[-1].lower() # extensión del archivo en minúscula
 
+    file_path = os.path.join(FILES_PATH, file_names[0])
+
     if ext == ".pdf":
         loader = PyPDFDirectoryLoader(os.path.dirname(FILES_PATH))
         print(f"📄 Downloading a PDF document.")
         documents = loader.load()
     elif ext == ".docx":
-        loader = UnstructuredWordDocumentLoader(FILES_PATH)
+        loader = UnstructuredWordDocumentLoader(file_path)
         print(f"📝 Downloading a Word document.")
         documents = loader.load()
     elif ext == ".xlsx":
-        loader = UnstructuredExcelLoader(FILES_PATH)
+        loader = UnstructuredExcelLoader(file_path)
         print(f"📊 Downloading an Excel document.")
         documents = loader.load()
     else:
