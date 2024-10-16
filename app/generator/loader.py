@@ -19,9 +19,12 @@ if __name__ == "__main__":
     print("🚀 Starting the load process!")
     print("🔍 Searching for files in Google Drive")
     files_in_gdrive = gdrive.get_files_recursive(gdrive.ROOT_FOLDER_ID)
+    # for file in files_in_gdrive:
+    #     print(f"📄 {file['title']}")
     print(f"🔍 Found {len(files_in_gdrive)} files in Google Drive")
     
-    target_file_name = "nombre_del_archivo_que_quieres_encontrar"
+    # target_file_name = "semilleros_investigacion_2023-1.pdf"
+    target_file_name = "Requisitos PASANTIA para empresas.docx"
 
     # encuentra el índice del archivo con el nombre específico
     index_specific_file = next((i for i, file in enumerate(files_in_gdrive) if file['title'] == target_file_name), None)
