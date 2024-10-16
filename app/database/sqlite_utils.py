@@ -1,9 +1,20 @@
 import os
 import sqlite3
 
+def verify_directory_exists(directory_path):
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+        print(f"Directory '{directory_path}' created.")
+    else:
+        print(f"Directory '{directory_path}' already exists.")
+
+db_path = os.path.join(os.path.dirname(__file__), 'sqlite3')
+verify_directory_exists(os.path.dirname(db_path))
 db_path = os.path.join(os.path.dirname(__file__), 'sqlite3', 'qag_se_system.db')
+
 print(f"dirname: {os.path.dirname(__file__)}")
 print(f"db_path: {db_path}")
+
 conn = sqlite3.connect(db_path)
 
 cursor = conn.cursor()

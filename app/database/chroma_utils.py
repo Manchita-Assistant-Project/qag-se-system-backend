@@ -7,6 +7,7 @@ from langchain.callbacks.base import BaseCallbackHandler
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader, UnstructuredExcelLoader
 
 # __import__('pysqlite3')
 # import sys
@@ -15,8 +16,17 @@ from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
 base_dir_files = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 base_dir_app = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DATA_PATH = os.path.join(base_dir_files, 'files')
+def verify_directory_exists(directory_path):
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+        print(f"Directory '{directory_path}' created.")
+    else:
+        print(f"Directory '{directory_path}' already exists.")
+
+FILES_PATH = os.path.join(base_dir_files, 'files')
+verify_directory_exists(FILES_PATH)
 CHROMA_PATH = os.path.join(base_dir_app, 'database', 'chroma')
+verify_directory_exists(CHROMA_PATH)
 
 class StreamingCallbackHandler(BaseCallbackHandler):
     def __init__(self):
@@ -27,8 +37,27 @@ class StreamingCallbackHandler(BaseCallbackHandler):
         print(token, end="", flush=True)
 
 def load_documents():
-    document_loader = PyPDFDirectoryLoader(DATA_PATH)
-    return document_loader.load()
+    files_and_folders = os.listdir(FILES_PATH)
+    file_names = [f for f in files_and_folders if os.path.isfile(os.path.join(FILES_PATH, f))]
+
+    ext = os.path.splitext(file_names[0])[-1].lower() # extensión del archivo en minúscula
+
+    if ext == ".pdf":
+        loader = PyPDFDirectoryLoader(os.path.dirname(FILES_PATH))
+        print(f"📄 Downloading a PDF document.")
+        documents = loader.load()
+    elif ext == ".docx":
+        loader = UnstructuredWordDocumentLoader(FILES_PATH)
+        print(f"📝 Downloading a Word document.")
+        documents = loader.load()
+    elif ext == ".xlsx":
+        loader = UnstructuredExcelLoader(FILES_PATH)
+        print(f"📊 Downloading an Excel document.")
+        documents = loader.load()
+    else:
+        raise ValueError(f"File format not supported: {ext}")
+
+    return documents
 
 def split_documents(documents: list[Document]):
     splitter = RecursiveCharacterTextSplitter(
@@ -42,7 +71,8 @@ def split_documents(documents: list[Document]):
 
 def get_embedding_function():
     embeddings = OllamaEmbeddings( # revisar acá si hacemos el request nosotros aparte porque hay un nuevo endpoint "http://localhost:11434/api/embed" que aún no se ha actualizado en langchaing-community
-        model='nomic-embed-text'
+        model='nomic-embed-text',
+        base_url='http://ollama-container:11434'
     )
     return embeddings
 

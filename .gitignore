@@ -12,3 +12,8 @@ __pycache__/
 # CHROMA database
 app/database/chroma/*
 app/database/sqlite3/*
+
+# Google Drive API credentials
+client_secrets.json
+credentials.json
+settings.yaml

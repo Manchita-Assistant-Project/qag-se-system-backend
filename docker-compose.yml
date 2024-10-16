@@ -28,10 +28,24 @@ services:
       fi
     "]
 
-      # docker exec ollama-container ollama pull bge-m3 &&
-      # echo 'bge-m3 completed' &&
-      # docker exec ollama-container ollama pull llama3 &&
-      # echo 'llama3 completed'
+  fastapi-app:
+    build:
+      context: .  # Usa tu Dockerfile ubicado en el directorio actual
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"  # Puerto para tu aplicación FastAPI
+    depends_on:
+      - ollama  # Asegura que 'ollama' esté listo antes de correr FastAPI
+    volumes:
+      - ./app:/code/app
+      - ./files:/code/files
+      - ./client_secrets.json:/code/client_secrets.json
+      - ./credentials.json:/code/credentials.json
+      - ./:/code  # Para otros archivos que estés usando
+    networks:
+      - shared-network
+    environment:
+      OLLAMA_URL: http://ollama-container:11434
 
 volumes:
   models-volume:

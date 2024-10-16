@@ -38,6 +38,16 @@ def update_json(filename: str, data: dict):
     with open(JSON_PATH, 'w', encoding='utf-8') as f:
         json.dump(json_dict, f, ensure_ascii=False, indent=4)
 
+def delete_local_file(file_path):
+    try:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"Archivo eliminado: {file_path}")
+        else:
+            print(f"El archivo no existe: {file_path}")
+    except Exception as e:
+        print(f"Error al eliminar el archivo {file_path}: {e}")
+
 def generate_graph_image(runnable):
     i = runnable.get_graph().draw_mermaid_png()
     with open("app/generator/graph.png", "wb") as png:

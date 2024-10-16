@@ -1,5 +1,8 @@
 python-dotenv
 PyPDF2
+PyDrive2
+IPython
+unstructured
 pypdf
 faiss-cpu
 tiktoken
