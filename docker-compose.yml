@@ -42,8 +42,8 @@ services:
       - ./client_secrets.json:/code/client_secrets.json
       - ./credentials.json:/code/credentials.json
       - ./:/code  # Para otros archivos que estés usando
-      - chroma-db-volume:/code/app/database/chroma   # Volumen para Chroma
-      - sqlite3-db-volume:/code/app/database/sqlite3 # Volumen para SQLite3
+      - ./app/database/chroma:/code/app/database/chroma   # Volumen para Chroma
+      - ./app/database/sqlite3:/code/app/database/sqlite3 # Volumen para SQLite3
       # - questions-volume:/code/app/generator/q&as    # Volumen para las preguntas
       - ./app/generator/q&as:/code/app/generator/q&as
     networks:

@@ -9,6 +9,106 @@
             "answer": "Verdadero",
             "type": "TFQ",
             "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El semillero de investigación Ars Vitam se enfoca exclusivamente en la exploración de la interacción entre música y tecnología?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El semillero de investigación Encuentros Sonoros se enfoca únicamente en la relación entre sonido, movimiento y expresión artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El semillero de investigación Ars Vitam abarca proyectos de investigación en otros campos además de las artes plásticas y visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El semillero de investigación Collatio se enfoca exclusivamente en el análisis y producción de obras de arte contemporáneo en el contexto artístico colombiano?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el impacto de la relación entre arte y archivo en las prácticas artísticas contemporáneas en el contexto de la investigación en Bellas Artes?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El objetivo principal del semillero de investigación Dramaturgia Performática en espacios no convencionales es analizar las adaptaciones de obras de teatro a dichos espacios?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El semillero de investigación Collatio también aborda la relación entre arte y diseño en otros campos además del diseño gráfico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El semillero de investigación YAGUAR RUMI también aborda aspectos relacionados con la historia y crítica de las artes plásticas en América Latina?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El semillero de investigación Collatio tiene como objetivo principal la exploración de las interacciones entre el arte y el diseño gráfico en el contexto de las artes visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "El enfoque exclusivo del semillero de investigación Collatio es la producción de obras de arte contemporáneo en el contexto colombiano.",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
         }
     ]
 }
