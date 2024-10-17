@@ -70,3 +70,10 @@ def choices_list_to_dict(choices_list: List[str]) -> Dict[str, str]:
             result[letter] = item
     
     return result
+
+def structure_generated_questions_string(generated_questions: list):
+    result = ""
+    for item in generated_questions:
+        result += f"{item}\n"
+        result += "\n"
+    return result
