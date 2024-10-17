@@ -83,6 +83,90 @@
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las implicaciones éticas y morales de la comunicación de marca en relación a la percepción de valor de los productos o servicios que representa?",
+            "choices": {
+                "a": "Generar expectativas exageradas sobre los productos o servicios.",
+                "b": "Manipular la información para ocultar aspectos negativos de los productos o servicios.",
+                "c": "Utilizar estrategias de persuasión para influir en las decisiones de compra de los clientes.",
+                "d": "Establecer conexiones emocionales con los clientes para crear lealtad."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el propósito del Semillero de Investigación Collatio en la Universidad?",
+            "choices": {
+                "a": "Promover la investigación en el campo de la dramaturgia",
+                "b": "Explorar nuevas formas de expresión artística",
+                "c": "Fomentar la colaboración entre diferentes disciplinas artísticas",
+                "d": "Investigar la relación entre la literatura y la música"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son los resultados esperados del semillero de investigación Ars Vitam en el Conservatorio Antonio María Valencia en términos de promover la investigación interdisciplinaria y contribuir al desarrollo académico de los estudiantes de Bellas Artes?",
+            "choices": {
+                "a": "Fortalecer la labor investigativa y fomentar en los estudiantes de Bellas Artes el interés por las actividades de investigación interdisciplinar.",
+                "b": "Ampliar el campo de acción disciplinar del semillero vinculando estudiantes de todas las facultades institucionales.",
+                "c": "Desarrollar proyectos interdisciplinarios que sean herramientas significativas en la interpretación de músicas populares y afines.",
+                "d": "Promover la investigación en artes y sus áreas afines en el Conservatorio Antonio María Valencia."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los objetivos específicos del semillero de investigación YAGUAR RUMI en el Conservatorio Antonio María Valencia y cómo se relacionan con el desarrollo académico de los estudiantes de Bellas Artes?",
+            "choices": {
+                "a": "Fomentar la investigación en música y promover la creación de obras musicales.",
+                "b": "Investigar y experimentar con nuevas técnicas y sonidos en la música contemporánea.",
+                "c": "Estudiar la relación entre la música y otras disciplinas artísticas en el contexto del Conservatorio.",
+                "d": "Desarrollar proyectos de investigación que contribuyan al enriquecimiento del currículo académico de los estudiantes de Bellas Artes."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cómo se puede fomentar la investigación y creación en el campo artístico para potenciar el desarrollo académico de los estudiantes del Conservatorio Antonio María Valencia?",
+            "choices": {
+                "a": "Promover la participación de los estudiantes en proyectos de investigación y creación artística dentro y fuera del conservatorio.",
+                "b": "Establecer alianzas con instituciones artísticas y culturales para brindar oportunidades de exposición y difusión de los trabajos de los estudiantes.",
+                "c": "Ofrecer becas y apoyos económicos para que los estudiantes puedan realizar proyectos de investigación y creación artística.",
+                "d": "Implementar programas de formación en metodologías de investigación y técnicas de creación artística."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál de los semilleros de investigación en Bellas Artes se enfoca en la relación entre arte y archivo en las prácticas artísticas contemporáneas?",
+            "choices": {
+                "a": "Semillero de Investigación CREA",
+                "b": "Semillero Dramaturgia Performática en espacios no convencionales",
+                "c": "Laboratorio de Investigación Biocreación",
+                "d": "Semillero de Investigación sobre el arte colombiano contemporáneo desde Cali"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo principal del Semillero de Investigación Encuentros Sonoros en el Conservatorio Antonio María Valencia?",
+            "choices": {
+                "a": "Fomentar la exploración sonora y de movimiento en diferentes disciplinas artísticas.",
+                "b": "Generar material de actividad artística y de vida a través de la escucha.",
+                "c": "Promover la composición colectiva a partir del entrenamiento corporal del actor.",
+                "d": "Realizar investigaciones sobre la dimensión expresiva del cuerpo en el trabajo creativo."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
         }
     ]
 }

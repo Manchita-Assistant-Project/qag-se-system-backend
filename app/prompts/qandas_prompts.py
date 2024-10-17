@@ -12,13 +12,14 @@ Debes siempre generar una (1) pregunta. \
 ---------------------------------------------------------------------------------
 La pregunta debe ser de nivel: "{difficulty}"
 
-{harder_prompt}
-
 ---------------------------------------------------------------------------------
 Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
 en este arreglo de preguntas:
 
-"{generated_questions}"
+{generated_questions}
+
+---------------------------------------------------------------------------------
+{harder_prompt}
 """
 
 
@@ -34,13 +35,14 @@ Debes siempre generar una (1) pregunta. \
 ---------------------------------------------------------------------------------
 La pregunta debe ser de nivel: "{difficulty}"
 
-{harder_prompt}
-
 ---------------------------------------------------------------------------------
 Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
 en este arreglo de preguntas:
 
-"{generated_questions}"
+{generated_questions}
+
+---------------------------------------------------------------------------------
+{harder_prompt}
 """
 
 
@@ -62,13 +64,14 @@ Debes siempre generar una (1) pregunta. \
 ---------------------------------------------------------------------------------
 La pregunta debe ser de nivel: "{difficulty}"
 
-{harder_prompt}
-
 ---------------------------------------------------------------------------------
 Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
 en este arreglo de preguntas:
 
-"{generated_questions}"
+{generated_questions}
+
+---------------------------------------------------------------------------------
+{harder_prompt}
 """
 
 

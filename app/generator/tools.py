@@ -282,3 +282,4 @@ def classify_question_tool(generated_question: str, context: str):
 
 def save_question_tool(question: dict, question_type: str):
     utils.update_json(question_type, question)
+    utils.update_json('qs', question)
