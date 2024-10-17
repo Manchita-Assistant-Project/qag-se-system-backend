@@ -64,6 +64,8 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
 
     generated_questions = [question["question"] for question in generated_questions_list]
 
+    print(f"generated_questions: {generated_questions}")
+
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
         temperature=0.7,
@@ -227,38 +229,35 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     }
     
     refinement_prompt = f"""
-    Modify the following generated question based on the feedback provided.
+    Modifica la siguiente pregunta generada basándote en el feedback proporcionado.
     
-    Generated question: "{generated_question}"
+    Pregunta generada: "{generated_question}"
     
-    Use this feedback to improve the generated question:
+    Usa este feedback para mejorar la pregunta generada:
     
     "{feedback}"
         
-    Modify the generated question, so that the metrics in the feedback average 0.8.
+    Modifica la pregunta generada para que las métricas en el feedback promedien 0.75.
     
-    ----------------------------------------------------------------------------------
-    Make sure that the modified question is DIFFERENT from any of the
-    following questions:
-    
+    ---------------------------------------------------------------------------------
+    Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
+    en este arreglo de preguntas:
+
     {generated_questions}
     
     ----------------------------------------------------------------------------------
-    Make sure the questions are creative, but still having the `context` in mind!
+    ¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
     
     ----------------------------------------------------------------------------------
-    Never change the type of question!
+    Nunca cambies el tipo de pregunta!
     
-    Question type: "{question_type_to_string[question_type]}"
+    Tipo de la pregunta: "{question_type_to_string[question_type]}"
+        
+    ----------------------------------------------------------------------------------
+    Nunca retornes la misma pregunta generada. ¡Siempre mejórala!
     
     ----------------------------------------------------------------------------------
-    Never translate the improved question! Always return it in spanish!
-    
-    ----------------------------------------------------------------------------------
-    Never return the exact same generated question! Always improve it!
-    
-    ----------------------------------------------------------------------------------
-    Return only the improved version of the generated question.
+    Solo retorna la versión mejorada de la pregunta generada.
     """
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
