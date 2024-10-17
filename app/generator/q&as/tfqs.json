@@ -1,7 +1,7 @@
 {
     "content": [
         {
-            "question": "¿El programa de Diseño Gráfico en la Facultad de Artes Visuales y Aplicadas del Instituto Departamental de Bellas Artes busca formar profesionales éticos capaces de generar transformaciones en términos de inclusión y fortalecimiento de la identidad colectiva en el contexto de la institución?",
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con programas de investigación y promoción específicos para cada disciplina artística en Colombia?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -11,17 +11,7 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El semillero de investigación Ars Vitam se enfoca exclusivamente en la exploración de la interacción entre música y tecnología?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Falso",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El semillero de investigación Encuentros Sonoros se enfoca únicamente en la relación entre sonido, movimiento y expresión artística?",
+            "question": "¿Las técnicas transmedia tienen un impacto significativo en la creación de experiencias inmersivas interactivas dentro del programa de investigación del Instituto Departamental de Bellas Artes, especialmente en el ámbito del arte digital? ¿En qué medida este impacto se manifiesta en la producción y recepción de obras de arte digital en el Instituto Departamental de Bellas Artes?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -31,7 +21,27 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El semillero de investigación Ars Vitam abarca proyectos de investigación en otros campos además de las artes plásticas y visuales?",
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas específicos de investigación y promoción para cada una de las disciplinas artísticas, como la música, la danza, el teatro y las artes visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Es cierto que los programas de formación en animación y arte interactivo ofrecidos por el Instituto Departamental de Bellas Artes se basan principalmente en influencias teóricas y conceptuales específicas relacionadas con la animación y el arte interactivo contemporáneo, y también exploran la corriente del arte digital y la vanguardia tecnológica?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? Does the Instituto Departamental de Bellas Artes in Colombia have specific research and promotion programs for each artistic discipline, such as music, dance, theater, and visual arts?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -41,17 +51,7 @@
             "difficulty": "Fácil"
         },
         {
-            "question": "¿El semillero de investigación Collatio se enfoca exclusivamente en el análisis y producción de obras de arte contemporáneo en el contexto artístico colombiano?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Falso",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el impacto de la relación entre arte y archivo en las prácticas artísticas contemporáneas en el contexto de la investigación en Bellas Artes?",
+            "question": "¿Es cierto que la investigación llevada a cabo por el Instituto Departamental de Bellas Artes en Colombia puede tener implicaciones éticas y morales que impacten negativamente en la promoción de la diversidad y la inclusión en el perfil del docente?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -61,7 +61,19 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El objetivo principal del semillero de investigación Dramaturgia Performática en espacios no convencionales es analizar las adaptaciones de obras de teatro a dichos espacios?",
+            "question": "¿Cuáles son los objetivos específicos de los programas de investigación y promoción ofrecidos por el Instituto Departamental de Bellas Artes en Colombia para cada disciplina artística?",
+            "choices": {
+                "a": "Promover la investigación y creación musical en Valencia",
+                "b": "Fortalecer la proyección social en todas las disciplinas artísticas",
+                "c": "Fomentar la investigación en el contexto de Bellas Artes",
+                "d": "Impulsar la innovación tecnológica en la danza"
+            },
+            "answer": "c",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Los programas de investigación y promoción del Instituto Departamental de Bellas Artes en Colombia para cada disciplina artística son generalmente relevantes y desafiantes en términos de complejidad, incluyendo aspectos como la innovación y la experimentación en cada área artística?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -71,7 +83,7 @@
             "difficulty": "Fácil"
         },
         {
-            "question": "¿El semillero de investigación Collatio también aborda la relación entre arte y diseño en otros campos además del diseño gráfico?",
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas específicos de investigación y promoción para cada disciplina artística, como música, danza, teatro y artes visuales?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -81,7 +93,7 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El semillero de investigación YAGUAR RUMI también aborda aspectos relacionados con la historia y crítica de las artes plásticas en América Latina?",
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como la música, la danza, el teatro y las artes visuales? ¿Estos programas garantizan oportunidades únicas y destacadas para cada disciplina artística?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -91,7 +103,27 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El semillero de investigación Collatio tiene como objetivo principal la exploración de las interacciones entre el arte y el diseño gráfico en el contexto de las artes visuales?",
+            "question": "¿El objetivo principal del semillero de investigación y creación de Diseño Gráfico en el Instituto Departamental de Bellas Artes en Colombia es impulsar la innovación y fomentar la excelencia académica en el campo del diseño gráfico en el ámbito artístico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿En el Instituto Departamental de Bellas Artes de Colombia, existen programas de investigación y promoción específicos para fomentar la innovación y la excelencia académica en cada disciplina artística? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas brindan oportunidades únicas y destacadas para el desarrollo de cada disciplina artística?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -101,7 +133,7 @@
             "difficulty": "Fácil"
         },
         {
-            "question": "El enfoque exclusivo del semillero de investigación Collatio es la producción de obras de arte contemporáneo en el contexto colombiano.",
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas están diseñados para fomentar la innovación y la excelencia académica en cada disciplina artística?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -109,6 +141,46 @@
             "answer": "Verdadero",
             "type": "TFQ",
             "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas brindan oportunidades únicas y destacadas para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ha llevado a cabo investigaciones sobre la aplicación de técnicas de animación en proyectos transmedia, resultando en experiencias innovadoras y disruptivas en la industria del arte digital? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas específicos de investigación y promoción para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas aseguran oportunidades sobresalientes para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
         }
     ]
 }
