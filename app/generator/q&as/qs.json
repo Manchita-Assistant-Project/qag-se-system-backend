@@ -1,5 +1,88 @@
 {
     "content": [
-        
+        {
+            "question": "¿Cuál es el propósito principal del semillero de investigación Ars Vitam en el Conservatorio Antonio María Valencia?",
+            "choices": {
+                "a": "Fortalecer la labor investigativa y fomentar en los estudiantes de Bellas Artes, el interés por las actividades de investigación interdisciplinar.",
+                "b": "Promover la interpretación de músicas populares y afines a través de proyectos interdisciplinarios.",
+                "c": "Investigar y crear en el campo de las artes y sus áreas afines.",
+                "d": "Ofrecer un espacio para indagar y profundizar en el entrenamiento corporal del actor."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los objetivos específicos de los semilleros de investigación en la Facultad de Bellas Artes que se mencionan en el contexto proporcionado?",
+            "choices": {
+                "a": "Realizar análisis medioambientales en espacios no convencionales",
+                "b": "Promover el desarrollo de la práctica investigativa en entornos comunitarios",
+                "c": "Establecer un espacio de integración y producción hacia los procesos artísticos y de diseño gráfico",
+                "d": "Generar habilidades para la investigación en artes en entornos sociales"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué tipo de actividades realiza el Semillero de Investigación Collatio en la Facultad de Artes Visuales y Aplicadas?",
+            "choices": {
+                "a": "Organización de exposiciones de arte",
+                "b": "Realización de investigaciones científicas",
+                "c": "Producción de proyectos artísticos y de diseño gráfico",
+                "d": "Promoción de actividades deportivas"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas utilizadas en la ética de la marca para reducir los riesgos sociales y de seguridad percibidos por los productos o servicios que representa en el campo de la bioética?",
+            "choices": {
+                "a": "Implementar políticas de transparencia y rendición de cuentas.",
+                "b": "Establecer alianzas con organizaciones de derechos humanos.",
+                "c": "Realizar estudios de impacto social y ambiental.",
+                "d": "Crear campañas de concientización sobre la importancia de la ética en la bioética."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas utilizadas en la ética de la marca para aumentar el valor y la moral percibidos de una línea de productos o servicios en función de la bioética?",
+            "choices": {
+                "a": "Crear asociaciones e imágenes positivas relacionadas con la marca.",
+                "b": "Establecer conexiones emocionales con los clientes.",
+                "c": "Reducir los riesgos sociales y de seguridad percibidos.",
+                "d": "Facilitar la imaginación en relación a los bienes intangibles expresados por la marca."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo principal del Semillero de Investigación Entrelíneas en la Facultad de Artes Escénicas en relación con la exploración de la relación entre cuerpo y texto en la escritura performática?",
+            "choices": {
+                "a": "Realizar conciertos y performances en espacios no convencionales",
+                "b": "Plasmar el trabajo resultante en un escenario o muestra",
+                "c": "Estudiar la relación entre arte y archivo en las prácticas artísticas contemporáneas",
+                "d": "Explorar la relación entre cuerpo y texto en la escritura performática"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo del Semillero de Investigación Encuentros Sonoros en el Conservatorio Antonio María Valencia?",
+            "choices": {
+                "a": "Fomentar el espacio y la guía para que los participantes de diferentes quehaceres artísticos realicen exploraciones sonoras y de movimiento, a través de la música y el Método Feldenkrais®, y creen o re-creen material de su actividad artística y de vida.",
+                "b": "Fortalecer el espacio de creación-investigación para la escritura creativa.",
+                "c": "Indagar sobre el acontecimiento social como imagen generadora del acontecimiento poético teatral.",
+                "d": "Realizar exploraciones sonoras y de movimiento para reconocer más posibilidades de expresión a través de la escucha."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        }
     ]
 }

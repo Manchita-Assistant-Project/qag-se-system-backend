@@ -72,6 +72,7 @@ def use_graph(question_type: int, question_difficulty_int: int):
     thread = {
         "configurable": {
             "thread_id": thread_id,
+            "recursion_limit": 6
         }
     }
     

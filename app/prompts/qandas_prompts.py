@@ -134,7 +134,10 @@ d.) Posible respuesta 4 \
 
 ---------------------------------------------------------------------------------
 Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
-    
+
+---------------------------------------------------------------------------------
+Nunca generes más de cuatro (4) posibles respuestas.
+
 ---------------------------------------------------------------------------------
 Las respuestas debe ser de nivel: "{difficulty}"
 
@@ -176,6 +179,9 @@ d.) Posible respuesta 4 \
 
 ---------------------------------------------------------------------------------
 Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
+    
+---------------------------------------------------------------------------------
+Nunca generes más de cuatro (4) posibles respuestas.
     
 ---------------------------------------------------------------------------------
 Las respuestas debe ser de nivel: "{difficulty}"

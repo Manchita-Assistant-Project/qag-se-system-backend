@@ -23,8 +23,9 @@ if __name__ == "__main__":
     #     print(f"📄 {file['title']}")
     print(f"🔍 Found {len(files_in_gdrive)} files in Google Drive")
     
-    # target_file_name = "semilleros_investigacion_2023-1.pdf"
-    target_file_name = "Requisitos PASANTIA para empresas.docx"
+    target_file_name = "semilleros_investigacion_2023-1.pdf"
+    # target_file_name = "Requisitos PASANTIA para empresas.docx"
+    # target_file_name = "NO"
 
     # encuentra el índice del archivo con el nombre específico
     index_specific_file = next((i for i, file in enumerate(files_in_gdrive) if file['title'] == target_file_name), None)
