@@ -65,6 +65,8 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
     generated_questions = [question["question"] for question in generated_questions_list]
 
     print(f"generated_questions: {generated_questions}")
+    
+    generated_questions_string = utils.structure_generated_questions_string(generated_questions)
 
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -76,7 +78,7 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
     # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
     
     prompt_template = ChatPromptTemplate.from_template(types[question_type - 1])
-    prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="", generated_questions=generated_questions)
+    prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="", generated_questions=generated_questions_string)
 
     response_text = llm.invoke(prompt).content
     print(f"response_text: {response_text}")
@@ -221,6 +223,7 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     generated_questions_list = utils.load_json(correct_file)
 
     generated_questions = [question["question"] for question in generated_questions_list]
+    generated_questions_string = utils.structure_generated_questions_string(generated_questions)
     
     question_type_to_string = {
         1: "Opción Múltiple",
@@ -243,7 +246,7 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
     en este arreglo de preguntas:
 
-    {generated_questions}
+    {generated_questions_string}
     
     ----------------------------------------------------------------------------------
     ¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
