@@ -99,13 +99,16 @@ No cambies el tipo de pregunta. El tipo de pregunta es:
 
 "{question_type}"
 
+---------------------------------------------------------------------------------
 ES MUY IMPORTANTE QUE LA PREGUNTA QUE GENERES SEA DEL MISMO TIPO QUE LA \
 PREGUNTA ORIGINAL.
 
 SI LA PREGUNTA ORIGINAL ERA DE OPCIÓN MÚLTIPLE, RETORNAS UNA PREGUNTA DE \
 OPCIÓN MÚLTIPLE.
+
 SI LA PREGUNTA ORIGINAL ERA DE RESPUESTA ABIERTA, RETORNAS UNA PREGUNTA DE \
 RESPUESTA ABIERTA.
+
 SI LA PREGUNTA ORIGINAL ERA DE VERDADER Y FALSO, RETORNAS UNA PREGUNTA DE \
 VERDADERO Y FALSO.
 
@@ -247,10 +250,10 @@ Las respuestas que hagas, generalas todas en un formato de varias opciones. \
 Un ejemplo de esto sería: \
 a.) Posible respuesta 1 \
 b.) Posible respuesta 2 \
-
----------------------------------------------------------------------------------
-Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
     
+---------------------------------------------------------------------------------
+Las únicas dos respuestas válidas son "Verdadero" y "Falso". \
+
 ---------------------------------------------------------------------------------
 Las respuestas debe ser de nivel: "{difficulty}"
 
