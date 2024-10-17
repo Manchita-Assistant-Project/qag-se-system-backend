@@ -238,21 +238,24 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     Modify the generated question, so that the metrics in the feedback average 0.8.
     
     ----------------------------------------------------------------------------------
-    ¡Never change the type of question! ¡Always return the same type of question!
-    
-    Question type: "{question_type_to_string[question_type]}"
-    
-    ----------------------------------------------------------------------------------
-    It's important that the question you generate is different from any of the
-    questions on this list:
+    Make sure that the modified question is DIFFERENT from any of the
+    following questions:
     
     {generated_questions}
     
     ----------------------------------------------------------------------------------
-    ¡Never translate the improved question! ¡Always return it in spanish!
+    Make sure the questions are creative, but still having the `context` in mind!
     
     ----------------------------------------------------------------------------------
-    ¡Never return the exact same generated question! ¡Always improve it!
+    Never change the type of question!
+    
+    Question type: "{question_type_to_string[question_type]}"
+    
+    ----------------------------------------------------------------------------------
+    Never translate the improved question! Always return it in spanish!
+    
+    ----------------------------------------------------------------------------------
+    Never return the exact same generated question! Always improve it!
     
     ----------------------------------------------------------------------------------
     Return only the improved version of the generated question.
