@@ -54,7 +54,7 @@ def question_refiner_node(state):
     last_message = state["messages"][-1].content
     feedback, similarity = last_message.split("|||")
     
-    response = tools.refine_question_tool(question["question"], feedback)
+    response = tools.refine_question_tool(question["question"], feedback, question["question_type"])
     
     return { "messages": [response] }
 

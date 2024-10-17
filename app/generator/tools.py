@@ -213,7 +213,19 @@ def evaluate_similarity_tool(generated_question: str, threshold: float=0.75):
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(generated_question: str, feedback: str):
+def refine_question(generated_question: str, feedback: str, question_type: int):
+    files = ['mcqs', 'oaqs', 'tfqs']
+    correct_file = files[question_type - 1]
+    generated_questions_list = utils.load_json(correct_file)
+
+    generated_questions = [question["question"] for question in generated_questions_list]
+    
+    question_type_to_string = {
+        1: "Opción Múltiple",
+        2: "Respuesta Abierta",
+        3: "Verdadero o Falso"
+    }
+    
     refinement_prompt = f"""
     Modify the following generated question based on the feedback provided.
     
@@ -223,12 +235,26 @@ def refine_question(generated_question: str, feedback: str):
     
     "{feedback}"
         
-    Modify the generated question, so that the metrics in the feedback average 0.75.
+    Modify the generated question, so that the metrics in the feedback average 0.8.
     
+    ----------------------------------------------------------------------------------
+    ¡Never change the type of question! ¡Always return the same type of question!
+    
+    Question type: "{question_type_to_string[question_type]}"
+    
+    ----------------------------------------------------------------------------------
+    It's important that the question you generate is different from any of the
+    questions on this list:
+    
+    {generated_questions}
+    
+    ----------------------------------------------------------------------------------
     ¡Never translate the improved question! ¡Always return it in spanish!
     
+    ----------------------------------------------------------------------------------
     ¡Never return the exact same generated question! ¡Always improve it!
     
+    ----------------------------------------------------------------------------------
     Return only the improved version of the generated question.
     """
     llm = AzureChatOpenAI(
@@ -240,11 +266,11 @@ def refine_question(generated_question: str, feedback: str):
     print(f"LLM response: {response}")
     return response
 
-def refine_question_tool(generated_question: str, feedback: str, dataset_path: str=QANDAS_EVALUATION_DATASET):
+def refine_question_tool(generated_question: str, feedback: str, question_type: int, dataset_path: str=QANDAS_EVALUATION_DATASET):
     # dataset = load_dataset(dataset_path)
     # human_questions = dataset["Pregunta"].to_list()
     
-    response = refine_question(generated_question, feedback)
+    response = refine_question(generated_question, feedback, question_type)
     
     return response
 
@@ -254,7 +280,6 @@ def classify_question(generated_question: str, context: str):
     
     The three classes are:
     - Easy
-    - Medium
     - Hard 
         
     Generated question: "{generated_question}"
