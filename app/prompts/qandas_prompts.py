@@ -113,6 +113,31 @@ No tienes por qué poner el tipo de la pregunta en la pregunta que generes.
 """
 
 
+Q_EVALUATION_PROMPT = """
+Evaluate the following generated question.
+
+Generated question: "{generated_question}"
+
+Use this context to evaluate the generated question:
+
+"{context}"
+
+Evaluate the generated question based on the following criteria, providing a score from 0 to 1 for each, along with a brief explanation:
+
+- Clarity: Is the question easy to understand, and does it clearly include the key concepts being asked about? The question should explicitly mention important elements rather than leaving them implied. For example, if referring to a subject, the question should not be vague like "What is the goal of this subject?" but should specify clearly what it refers to. A score of 1 indicates the question is clear and unambiguous, while a lower score suggests vagueness or potential confusion.
+
+- Relevance: How closely does the question align with the provided context? Does it directly relate to the content, or does it feel tangential or unrelated? A score of 1 reflects that the question is highly relevant to the context, while a lower score suggests that the question may not directly address the information provided.
+
+- Complexity: Does the question demonstrate a deeper level of thinking, or is it overly simplistic? This criterion looks at how much thought the question requires to answer and if it challenges the reader to reflect or analyze. A score of 1 indicates that the question is appropriately challenging for the context, while a lower score suggests it is too basic or too advanced for the situation.
+
+- Originality: Is the question unique, or does it seem like a standard question that could be asked about any similar situation? If the generated question feels generic or overused, penalize originality. A score of 1 indicates a highly original and creative question, while a lower score should be given for questions that seem commonplace.
+
+Provide a score from 0 to 1 for each criterion and include a brief justification for the score assigned to each.
+
+Always return the four (4) scores.
+"""
+
+
 A_MCQ_PROMPT = """
 Eres un modelo que genera respuestas de opción múltiple a partir \
 únicamente de: \
