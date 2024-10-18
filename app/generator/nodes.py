@@ -4,9 +4,10 @@ import json
 import app.generator.tools as tools
 
 def context_generator_node(state):
-    question = state.get("question", None)
+    print('--- CONTEXT GENERATOR ---')
+    question = state["question"]
     
-    if question["question"] is not None: # se genera un contexto basado en la pregunta generada
+    if question["approved"] == True: # se genera un contexto basado en la pregunta generada
         result = tools.get_context_tool(question["question"], k=5)
     else:
         result = tools.get_context_tool()
@@ -14,18 +15,38 @@ def context_generator_node(state):
     return { "messages": [result] }
 
 def question_generator_node(state):
+    print('--- QUESTION GENERATOR ---')
     question = state["question"]
-    question_type = question["question_type"] # para este momento existe
+    question_type = question["question_type"] # para este momento ya existe
     question_difficulty = question["question_difficulty"]
     
-    context = state["messages"][-1].content
+    context = state["messages"][-1].content if '|||' not in state["messages"][-1].content else state["messages"][-1].content.split('|||')[0]
     result = tools.question_generator_tool(question_type, question_difficulty, context)
     
     question["question"] = result
     print(f"question: {result}")
     return { "messages": [result], "question": question }
 
+def question_seen_node(state):
+    print("--- QUESTION SEEN ---")
+    question = state["question"]
+    question_type = question["question_type"]
+    
+    generated_question = state["messages"][-1].content
+    context = state["messages"][-2].content
+    
+    seen = tools.question_seen_embeddings_tool(question, question_type)    
+    
+    print(f"Similarity: {seen}")
+    
+    if seen >= 0.86:
+        return { "messages": [f"{context}|||{seen}"] }
+    
+    question["question"] = generated_question if '|||' not in generated_question else generated_question.split('|||')[0]
+    return { "messages": [f"{question['question']}|||{seen}"], "question": question }
+
 def answer_generator_node(state):
+    print('--- ANSWER GENERATOR ---')
     question = state["question"]
     question_type = question["question_type"]
     question_difficulty = question["question_difficulty"]
@@ -39,26 +60,30 @@ def answer_generator_node(state):
     return { "messages": [result], "question": question }
 
 def question_evaluator_node(state):
+    print('--- QUESTION EVALUATOR ---')
     question = state["question"]
     generated_question = state["messages"][-1].content
-    similarity, feedback = tools.evaluate_similarity_tool(generated_question)
+    quality, feedback = tools.evaluate_similarity_tool(generated_question)
     
-    if similarity < 0.7:
-        return { "messages": [f"{feedback}|||{similarity}"] }
+    if quality < 0.7:
+        return { "messages": [f"{feedback}|||{quality}"] }
     
-    question["question"] = generated_question
-    return { "messages": [f"{feedback}|||{similarity}"], "question": question }
+    question["question"] = generated_question if '|||' not in generated_question else generated_question.split('|||')[0]
+    question["approved"] = True
+    return { "messages": [f"{feedback}|||{quality}"], "question": question }
 
 def question_refiner_node(state):
+    print('--- QUESTION REFINER ---')
     question = state["question"]
     last_message = state["messages"][-1].content
-    feedback, similarity = last_message.split("|||")
+    feedback, quality = last_message.split("|||")
     
-    response = tools.refine_question_tool(question["question"], feedback, question["question_type"])
+    response = tools.refine_question_tool(question["question"], feedback, float(quality), question["question_type"])
     
     return { "messages": [response] }
 
 def data_saver_tool(state):
+    print('--- DATA SAVER ---')
     question = state["question"]
     question_format = question["question_answers"]
     

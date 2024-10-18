@@ -1,0 +1,361 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es la ciudad en la que se encuentra el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Cali",
+                "b": "Bogotá",
+                "c": "Medellín",
+                "d": "Barranquilla"
+            }
+        },
+        {
+            "question": "¿Cuál es el enfoque principal del proyecto educativo del Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Formación en artes plásticas",
+                "b": "Promoción de la cultura local",
+                "c": "Desarrollo de habilidades técnicas",
+                "d": "Fomento de la creatividad"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las competencias que se desarrollan en la asignatura en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Competencia 1",
+                "b": "Competencia 2",
+                "c": "Competencia 3",
+                "d": "Competencia 4"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué estrategias se pueden implementar en el Instituto Departamental de Bellas Artes para integrar de manera innovadora la poesía y la música en la asignatura, promoviendo así la creatividad y la expresión artística de los estudiantes?",
+            "choices": {
+                "a": "Realizar conciertos y recitales donde los estudiantes puedan mostrar sus habilidades musicales y poéticas.",
+                "b": "Organizar talleres de improvisación musical y poética para que los estudiantes puedan experimentar y crear en el momento.",
+                "c": "Incorporar tecnología en las clases de música y poesía, permitiendo a los estudiantes utilizar herramientas digitales para crear y compartir sus trabajos artísticos.",
+                "d": "Establecer colaboraciones con artistas locales y nacionales para que los estudiantes puedan aprender de profesionales y participar en proyectos artísticos conjuntos."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué estrategias específicas pueden implementar las instituciones educativas para promover la participación y el acceso inclusivo a las actividades artísticas de la comunidad?",
+            "choices": {
+                "a": "Ofrecer becas de estudio a estudiantes talentosos en el área artística.",
+                "b": "Realizar eventos culturales abiertos a toda la comunidad.",
+                "c": "Crear programas de mentoría artística para estudiantes con discapacidad.",
+                "d": "Promover la diversidad cultural en las actividades artísticas de la institución."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los enfoques y estrategias específicas que el Instituto Departamental de Bellas Artes utiliza para fomentar una comprensión más profunda y una apreciación más amplia del folclore y la cultura tradicional de Colombia a través de la interdisciplinariedad entre teatro, poesía, canto y música en el estudio y práctica de la poesía popular?",
+            "choices": {
+                "a": "Organiza festivales anuales de poesía popular en diferentes regiones del país",
+                "b": "Ofrece talleres de poesía popular en colaboración con artistas locales",
+                "c": "Realiza investigaciones sobre la historia y tradiciones del folclore colombiano",
+                "d": "Promueve la creación de grupos interdisciplinarios que fusionen teatro, poesía, canto y música en sus presentaciones"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo principal del Instituto Departamental de Bellas Artes en relación con la formación integral de sus estudiantes en el campo de las bellas artes, y qué enfoques y estrategias innovadoras utiliza para fomentar la creatividad y la expresión artística de los estudiantes en todas las disciplinas artísticas que ofrece?",
+            "choices": {
+                "a": "Desarrollar y fortalecer los planes y programas educativos encaminados a la formación de artistas con altos niveles de desempeño profesional.",
+                "b": "Fomentar la interdisciplinariedad y el trabajo colaborativo entre las diferentes disciplinas artísticas.",
+                "c": "Implementar metodologías de enseñanza y aprendizaje basadas en problemas y el uso de tecnologías digitales.",
+                "d": "Promover la participación de los estudiantes en proyectos de investigación y creación artística."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias implementadas por el Instituto Departamental de Bellas Artes para promover la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?|||0.2",
+            "choices": {
+                "a": "Implementación de rampas de acceso en todas las instalaciones del Instituto.",
+                "b": "Creación de programas de formación especializados para personas con discapacidad.",
+                "c": "Contratación de intérpretes en lenguaje de señas para eventos y clases.",
+                "d": "Adaptación de materiales y recursos educativos para personas con discapacidad."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias implementadas por el Instituto Departamental de Bellas Artes para promover la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?",
+            "choices": {
+                "a": "Ofrecer becas exclusivas para personas con discapacidad",
+                "b": "Adaptar los espacios y materiales para personas con discapacidad",
+                "c": "Realizar eventos y exposiciones inclusivas",
+                "d": "Brindar talleres de sensibilización sobre la discapacidad"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para promover la inclusión y la accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?|||0.2",
+            "choices": {
+                "a": "Implementación de rampas y accesibilidad física en todas las instalaciones del instituto.",
+                "b": "Ofrecimiento de programas de educación artística adaptados para personas con discapacidad.",
+                "c": "Contratación de intérpretes de lenguaje de señas para las actividades artísticas y educativas.",
+                "d": "Organización de eventos y exposiciones enfocados en la inclusión de personas con discapacidad."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?",
+            "choices": {
+                "a": "Implementación de programas de educación inclusiva que promueven la participación de personas con discapacidad en todas las actividades artísticas y educativas.",
+                "b": "Adaptación de instalaciones y materiales para garantizar la accesibilidad de personas con discapacidad.",
+                "c": "Capacitación de docentes y personal para atender las necesidades específicas de personas con discapacidad.",
+                "d": "Colaboración con organizaciones y expertos en discapacidad para desarrollar proyectos inclusivos."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para promover la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?",
+            "choices": {
+                "a": "Implementación de programas de educación inclusiva que permiten la participación de personas con discapacidad en todas las actividades artísticas y educativas.",
+                "b": "Adaptación de espacios físicos y materiales para garantizar la accesibilidad de personas con discapacidad.",
+                "c": "Capacitación y sensibilización del personal docente y artístico para atender las necesidades de personas con discapacidad.",
+                "d": "Creación de alianzas con organizaciones y entidades especializadas en inclusión para desarrollar proyectos y programas conjuntos."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias concretas implementadas por el Instituto Departamental de Bellas Artes para impulsar la comprensión profunda del folclore y la cultura tradicional de Colombia mediante la integración interdisciplinaria del teatro, la poesía, el canto y la música en el estudio y práctica de la poesía popular?",
+            "choices": {
+                "a": "Realizar eventos anuales dedicados a la música popular",
+                "b": "Estimular la creación de agrupaciones de cámara",
+                "c": "Promover la participación de los músicos como solistas",
+                "d": "Establecer una línea de investigación sobre protección y salvaguarda del patrimonio"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para asegurar la accesibilidad de personas con discapacidad en sus actividades artísticas y educativas, especialmente en los programas de música y danza?",
+            "choices": {
+                "a": "Implementación de tecnologías de asistencia para personas con discapacidad auditiva y visual.",
+                "b": "Adaptación de los espacios físicos para facilitar el acceso y movilidad de personas con discapacidad física.",
+                "c": "Contratación de intérpretes y guías especializados en lenguaje de señas y comunicación táctil.",
+                "d": "Desarrollo de programas de formación y capacitación para el personal docente y artístico en temas de inclusión y accesibilidad."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias implementadas por el Instituto Departamental de Bellas Artes para fomentar la inclusión de personas con discapacidad en sus programas de música y danza?",
+            "choices": {
+                "a": "Adaptación de instrumentos y coreografías para personas con discapacidad",
+                "b": "Contratación de profesionales especializados en inclusión",
+                "c": "Creación de programas de música y danza exclusivos para personas con discapacidad",
+                "d": "Promoción de la accesibilidad en los espacios y eventos de música y danza"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el enfoque principal del Instituto Departamental de Bellas Artes para promover la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?",
+            "choices": {
+                "a": "Ofrecer programas de educación especializada para personas con discapacidad",
+                "b": "Adaptar las instalaciones y recursos para personas con discapacidad",
+                "c": "Implementar estrategias de sensibilización y formación en inclusión",
+                "d": "Fomentar alianzas con organizaciones que trabajan en el campo de la discapacidad"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo principal del Instituto Departamental de Bellas Artes en relación con la formación integral de sus estudiantes en el campo de las bellas artes?",
+            "choices": {
+                "a": "Promover la investigación en arte contemporáneo",
+                "b": "Fomentar la interdisciplinariedad entre las diferentes disciplinas artísticas",
+                "c": "Ofrecer programas de formación infantil y juvenil en música y artes escénicas",
+                "d": "Brindar una educación especializada en artes y diseño"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias implementadas por el Instituto Departamental de Bellas Artes para promover la inclusión y accesibilidad de personas con discapacidad en sus programas de música y danza?",
+            "choices": {
+                "a": "Ofrecer becas exclusivas para personas con discapacidad",
+                "b": "Adaptar las instalaciones y equipamiento para personas con discapacidad",
+                "c": "Brindar apoyo y adaptaciones en las clases para personas con discapacidad",
+                "d": "Organizar eventos y actividades inclusivas para personas con discapacidad"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias implementadas por el Instituto Departamental de Bellas Artes para fomentar la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?",
+            "choices": {
+                "a": "Implementación de tecnologías de asistencia para personas con discapacidad.",
+                "b": "Adaptación de espacios físicos y equipamiento para personas con discapacidad.",
+                "c": "Oferta de programas de formación específicos para personas con discapacidad.",
+                "d": "Contratación de profesionales especializados en inclusión y discapacidad."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el enfoque principal del Instituto Departamental de Bellas Artes en relación a la inclusión y accesibilidad de personas con discapacidad en sus actividades artísticas y educativas?",
+            "choices": {
+                "a": "Promover la participación activa de personas con discapacidad en todas las actividades artísticas y educativas.",
+                "b": "Ofrecer programas exclusivos para personas con discapacidad en el campo de las artes.",
+                "c": "Brindar apoyo y recursos para facilitar la inclusión de personas con discapacidad en las actividades artísticas y educativas.",
+                "d": "No tiene un enfoque específico en relación a la inclusión y accesibilidad de personas con discapacidad."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con un semillero de animación y interactividad?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Los programas de formación en diseño gráfico del Instituto Departamental de Bellas Artes implementan enfoques y metodologías innovadoras y únicas en comparación con otros programas similares en la región?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ha implementado medidas de accesibilidad en su infraestructura física para garantizar la inclusión de personas con discapacidad, como la instalación de elevadores y señalización braille?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "b",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con un semillero de investigación en Diseño?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece talleres especializados en creación objetual?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico?|||0.4",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con un programa de formación en Diseño de Interiores?|||0.4",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "b",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y otras disciplinas artísticas además de las mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y otras disciplinas artísticas que van más allá de las mencionadas en el contexto, como por ejemplo danza y teatro?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en cine, comunicación digital y otras disciplinas relacionadas con el arte en general?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en artes plásticas y visuales adicionales a las áreas artísticas mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece talleres especializados en arte y sostenibilidad además de los mencionados en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

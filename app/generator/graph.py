@@ -5,27 +5,36 @@ import app.generator.utils as utils
 import app.generator.nodes as nodes
 from app.generator.state import State, Question
 
-from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, END
+from langchain_core.messages import HumanMessage
+from langgraph.errors import GraphRecursionError
 from langgraph.checkpoint.memory import MemorySaver
+from langchain_core.runnables import RunnableConfig
 
 # routing functions
 def question_or_answer_path(state) -> Literal["question_generator", "answer_generator"]:
     question = state["question"]
     
-    if question["question"] is None: 
+    if question["approved"] == False:
         return "question_generator"
     else:
-        print('POR ACÁ')
         return "answer_generator"
     
-def refine_or_classify_path(state) -> Literal["question_refiner", "context_generator"]:
-    similarity = state["messages"][-1].content.split("|||")[1]
+def question_approved(state) -> Literal["question_refiner", "context_generator"]:
+    quality = state["messages"][-1].content.split("|||")[1]
 
-    if float(similarity) < 0.8: # ajustar threshold
+    if float(quality) < 0.75: # ajustar threshold
         return "question_refiner"
     else:
         return "context_generator"
+    
+def question_already_seen(state) -> Literal["context_generator", "question_evaluator"]:
+    similarity = state["messages"][-1].content.split("|||")[1]
+
+    if float(similarity) >= 0.86: # ajustar threshold
+        return "context_generator"
+    else:
+        return "question_evaluator"
 
 # building the graph
 workflow = StateGraph(State)
@@ -34,6 +43,7 @@ workflow = StateGraph(State)
 workflow.add_node("context_generator", nodes.context_generator_node)
 workflow.add_node("question_generator", nodes.question_generator_node)
 workflow.add_node("answer_generator", nodes.answer_generator_node)
+workflow.add_node("question_seen_validator", nodes.question_seen_node)
 workflow.add_node("question_evaluator", nodes.question_evaluator_node)
 workflow.add_node("question_refiner", nodes.question_refiner_node)
 # workflow.add_node("question_classifier", nodes.question_classifier_node)
@@ -48,11 +58,17 @@ workflow.add_conditional_edges(
 )
 
 workflow.add_conditional_edges(
-    "question_evaluator",
-    refine_or_classify_path
+    "question_seen_validator",
+    question_already_seen
 )
 
-workflow.add_edge("question_generator", "question_evaluator")
+workflow.add_conditional_edges(
+    "question_evaluator",
+    question_approved
+)
+
+workflow.add_edge("question_generator", "question_seen_validator")
+# workflow.add_edge("question_generator", "question_evaluator")
 workflow.add_edge("question_refiner", "question_evaluator")
 # workflow.add_edge("question_classifier", "context_generator")
 workflow.add_edge("answer_generator", "qanda_saver")
@@ -72,9 +88,13 @@ def use_graph(question_type: int, question_difficulty_int: int):
     thread = {
         "configurable": {
             "thread_id": thread_id,
-            "recursion_limit": 6
+            "recursion_limit": 75
         }
     }
+    config = RunnableConfig(
+        thread_id=thread_id,
+        recursion_limit=75
+    )
     
     # question_type = int(input("Enter question type: "))
     # question_difficulty_int = int(input("Enter question difficulty: "))
@@ -84,12 +104,12 @@ def use_graph(question_type: int, question_difficulty_int: int):
     # 3 -> Verdadero o Falso
     # 4 -> Completar Espacios (idea)
     
-    # question_type = 1
+    # question_type = 1 # COMENTAR!!!!
     
     # 1 -> Fácil
     # 2 -> Difícil
     
-    # question_difficulty_int = 2
+    # question_difficulty_int = 2 # COMENTAR!!!!
     question_difficulty = ""
     
     if question_difficulty_int == 1:
@@ -100,13 +120,17 @@ def use_graph(question_type: int, question_difficulty_int: int):
     question = Question(
         question=None,
         question_type=question_type,
-        question_difficulty=question_difficulty
+        question_difficulty=question_difficulty,
+        approved=False
     )
     graph.update_state(thread, { "question": question })
     
-    for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, thread, stream_mode="values"):
-        print(f"NEXT: {graph.get_state(thread).next}")
-        if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
-            event['messages'][-1].pretty_print()
+    try:
+        for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, config, stream_mode="values"):
+            print(f"NEXT: {graph.get_state(thread).next}")
+            if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
+                event['messages'][-1].pretty_print()
+    except GraphRecursionError:
+        print("Recursion limit reached")
 
 # use_graph()

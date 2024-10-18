@@ -171,10 +171,5 @@ def main():
 
     ...
 
-# if __name__ == "__main__":
-#     root_folder_id = '1IMUNjBqkivtipzx476cuz3eY1HPDfn12'
-#     files_in_gdrive = gdrive.get_files_recursive(root_folder_id)
-#     for each_file in files_in_gdrive:
-#         gdrive.download_file_from_drive(each_file['id'], chroma_utils.FILES_PATH)
-#         main_load() # proceso de recorte de chunks y guardado en la base de datos
-#         utils.delete_local_file(os.path.join(chroma_utils.FILES_PATH, each_file['title']))
+if __name__ == "__main__":
+    main_load() # proceso de recorte de chunks y guardado en la base de datos

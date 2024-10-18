@@ -1,0 +1,136 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es el objetivo principal del Sistema de práctica social?",
+            "choices": {
+                "a": "Promover la comunicación visual",
+                "b": "Transformar el entorno",
+                "c": "Desarrollar habilidades estéticas",
+                "d": "Generar proyectos multimedia"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es una de las características del modelo de práctica social?",
+            "choices": {
+                "a": "Dominio de diversos lenguajes estéticos",
+                "b": "Enfoque en la comunicación oral",
+                "c": "Énfasis en la teoría del diseño",
+                "d": "Fomento de la práctica individual"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es la formación académica del docente de la Facultad de Diseño de Medios Interactivos?",
+            "choices": {
+                "a": "Comunicación Social y Diseño Gráfico",
+                "b": "Artes Visuales y Multimedia",
+                "c": "Diseño Industrial y Animación",
+                "d": "Ingeniería de Sistemas y Programación"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿En qué año se graduó el docente de la Universidad del Valle?",
+            "choices": {
+                "a": "2005",
+                "b": "2006",
+                "c": "2007",
+                "d": "2008"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es el nombre de la resolución que establece el Sistema de práctica social?",
+            "choices": {
+                "a": "Resolución No. 051 de junio 24 de 2008",
+                "b": "Resolución No. 044 de mayo 15 de 2007",
+                "c": "Resolución No. 066 de agosto 10 de 2009",
+                "d": "Resolución No. 077 de septiembre 5 de 2010"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es la facultad a la que pertenece el docente de la Universidad Autónoma de Occidente?",
+            "choices": {
+                "a": "Facultad de Diseño de Medios Interactivos",
+                "b": "Facultad de Comunicación Social",
+                "c": "Facultad de Artes Visuales",
+                "d": "Facultad de Ingeniería de Sistemas"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es uno de los campos de estudio del diseño?",
+            "choices": {
+                "a": "Física cuántica",
+                "b": "Historia del arte",
+                "c": "Biología molecular",
+                "d": "Economía internacional"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es una de las habilidades necesarias para el diseño digital?",
+            "choices": {
+                "a": "Conocimiento de técnicas de carpintería",
+                "b": "Dominio de diversos lenguajes de programación",
+                "c": "Experiencia en la agricultura",
+                "d": "Habilidad para tocar instrumentos musicales"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es una de las áreas de especialización en diseño?",
+            "choices": {
+                "a": "Diseño de moda",
+                "b": "Diseño de edificios",
+                "c": "Diseño de automóviles",
+                "d": "Diseño de alimentos"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es una de las competencias del diseñador?",
+            "choices": {
+                "a": "Capacidad para realizar cirugías",
+                "b": "Habilidad para construir puentes",
+                "c": "Destreza en la cocina",
+                "d": "Capacidad crítica y discursiva"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las principales líneas de investigación en las que se enfocan los proyectos y semilleros de investigación en el programa de Diseño Gráfico de la Universidad Colegio Mayor del Cauca?",
+            "choices": {
+                "a": "Investigación en comunicación visual",
+                "b": "Investigación en diseño editorial",
+                "c": "Investigación en diseño de marca",
+                "d": "Investigación en diseño web"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

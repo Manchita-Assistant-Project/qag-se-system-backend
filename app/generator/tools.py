@@ -3,6 +3,7 @@ import re
 import json
 import random
 import string
+import numpy as np
 import pandas as pd
 from typing import Dict, List, TypedDict
 
@@ -64,14 +65,13 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
 
     generated_questions = [question["question"] for question in generated_questions_list]
 
-    print(f"generated_questions: {generated_questions}")
+    # print(f"generated_questions: {generated_questions}")
     
     generated_questions_string = utils.structure_generated_questions_string(generated_questions)
 
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0.7,
-        max_tokens=200
+        temperature=0.7
     )
     
     types = [Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT]
@@ -102,8 +102,7 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
 def answer_generator_tool(q_type: int, question: str, difficulty: str, context: str):
     llm = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0.7,
-        max_tokens=200
+        temperature=0.7
     )
     
     types = [A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT]
@@ -172,8 +171,7 @@ def conditional_evaluation(generated_question, threshold=0.6):
     if similarity < threshold:  # Si la similitud es baja, pedirle al LLM una evaluación más profunda
         llm = AzureChatOpenAI(
             deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-            temperature=0.2,
-            max_tokens=200
+            temperature=0.2
         )
         
         prompt_template = ChatPromptTemplate.from_template(Q_EVALUATION_PROMPT)
@@ -217,7 +215,7 @@ def evaluate_similarity_tool(generated_question: str, threshold: float=0.75):
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(generated_question: str, feedback: str, question_type: int):
+def refine_question(generated_question: str, feedback: str, similarity: float, question_type: int):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
@@ -240,6 +238,8 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     
     "{feedback}"
         
+    Similarity pasado: "{similarity}"
+    
     Modifica la pregunta generada para que las métricas en el feedback promedien 0.75.
     
     ---------------------------------------------------------------------------------
@@ -271,44 +271,89 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     print(f"LLM response: {response}")
     return response
 
-def refine_question_tool(generated_question: str, feedback: str, question_type: int, dataset_path: str=QANDAS_EVALUATION_DATASET):
+def refine_question_tool(generated_question: str, feedback: str, similarity: float, question_type: int, dataset_path: str=QANDAS_EVALUATION_DATASET):
     # dataset = load_dataset(dataset_path)
     # human_questions = dataset["Pregunta"].to_list()
     
-    response = refine_question(generated_question, feedback, question_type)
+    response = refine_question(generated_question, feedback, similarity, question_type)
     
     return response
 
-def classify_question(generated_question: str, context: str):
-    refinement_prompt = f"""
-    Classify the following generated question based on the context provided.
+def question_seen_tool(question: dict, question_type: int):
+    files = ['mcqs', 'oaqs', 'tfqs']
+    correct_file = files[question_type - 1]
+    generated_questions_list = utils.load_json(correct_file)
+
+    generated_questions = [question["question"] for question in generated_questions_list]
     
-    The three classes are:
-    - Easy
-    - Hard 
+    generated_questions_string = utils.structure_generated_questions_string(generated_questions)
+    
+    print(f"Evaluating if {question} was already seen...")
         
-    Generated question: "{generated_question}"
+    seen = any(value == question["question"] for value in generated_questions)
+    
+    if seen == False:
+        prompt = f"""    
+        Debes comparar la pregunta: "{question['question']}"
+        
+        Con cada una de las siguientes preguntas:
+            
+        `
+        {generated_questions_string}
+        `
+        
+        Y determinar si la pregunta ya ha sido generada anteriormente.
+        -----------------------------------------------------------------------------------------------------------------------------
+        Debes determinar si la pregunta es parecida a alguna otra de las de la lista lista.
+        
+        ¿De en una escala de 0 a 1 (1 significa que son iguales y 0 significa que son totalmente distintas), es parecida a alguna?
 
-    Use this contexto to classify the generated question:
-    
-    "{context}"
-    
-    Return only the class of the generated question.    
-    """
-    llm = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0.8,
-        max_tokens=200
-    )
-    
-    response = llm.invoke(refinement_prompt).content
-    print(f"LLM response: {response}")
-    return response
+        No me recomiendes cómo sacar los valores. Necesito que tú determines los valores de parecido
+        
+        Determina un valor de parecido con cada pregunta de la lista.
+        
+        Sé muy sincero. Si hay alguna parecida, no tengas miedo de dar un valor alto.
+        
+        Retorna siempre una valoración para cada pregunta y al final la valoración más alta entre todas.
+        """
 
-def classify_question_tool(generated_question: str, context: str):
-    response = classify_question(generated_question, context)
+        llm = AzureChatOpenAI(
+            deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+            temperature=1
+        )
+        
+        response = llm.invoke(prompt).content
+    else:
+        response = "1.0"
+        
+    # print(f"question_seen_tool: {response}")
+    matches = re.findall(r'\b\d+\.\d+|\b[01]\b', response)[-1]
     
-    return response
+    print(f"Valoración: {matches}")
+    return float(matches)
+
+def question_seen_embeddings_tool(question: dict, question_type: int, threshold=0.86, hdf5_file='embeddings.h5'):
+    # Obtener el modelo de embedding
+    embedding_model = chroma_utils.get_embedding_function()
+    question_embedding = embedding_model.embed_query(question["question"])
+
+    # Cargar embeddings almacenados
+    stored_embeddings = utils.load_embeddings_hdf5(question_type, hdf5_file)
+
+    if len(stored_embeddings) == 0:
+        # Si no hay embeddings, guarda el nuevo embedding y retorna
+        utils.save_embedding_hdf5(question_embedding, question_type, hdf5_file)
+        return 0  # no hay preguntas previas, así que no hay similitud previa
+
+    # Calcular la similitud coseno
+    similarities = cosine_similarity([question_embedding], stored_embeddings)
+    max_similarity = max(similarities[0])
+
+    if max_similarity < threshold:
+        # Si no es lo suficientemente similar, guarda el nuevo embedding
+        utils.save_embedding_hdf5(question_embedding, question_type, hdf5_file)
+
+    return max_similarity
 
 def save_question_tool(question: dict, question_type: str):
     utils.update_json(question_type, question)

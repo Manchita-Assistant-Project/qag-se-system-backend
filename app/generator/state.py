@@ -8,6 +8,7 @@ class Question(TypedDict):
     question_type: int
     question_difficulty: str
     question_answers: str
+    approved: bool
 
 class State(TypedDict):
     messages: Annotated[list[AnyMessage], add_messages]

@@ -4,19 +4,18 @@ Q_MCQ_PROMPT = """
 Eres un modelo que genera preguntas de opción múltiple a partir \
 únicamente de: \
 
-{context}
+"{context}"
+
+---------------------------------------------------------------------------------
+Y diferentes de:
+
+"{generated_questions}"
 
 ---------------------------------------------------------------------------------
 Debes siempre generar una (1) pregunta. \
     
 ---------------------------------------------------------------------------------
 La pregunta debe ser de nivel: "{difficulty}"
-
----------------------------------------------------------------------------------
-Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
-en este arreglo de preguntas:
-
-{generated_questions}
 
 ---------------------------------------------------------------------------------
 {harder_prompt}
@@ -77,17 +76,17 @@ en este arreglo de preguntas:
 
 HARDER_Q_PROMPT = """
 ---------------------------------------------------------------------------------
-Genera una pregunta más compleja basada en la pregunta:
+Haz esta pregutna más difícil:
 
 "{question}"
 
-Y única y exclusivamente en el contexto:
+Y única y exclusivamente basándote en el contexto:
 
 "{context}"
 
 ---------------------------------------------------------------------------------
-Hacer una pregunta más compleja significa que la pregunta debe ser más difícil \
-de responder, no necesariamente más larga ni más palabras.
+Hacer una pregunta más difícil no significa hacerla más larga que
+tenga más palabras.
 
 Lo importante es el nivel del contenido de la pregunta. ¡Hazla más difícil, \
 no la hagas solamente más larga.
@@ -269,4 +268,45 @@ Aquí un ejemplo: \
     "answer": "b" \
         
 dentro de un diccionario Python.
+"""
+
+
+TEN_Q_MCQ_PROMPT = """
+Eres un modelo que genera preguntas de opción múltiple a partir \
+únicamente de: \
+
+"{context}"
+
+E hace lo posible para no generar preguntas parecidas a:
+
+"{generated_questions}"
+
+---------------------------------------------------------------------------------
+Debes siempre generar diez (10) preguntas. \
+    
+---------------------------------------------------------------------------------
+Dos tercios (2/3) de las preguntas deben ser de nivel "Fácil". \
+    
+Un tercio (1/3) de las preguntas deben ser de nivel "Difícil".
+
+---------------------------------------------------------------------------------
+Ninguna de las preguntas que generes debe ser igual o si quiera parecida en lo \
+más mínimo a alguna de estas otras preguntas viejas e incorrectas:
+
+"{generated_questions}"
+
+---------------------------------------------------------------------------------
+Debes siempre retornar las preguntas y las dificultades en una lista de diccionarios
+al estilo Python:
+
+Aquí un ejemplo: \
+[
+    (
+        "question": "¿Cuál es la capital de Colombia?", \
+        "difficulty": "Fácil" \
+    ),
+]
+
+---------------------------------------------------------------------------------
+Siempre retorna el formato completo para todas las preguntas.
 """

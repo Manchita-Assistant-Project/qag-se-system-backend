@@ -1,0 +1,702 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es la ciudad en la que se encuentra el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Cali",
+                "b": "Bogotá",
+                "c": "Medellín",
+                "d": "Barranquilla"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuándo se estableció el Programa de Diseño Gráfico en la Universidad?",
+            "choices": {
+                "a": "1980",
+                "b": "2008",
+                "c": "2011",
+                "d": "2019"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es uno de los objetivos del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Promover el uso de herramientas digitales en la creación de imágenes",
+                "b": "Fomentar la interdisciplinariedad y la autonomía en el diseño gráfico",
+                "c": "Desarrollar habilidades en la narración gráfica y audiovisual",
+                "d": "Enseñar técnicas de diseño tipográfico"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es la cantidad de créditos académicos requeridos en el programa de Diseño Gráfico?",
+            "choices": {
+                "a": "120 créditos",
+                "b": "180 créditos",
+                "c": "240 créditos",
+                "d": "300 créditos"
+            },
+            "answer": "b) 180 créditos",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es una de las líneas de investigación del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Comunicación",
+                "b": "Estética",
+                "c": "Historia",
+                "d": "Tecnología"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Quién es el rector de la Institución Universitaria del Valle del Cauca?",
+            "choices": {
+                "a": "Paola Andrea Quijano Fuenmayor",
+                "b": "Claudia Marcela Sánchez Morales",
+                "c": "Alba Lucía Reina Meneses",
+                "d": "Alberto Ayala Morante"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es el objetivo de desarrollo proyectual del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Diseñar interfaces digitales",
+                "b": "Desarrollar proyectos de emprendimiento",
+                "c": "Integrar diversos contextos en el campo de la comunicación visual",
+                "d": "Investigar la interacción entre la pieza gráfica, el usuario y el contexto"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es el objetivo del programa de Diseño Gráfico en relación a la educación artística?",
+            "choices": {
+                "a": "Fomentar la creatividad y el pensamiento crítico en el ámbito artístico",
+                "b": "Desarrollar habilidades técnicas para la creación de imágenes digitales",
+                "c": "Promover el estudio de las bases conceptuales del Diseño Gráfico",
+                "d": "Facilitar la formación de profesionales en Diseño Gráfico"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es el objetivo del programa de Diseño Gráfico en relación a la investigación?",
+            "choices": {
+                "a": "Fomentar la creación de obras de valor estético",
+                "b": "Investigar la interacción entre el usuario y la pieza gráfica",
+                "c": "Promover la sistematización del proceso de diseño",
+                "d": "Desarrollar estrategias pedagógicas en el plan de estudios"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los medios educativos disponibles para los estudiantes del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Bibliotecas",
+                "b": "Laboratorios de diseño",
+                "c": "Conferencias y charlas",
+                "d": "Prácticas en empresas de diseño"
+            },
+            "answer": "b) Laboratorios de diseño",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los principales desafíos y beneficios que surgen al integrar el campo del arte con las industrias creativas en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Mayor competitividad y oportunidades de trabajo para los artistas.",
+                "b": "Mayor diversidad y enriquecimiento de los procesos creativos.",
+                "c": "Limitación de la libertad artística y creativa.",
+                "d": "Disminución del valor y la relevancia del arte en la sociedad."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el principal enfoque del Semillero de Animación e Interactividad en el Instituto Departamental de Bellas Artes, en relación a la integración de la educación artística y la investigación en el campo del arte?",
+            "choices": {
+                "a": "Promover la investigación como herramienta de conocimiento y transformación en el campo del arte",
+                "b": "Fomentar la interdisciplinariedad entre las diferentes disciplinas artísticas",
+                "c": "Desarrollar habilidades para la investigación en entornos comunitarios y con enfoque social",
+                "d": "Estudiar la relación entre arte y archivo en las prácticas artísticas contemporáneas"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores utilizados en el programa exclusivo de Diseño Gráfico en el reconocido Instituto Departamental de Bellas Artes para fomentar el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Aprendizaje Basado en Problemas",
+                "b": "Educación Artística y Diseño Gráfico",
+                "c": "Prácticas sociales con la comunidad",
+                "d": "Pasantías en diferentes dependencias"
+            },
+            "answer": "Aprendizaje Basado en Problemas",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las formas de expresión artística que se integran en la tradición de poesía popular en Colombia, incluyendo teatro, poesía, canto y música?",
+            "choices": {
+                "a": "Danza, pintura, escultura y música",
+                "b": "Teatro, cine, fotografía y literatura",
+                "c": "Escultura, música, cine y poesía",
+                "d": "Teatro, poesía, canto y música"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los objetivos específicos del proyecto de investigación del Semillero de Animación e Interactividad en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Fomentar la creatividad y la innovación en el campo de la animación e interactividad.",
+                "b": "Desarrollar habilidades técnicas y artísticas en el uso de herramientas digitales para la creación de animaciones interactivas.",
+                "c": "Investigar y experimentar con nuevas formas de narrativa y expresión visual en el ámbito de la animación e interactividad.",
+                "d": "Promover la colaboración y el intercambio de conocimientos entre los participantes del semillero."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los beneficios específicos que surgirían al integrar la educación artística con las industrias creativas en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Mayor oportunidad de empleo para los graduados en Bellas Artes",
+                "b": "Estimulación de la economía local a través de la producción artística",
+                "c": "Mayor diversidad y calidad en la oferta cultural de la región",
+                "d": "Desarrollo de habilidades creativas y pensamiento innovador en los estudiantes"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los principios fundamentales que guían la formación en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes, para impulsar de manera única e innovadora el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Exploración de nuevos movimientos de Diseño y creación",
+                "b": "Realización de talleres y prácticas formativas",
+                "c": "Realización de productos a partir de diálogos y prácticas vividas",
+                "d": "Mantenimiento de pasantías en diversas dependencias"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las técnicas específicas utilizadas en el proyecto de investigación del Semillero de Animación e Interactividad en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Animación stop-motion",
+                "b": "Animación 2D",
+                "c": "Animación 3D",
+                "d": "Animación tradicional"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas utilizadas en el Instituto Departamental de Bellas Artes para integrar la educación artística con las industrias creativas y fomentar el desarrollo de habilidades prácticas y técnicas en los estudiantes del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Implementación de pasantías en empresas de diseño gráfico",
+                "b": "Organización de ferias y exposiciones de diseño gráfico",
+                "c": "Promoción de colaboraciones con profesionales de la industria del diseño",
+                "d": "Integración de proyectos reales de diseño gráfico en el plan de estudios"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los efectos específicos de la poesía popular en las expresiones artísticas de teatro, poesía, canto y música en el Instituto Departamental de Bellas Artes, y cómo influyen en la formación artística de los estudiantes?",
+            "choices": {
+                "a": "Promueve la creatividad y la experimentación en las distintas disciplinas artísticas.",
+                "b": "Genera un mayor interés y apreciación por la cultura popular en los estudiantes.",
+                "c": "Fomenta la colaboración y el trabajo en equipo entre los estudiantes de diferentes áreas artísticas.",
+                "d": "Desarrolla habilidades de comunicación y expresión oral en los estudiantes."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los desafíos y beneficios específicos que se presentan al integrar el campo del arte con las industrias creativas en el Instituto Departamental de Bellas Artes y cómo podrían impactar en la formación de los estudiantes y en el desarrollo de su futuro profesional?",
+            "choices": {
+                "a": "Mayor diversidad de oportunidades laborales y desarrollo de habilidades creativas",
+                "b": "Incremento de la competitividad y adaptación al mercado actual",
+                "c": "Desafío de encontrar un equilibrio entre el arte y los aspectos comerciales",
+                "d": "Fortalecimiento de la identidad y la conexión con la comunidad artística"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo general del programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes en relación a la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Promover la experimentación y creatividad en diferentes medios artísticos y de diseño gráfico.",
+                "b": "Preparar a los estudiantes para desafíos profesionales en el campo de las artes visuales y el diseño gráfico.",
+                "c": "Contribuir a la formación de comunicadores visuales mediante metodologías de enseñanza y aprendizaje innovadoras.",
+                "d": "Generar procesos académicos rigurosos y producción creativa de alto nivel en las disciplinas artísticas."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es la importancia de integrar la educación artística con las industrias creativas en el programa de Diseño Gráfico del Instituto Departamental de Bellas Artes en relación con el desarrollo profesional de los estudiantes?",
+            "choices": {
+                "a": "Promueve la creatividad y la innovación en el diseño gráfico",
+                "b": "Amplía las oportunidades laborales de los estudiantes",
+                "c": "Permite la colaboración y el intercambio de ideas con profesionales de otras disciplinas",
+                "d": "Mejora la calidad estética de los productos y proyectos de diseño gráfico"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los aspectos clave para una integración efectiva entre la educación artística y las industrias creativas para el desarrollo profesional de los estudiantes del programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Establecer alianzas estratégicas con empresas del sector creativo",
+                "b": "Fomentar la participación en eventos y exposiciones artísticas",
+                "c": "Promover la colaboración entre estudiantes de diferentes disciplinas artísticas",
+                "d": "Incorporar tecnologías digitales en la práctica artística"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el impacto de la poesía popular en las expresiones artísticas de teatro, poesía, canto y música en el Instituto Departamental de Bellas Artes y en la formación artística de los estudiantes?",
+            "choices": {
+                "a": "La poesía popular tiene un impacto negativo en las expresiones artísticas y en la formación artística de los estudiantes.",
+                "b": "La poesía popular no tiene ningún impacto en las expresiones artísticas y en la formación artística de los estudiantes.",
+                "c": "La poesía popular fomenta la creatividad y la exploración en las expresiones artísticas y en la formación artística de los estudiantes.",
+                "d": "La poesía popular limita la creatividad y la experimentación en las expresiones artísticas y en la formación artística de los estudiantes."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿En qué medida los aspectos técnicos específicos utilizados en las expresiones artísticas de teatro, poesía, canto y música, como la iluminación escénica, la métrica poética, la técnica vocal y la teoría musical, influyen en la formación artística de los estudiantes del Instituto Departamental de Bellas Artes y su capacidad para expresarse creativamente en diferentes medios artísticos en el siglo XXI?",
+            "choices": {
+                "a": "Tienen un impacto significativo en la formación artística de los estudiantes y en su capacidad para expresarse creativamente en diferentes medios artísticos.",
+                "b": "Tienen poco o ningún impacto en la formación artística de los estudiantes y en su capacidad para expresarse creativamente en diferentes medios artísticos.",
+                "c": "Solo influyen en la formación artística de los estudiantes, pero no en su capacidad para expresarse creativamente en diferentes medios artísticos.",
+                "d": "Los aspectos técnicos específicos no tienen ninguna influencia en la formación artística de los estudiantes del Instituto Departamental de Bellas Artes ni en su capacidad para expresarse creativamente en diferentes medios artísticos."
+            },
+            "answer": "a) Tienen un impacto significativo en la formación artística de los estudiantes y en su capacidad para expresarse creativamente en diferentes medios artísticos.",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los enfoques clave utilizados en el programa de Diseño Gráfico del Instituto Departamental de Bellas Artes para fomentar la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes, de manera innovadora y exclusiva?",
+            "choices": {
+                "a": "Aprendizaje Basado en Problemas",
+                "b": "Prácticas sociales",
+                "c": "Educación artística y diseño gráfico",
+                "d": "Evaluación de aula en la educación superior en artes"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores y exclusivos utilizados en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para fomentar de manera creativa y única la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Aprendizaje Basado en Problemas",
+                "b": "Educación artística y diseño gráfico",
+                "c": "Prácticas sociales en comunidad",
+                "d": "Talleres y prácticas formativas"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la integración de la educación artística con las industrias creativas y promover el desarrollo de habilidades prácticas y técnicas en los estudiantes del programa de Diseño Gráfico de manera innovadora y exclusiva?",
+            "choices": {
+                "a": "Implementación de pasantías en empresas de diseño reconocidas a nivel nacional e internacional.",
+                "b": "Organización de exposiciones y eventos de diseño en los que los estudiantes puedan mostrar su trabajo y establecer contactos con profesionales del sector.",
+                "c": "Incorporación de tecnologías emergentes en el proceso de enseñanza-aprendizaje, como realidad virtual y diseño generativo.",
+                "d": "Creación de alianzas con empresas y organizaciones del sector creativo para realizar proyectos colaborativos y prácticas profesionales."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es la metodología utilizada en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para promover la innovación y desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Aprendizaje Basado en Problemas (ABP)",
+                "b": "Aprendizaje Basado en Proyectos (ABPr)",
+                "c": "Enseñanza Tradicional",
+                "d": "Aprendizaje Basado en Competencias (ABCom)"
+            },
+            "answer": "B",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico de manera innovadora y exclusiva, a través de la colaboración con artistas y profesionales de la industria?",
+            "choices": {
+                "a": "Organización de exposiciones y eventos que promueven la interacción entre estudiantes y profesionales de la industria.",
+                "b": "Creación de convenios con empresas y organizaciones del sector creativo para ofrecer prácticas profesionales a los estudiantes.",
+                "c": "Incorporación de asignaturas que abordan casos reales de la industria y fomentan la colaboración con artistas y profesionales.",
+                "d": "Desarrollo de proyectos de investigación y desarrollo tecnológico en colaboración con empresas del sector creativo."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores utilizados en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para promover la integración de la educación artística con las industrias creativas y fomentar el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Implementación de pasantías en empresas de la industria creativa",
+                "b": "Realización de proyectos sostenibles propios",
+                "c": "Uso de metodologías basadas en problemas",
+                "d": "Integración de diversas disciplinas artísticas en el currículo"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las implicaciones del enfoque de integración de la educación artística con las industrias creativas en el Instituto Departamental de Bellas Artes en el desarrollo profesional de los estudiantes del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Ampliación de oportunidades laborales en el campo del diseño gráfico.",
+                "b": "Desarrollo de habilidades creativas y artísticas en los estudiantes.",
+                "c": "Mayor conexión entre la teoría y la práctica del diseño gráfico.",
+                "d": "Estimulación del espíritu emprendedor en los estudiantes."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el principal enfoque del Semillero de Animación e Interactividad del Instituto Departamental de Bellas Artes en relación a la integración de la educación artística y la investigación en el campo del arte, buscando fomentar la creatividad y la innovación en sus estudiantes?",
+            "choices": {
+                "a": "Promover la participación activa de los estudiantes en proyectos de investigación artística.",
+                "b": "Desarrollar habilidades técnicas en el campo de la animación e interactividad.",
+                "c": "Fomentar la colaboración entre estudiantes y profesionales del arte en proyectos de investigación.",
+                "d": "Explorar nuevas formas de expresión artística a través de la tecnología."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los beneficios específicos de la integración de la educación artística con las industrias creativas en el Instituto Departamental de Bellas Artes para el desarrollo profesional de los estudiantes del programa de Diseño Gráfico?",
+            "choices": {
+                "a": "Mayor creatividad y originalidad en los proyectos de diseño.",
+                "b": "Ampliación de la red de contactos profesionales en el campo del diseño.",
+                "c": "Adquisición de habilidades técnicas y prácticas en diferentes disciplinas artísticas.",
+                "d": "Mayor comprensión y conocimiento de las necesidades y preferencias del público objetivo."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores utilizados en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para promover la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes de una manera única y exclusiva, enfocada específicamente en la aplicación de la tecnología digital y la realidad virtual en el diseño gráfico?",
+            "choices": {
+                "a": "Uso de software de diseño gráfico avanzado",
+                "b": "Incorporación de realidad virtual en las asignaturas",
+                "c": "Organización de exposiciones de diseño gráfico digital",
+                "d": "Implementación de un laboratorio de impresión 3D"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las implicaciones del enfoque de integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico del Instituto Departamental de Bellas Artes en términos del desarrollo profesional de los estudiantes?",
+            "choices": {
+                "a": "Aumento de oportunidades laborales en el campo del diseño gráfico",
+                "b": "Ampliación de conocimientos y habilidades en el ámbito de las industrias creativas",
+                "c": "Desarrollo de competencias para trabajar en proyectos sostenibles",
+                "d": "Promoción del trabajo en agencias de publicidad"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo general del programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes en relación a la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Formar artistas profesionales con un alto nivel de calidad, ética y desempeño.",
+                "b": "Fomentar la interdisciplinariedad y la producción creativa de altísimo nivel.",
+                "c": "Desarrollar y fortalecer los planes y programas educativos.",
+                "d": "Estudiar la relación entre arte y archivo en las prácticas artísticas contemporáneas."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las implicaciones de integrar la educación artística con las industrias creativas en el programa de Diseño Gráfico del Instituto Departamental de Bellas Artes para el desarrollo profesional de los estudiantes?|||0.0",
+            "choices": {
+                "a": "Amplía las oportunidades laborales de los estudiantes al combinar habilidades artísticas con conocimientos técnicos en diseño gráfico.",
+                "b": "Permite a los estudiantes desarrollar un enfoque más creativo e innovador en su trabajo como diseñadores gráficos.",
+                "c": "Favorece la colaboración y el intercambio de ideas entre artistas y profesionales de la industria creativa.",
+                "d": "Proporciona a los estudiantes una formación integral que combina teoría y práctica en el campo del diseño gráfico."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico de manera innovadora y exclusiva, a través de la colaboración con artistas y profesionales de la industria?",
+            "choices": {
+                "a": "Organizar exposiciones conjuntas entre estudiantes y artistas reconocidos en la industria.",
+                "b": "Facilitar prácticas profesionales en empresas creativas para que los estudiantes adquieran experiencia laboral.",
+                "c": "Realizar conferencias y talleres con profesionales destacados del campo del diseño gráfico.",
+                "d": "Establecer alianzas con empresas del sector creativo para desarrollar proyectos reales con los estudiantes."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas utilizadas por el programa de Diseño Gráfico del Instituto Departamental de Bellas Artes para fomentar la colaboración con artistas y profesionales de la industria y promover la integración de la educación artística con las industrias creativas?",
+            "choices": {
+                "a": "Organizar exposiciones y eventos que involucren a artistas y profesionales de la industria",
+                "b": "Establecer convenios y alianzas con empresas y organizaciones del sector creativo",
+                "c": "Impartir clases y talleres a cargo de artistas y profesionales destacados",
+                "d": "Promover la participación de los estudiantes en proyectos y pasantías en empresas del sector creativo"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores utilizados en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para fomentar la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Aprendizaje Basado en Problemas",
+                "b": "Educación Física y Deportes",
+                "c": "Literatura y Escritura Creativa",
+                "d": "Matemáticas Avanzadas"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son algunas de las estrategias innovadoras implementadas por el Instituto Departamental de Bellas Artes para promover la integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico, específicamente a través de la colaboración con artistas y profesionales de la industria?",
+            "choices": {
+                "a": "Establecer convenios de colaboración con empresas y organizaciones del sector creativo.",
+                "b": "Ofrecer pasantías y prácticas profesionales en empresas y estudios de diseño reconocidos.",
+                "c": "Organizar conferencias y talleres con artistas y profesionales destacados del campo del diseño gráfico.",
+                "d": "Promover proyectos de colaboración entre estudiantes y profesionales de la industria para desarrollar soluciones creativas a problemas reales."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores utilizados en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para fomentar la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Uso de realidad virtual en el proceso de diseño",
+                "b": "Implementación de inteligencia artificial en la creación de proyectos",
+                "c": "Incorporación de técnicas de impresión 3D en la producción gráfica",
+                "d": "Utilización de software de diseño colaborativo en asignaciones grupales"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son algunas de las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico de manera innovadora y exclusiva, a través de la colaboración con artistas y profesionales de la industria?",
+            "choices": {
+                "a": "Creación de programas de prácticas profesionales en empresas del sector creativo.",
+                "b": "Organización de conferencias y charlas con expertos de la industria creativa.",
+                "c": "Implementación de proyectos de cooperación con empresas del sector creativo para la realización de proyectos reales.",
+                "d": "Desarrollo de alianzas con instituciones educativas internacionales para intercambio de conocimientos y experiencias."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico de manera innovadora y exclusiva, a través de la colaboración con artistas y profesionales de la industria?",
+            "choices": {
+                "a": "Organizar exposiciones y eventos en los que participen artistas y profesionales de la industria creativa.",
+                "b": "Ofrecer prácticas profesionales en empresas de diseño gráfico y agencias creativas.",
+                "c": "Establecer alianzas con empresas de la industria creativa para desarrollar proyectos conjuntos.",
+                "d": "Impartir cursos y talleres a cargo de artistas y profesionales destacados en el campo del diseño gráfico."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la integración de la educación artística con las industrias creativas en el programa de Diseño Gráfico de manera innovadora y exclusiva, a través de la colaboración con artistas y profesionales de la industria?",
+            "choices": {
+                "a": "Establecer convenios de colaboración con empresas y organizaciones del sector creativo para que los estudiantes realicen prácticas profesionales.",
+                "b": "Organizar eventos y exposiciones donde los estudiantes puedan mostrar su trabajo a profesionales de la industria y establecer contactos.",
+                "c": "Invitar a artistas y profesionales de la industria a dar charlas y talleres a los estudiantes.",
+                "d": "Realizar proyectos de colaboración con empresas y organizaciones del sector creativo donde los estudiantes puedan aplicar sus conocimientos en un entorno real."
+            },
+            "answer": "d) Realizar proyectos de colaboración con empresas y organizaciones del sector creativo donde los estudiantes puedan aplicar sus conocimientos en un entorno real.",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los enfoques innovadores utilizados en el programa de Diseño Gráfico en el Instituto Departamental de Bellas Artes para fomentar la formación artística y el desarrollo de habilidades prácticas y técnicas en los estudiantes?",
+            "choices": {
+                "a": "Aprendizaje Basado en Problemas",
+                "b": "Educación Artística y Diseño Gráfico",
+                "c": "Prácticas Artísticas y Etnografía",
+                "d": "Metodologías de Enseñanza y Aprendizaje"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son algunas de las estrategias innovadoras implementadas por el Instituto Departamental de Bellas Artes para colaborar exclusivamente con artistas y profesionales de la industria en el programa de Diseño Gráfico, con el objetivo de fomentar la integración de la educación artística con las industrias creativas?",
+            "choices": {
+                "a": "Creación de alianzas estratégicas con empresas del sector creativo",
+                "b": "Implementación de programas de prácticas profesionales en empresas del sector creativo",
+                "c": "Desarrollo de proyectos de investigación en colaboración con artistas y profesionales de la industria",
+                "d": "Organización de eventos y exposiciones para promover el trabajo de artistas y profesionales de la industria"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con reconocimiento oficial a nivel nacional e internacional como institución de formación en artes escénicas y visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y artes escénicas además de las áreas artísticas mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes es oficialmente reconocido a nivel nacional e internacional como institución de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de maestría en alguna disciplina artística reconocidos a nivel nacional e internacional?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes es reconocido oficialmente a nivel nacional e internacional como una institución de formación en diseño gráfico, cine, música y otras disciplinas artísticas?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        }
+    ]
+}

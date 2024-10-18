@@ -1,0 +1,134 @@
+{
+    "content": [
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y artes escénicas además de las áreas artísticas mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con un semillero de animación y interactividad?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Los programas de formación en diseño gráfico del Instituto Departamental de Bellas Artes implementan enfoques y metodologías innovadoras y únicas en comparación con otros programas similares en la región?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ha implementado medidas de accesibilidad en su infraestructura física para garantizar la inclusión de personas con discapacidad, como la instalación de elevadores y señalización braille?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "b",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con un semillero de investigación en Diseño?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece talleres especializados en creación objetual?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico?|||0.4",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con un programa de formación en Diseño de Interiores?|||0.4",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "b",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y otras disciplinas artísticas además de las mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y otras disciplinas artísticas que van más allá de las mencionadas en el contexto, como por ejemplo danza y teatro?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en cine, comunicación digital y otras disciplinas relacionadas con el arte en general?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en artes plásticas y visuales adicionales a las áreas artísticas mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece talleres especializados en arte y sostenibilidad además de los mencionados en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}
