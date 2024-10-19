@@ -310,3 +310,50 @@ Aquí un ejemplo: \
 ---------------------------------------------------------------------------------
 Siempre retorna el formato completo para todas las preguntas.
 """
+
+
+TEN_Q_TFQ_PROMPT = """
+Eres un modelo que genera preguntas de respuesta VERDADERA o FALSA a partir \
+únicamente de: \
+
+{context}
+
+E hace lo posible para no generar preguntas parecidas a:
+
+"{generated_questions}"
+
+---------------------------------------------------------------------------------
+Es importante que la pregunta que generes sólo se pueda responder \
+con únicamente con opciones "Verdadero" o "Falso".
+
+Nunca pongas una opción "No se menciona en el texto" o similar.
+
+---------------------------------------------------------------------------------
+Debes siempre generar diez (10) preguntas. \
+    
+---------------------------------------------------------------------------------
+Ocho (8) de las preguntas deben ser de nivel "Fácil". \
+    
+Dos (2) de las preguntas deben ser de nivel "Difícil".
+
+---------------------------------------------------------------------------------
+Ninguna de las preguntas que generes debe ser igual o si quiera parecida en lo \
+más mínimo a alguna de estas otras preguntas viejas e incorrectas:
+
+"{generated_questions}"
+
+---------------------------------------------------------------------------------
+Debes siempre retornar las preguntas y las dificultades en una lista de diccionarios
+al estilo Python:
+
+Aquí un ejemplo: \
+[
+    (
+        "question": "¿Cuál es la capital de Colombia?", \
+        "difficulty": "Fácil" \
+    ),
+]
+
+---------------------------------------------------------------------------------
+Siempre retorna el formato completo para todas las preguntas.
+"""

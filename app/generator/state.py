@@ -1,4 +1,4 @@
-from typing import Annotated, Optional
+from typing import Annotated, Dict, List, Optional
 from typing_extensions import TypedDict
 
 from langgraph.graph.message import AnyMessage, add_messages
@@ -18,3 +18,4 @@ class State(TypedDict):
     messages: Annotated[list[AnyMessage], add_messages]
     question: Optional[Question]
     threshold: Optional[Threshold]
+    questions: Optional[List[Dict[str, str]]]

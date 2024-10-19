@@ -10,7 +10,7 @@ def context_generator_node(state):
     if question["approved"] == True: # se genera un contexto basado en la pregunta generada
         result = tools.get_context_tool(question["question"], k=5)
     else:
-        result = tools.get_context_tool(k=15)
+        result = tools.get_context_tool()
         
     return { "messages": [result] }
 
@@ -21,11 +21,12 @@ def question_generator_node(state):
     question_difficulty = question["question_difficulty"]
     
     context = state["messages"][-1].content if '|||' not in state["messages"][-1].content else state["messages"][-1].content.split('|||')[0]
-    result = tools.question_generator_tool(question_type, question_difficulty, context)
+    # result = tools.question_generator_tool(question_type, question_difficulty, context)
+    result = tools.ten_questions_generator_tool(question_type, question_difficulty, context)
     
-    question["question"] = result
+    # question["question"] = result
     print(f"question: {result}")
-    return { "messages": [result], "question": question }
+    return { "messages": [result[0]["question"]], "question": question, "questions": result }
 
 def question_seen_node(state):
     print("--- QUESTION SEEN ---")
@@ -33,17 +34,20 @@ def question_seen_node(state):
     question_type = question["question_type"]
     similarity_threshold = state["threshold"]["similarity_threshold"]
     
-    generated_question = state["messages"][-1].content
-    context = state["messages"][-2].content
+    questions = state["questions"]
     
-    seen = tools.question_seen_embeddings_tool(question, question_type, similarity_threshold)    
+    generated_question = state["messages"][-1].content
+    
+    # seen = tools.question_seen_embeddings_tool(question, question_type, similarity_threshold)
+    question_n, seen = tools.find_most_different_question(questions, question_type, similarity_threshold)
     
     print(f"Similarity: {seen}")
     
     if seen >= 0.86:
-        return { "messages": [f"{context}|||{seen}"] }
+        return { "messages": [f"{seen}|||{seen}"] }
     
-    question["question"] = generated_question if '|||' not in generated_question else generated_question.split('|||')[0]
+    question["question"] = question_n
+    # question["question"] = generated_question if '|||' not in generated_question else generated_question.split('|||')[0]
     return { "messages": [f"{question['question']}|||{seen}"], "question": question }
 
 def answer_generator_node(state):

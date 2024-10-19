@@ -89,12 +89,12 @@ def use_graph(question_type: int, question_difficulty_int: int, similarity_thres
     thread = {
         "configurable": {
             "thread_id": thread_id,
-            "recursion_limit": 75
+            "recursion_limit": 15
         }
     }
     config = RunnableConfig(
         thread_id=thread_id,
-        recursion_limit=75
+        recursion_limit=15
     )
     
     # question_type = int(input("Enter question type: "))
