@@ -26,6 +26,13 @@ services:
       else 
         echo 'Model nomic-embed-text already exists'; 
       fi
+      
+      if [ ! -f /root/.ollama/models/llama3.1 ]; then 
+        docker exec ollama-container ollama pull llama3.1 && 
+        echo 'llama3.1 completed'; 
+      else 
+        echo 'Model llama3.1 already exists'; 
+      fi
     "]
 
   fastapi-app:
