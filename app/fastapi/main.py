@@ -201,7 +201,7 @@ def get_questions():
     data = load_json(JSON_PATH)
     
     # solo para preguntas de "Verdadero o Falso"
-    questions = {index + 1: item["question"] for index, item in enumerate(data) if item.get("type") == "TFQ"}
+    questions = {index + 1: item["question"] for index, item in enumerate(data) if item["type"] == "TFQ"}
     return questions
 
 @app.post('/evaluate')

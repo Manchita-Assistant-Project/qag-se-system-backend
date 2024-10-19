@@ -379,7 +379,8 @@ def find_most_different_question(questions: list, question_type: int, threshold:
 
     # Si no hay embeddings almacenados, guarda el primero y retorna
     if len(stored_embeddings) == 0:
-        first_question_embedding = embedding_model.embed_query(questions[0]["question"])
+        current_question = utils.add_question_marks(questions[0]["question"])
+        first_question_embedding = embedding_model.embed_query(current_question)
         utils.save_embedding_hdf5(first_question_embedding, question_type, hdf5_file)
         return questions[0], 0  # retorna la primera pregunta y similitud 0
 
@@ -390,6 +391,7 @@ def find_most_different_question(questions: list, question_type: int, threshold:
     # Iterar sobre las preguntas y calcular la similitud coseno de cada una
     for question_dict in questions:
         question_text = question_dict["question"]
+        question_text = utils.add_question_marks(questions[0]["question"])
         question_embedding = embedding_model.embed_query(question_text)
 
         # Calcular la similitud coseno entre el embedding de la pregunta y los almacenados

@@ -16,7 +16,7 @@ single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name
 character_node = functools.partial(agent_w_tools_node, agent=character_agent, name="Character")
 
 # single_tools_tool_node = ToolNode(single_tools)
-chooser_tool_node = ToolNode([tools.qanda_chooser])
+# chooser_tool_node = ToolNode([tools.qanda_chooser])
 
 def single_tools_tool_node(state): 
     user_message = state["messages"][0]
@@ -63,6 +63,16 @@ def single_tools_tool_node(state):
     print(f"Final response: {response}")
 
     return response
+
+def chooser_tool_node(state):
+    ai_message = state["messages"][-1]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"]
+    
+    question = tools.qanda_chooser("simple_quiz")
+    tool_result = ToolMessage(content=question, name=tool_call, tool_call_id=tool_call_id)
+    
+    return {"messages": [tool_result]}
 
 def human_interaction(state):
     pass

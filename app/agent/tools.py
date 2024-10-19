@@ -102,14 +102,18 @@ def rag_search(query: str) -> str:
 
     return response_text
 
-def qanda_chooser() -> str:
+def qanda_chooser(game_type: str) -> str:
     """
-    It does not generate questions.
-    Chooses a random question ONLY from the JSON file.
+    Chooses a random question from the JSON file based on the game type.
     """
-    json_path = utils.JSON_PATH
+    json_path = utils.JSON_PATH                
     data = utils.load_json(json_path)
-    questions = [item["question"] for item in data]
+    
+    if game_type == "story":
+        questions = [item["question"] for item in data if item["type"] == "MCQ" and item["difficulty"] == "Difícil"]
+    elif game_type == "simple_quiz":
+        questions = [item["question"] for item in data]
+            
     random_question = random.choice(questions)  
     
     return random_question
@@ -224,7 +228,7 @@ def verify_tool_call(message: AIMessage) -> bool:
             
     return False
 
-single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, qanda_evaluation, narrator_tool]    
+single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, narrator_tool] # qanda_evaluation    
 
 # ================== #
 # STORIES GAME TOOLS #
@@ -234,7 +238,7 @@ def first_character(current_story: str):
     """
     Calls the first character and returns it's response.
     """
-    question = qanda_chooser()
+    question = qanda_chooser("story")
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -257,7 +261,7 @@ def second_character(current_story: str):
     """
     Calls the second character and returns it's response.
     """
-    question = qanda_chooser()
+    question = qanda_chooser("story")
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -280,7 +284,7 @@ def third_character(current_story: str):
     """
     Calls the third character and returns it's response.
     """
-    question = qanda_chooser()
+    question = qanda_chooser("story")
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],

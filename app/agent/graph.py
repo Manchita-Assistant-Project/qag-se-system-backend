@@ -161,10 +161,10 @@ def use_graph():
 
     questions = [
         'hola!',
-        # 'hazme una pregunta!',
         'quiero jugar las historias!',
+        'hazme una pregunta!',
         # 'cuántos puntos tengo?',
-        # 'sigue con el juego!',
+        'sigue con el juego!',
         # 'sigue!',
         # 'termina!',
         # 'hazme otra!',
@@ -199,7 +199,7 @@ def use_graph():
         # interrupción para el camino quiz
         if (is_not_single_use and is_not_character_game):
             user_answer = input('You: ')
-            question = event["messages"][-1].content if event["messages"][-1].content[0] == '¿' else graph.get_state(thread).values["current_story"]["to_evaluate"] # pregunta sencilla o pregunta de juego character
+            question = event["messages"][-1].content if (event["messages"][-1].name == "qanda_chooser") else graph.get_state(thread).values["current_story"]["to_evaluate"] # pregunta sencilla o pregunta de juego character
             
             combined_input = f"{question}|||{user_answer}"
             print(combined_input)
@@ -260,4 +260,4 @@ def use_graph():
                     for event in graph.stream(None, thread, stream_mode="values"):
                         event['messages'][-1].pretty_print()
                             
-# use_graph()
+use_graph()

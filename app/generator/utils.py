@@ -149,3 +149,9 @@ def structure_generated_questions_string(generated_questions: list):
         result += f"- {item}\n"
         result += "\n"
     return result
+
+def add_question_marks(text: str) -> str:
+    if text[0] not in ['V', '¿']:
+        text = '¿' + text[:-1] + '?'
+        
+    return text

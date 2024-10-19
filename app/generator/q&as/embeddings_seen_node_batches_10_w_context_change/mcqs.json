@@ -361,6 +361,18 @@
             "difficulty": "Fácil"
         },
         {
+            "question": "¿Cuál es la capital de Colombia?",
+            "choices": {
+                "a": "Bogotá",
+                "b": "Medellín",
+                "c": "Cali",
+                "d": "Barranquilla"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
             "question": "¿Cuál es la función del blog Comparativa de Medios (MIT)?",
             "choices": {
                 "a": "Proporcionar información sobre medios de comunicación",
@@ -527,136 +539,6 @@
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El Instituto Departamental de Bellas Artes cuenta con una orquesta juvenil en el Conservatorio Antonio María Valencia y se encuentra ubicado en Cali, Colombia.",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una oferta de semilleros pertenecientes al grupo Aisthesis: Teoría y creación?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Es cierto que el Instituto Departamental de Bellas Artes ofrece talleres gratuitos de animación para jóvenes y adolescentes en Cali, Colombia?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Falso",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de disminución de barreras en infraestructura física.?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "b",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El compromiso del Instituto Departamental de Bellas Artes con su comunidad interna y externa es fundamental para su funcionamiento.",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "a",
-            "type": "TFQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de inclusión y diversidad?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El compromiso del Instituto Departamental de Bellas Artes con su comunidad interna y externa es fundamental para su funcionamiento.",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "a",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes se encuentra ubicado en Cali, Colombia?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "a",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El Instituto Departamental de Bellas Artes se enfoca exclusivamente en la producción cinematográfica.",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "b",
-            "type": "TFQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Es correcto afirmar que el objetivo principal del Instituto Departamental de Bellas Artes es promover la inclusión y diversidad en el campo de las artes en Cali, Colombia?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El objetivo principal del Instituto Departamental de Bellas Artes es promover la inclusión y diversidad en el campo de las artes en Cali, Colombia.",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes tiene como objetivo principal promover la inclusión y diversidad en el campo de las artes en Cali, Colombia? (Verdadero o Falso)",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes ofrece talleres gratuitos de animación para jóvenes y adolescentes en Cali, Colombia? (Verdadero o Falso)",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Fácil"
         }
     ]
 }

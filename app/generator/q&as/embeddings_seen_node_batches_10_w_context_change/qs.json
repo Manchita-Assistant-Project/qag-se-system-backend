@@ -529,6 +529,16 @@
             "difficulty": "Difícil"
         },
         {
+            "question": "El Instituto Departamental de Bellas Artes se encuentra ubicado en Cali, Colombia.",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a) Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
             "question": "Verdadero o Falso: El Instituto Departamental de Bellas Artes cuenta con una orquesta juvenil en el Conservatorio Antonio María Valencia y se encuentra ubicado en Cali, Colombia.",
             "choices": {
                 "a": "Verdadero",
@@ -559,7 +569,7 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de disminución de barreras en infraestructura física.?",
+            "question": "El Instituto Departamental de Bellas Artes cuenta con una política de disminución de barreras en infraestructura física.",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -579,7 +589,7 @@
             "difficulty": "Fácil"
         },
         {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de inclusión y diversidad?",
+            "question": "El Instituto Departamental de Bellas Artes cuenta con una política de inclusión y diversidad.",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"

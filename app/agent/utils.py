@@ -11,6 +11,7 @@ from langchain_core.runnables import RunnableLambda
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+QS_PATH = os.path.join(base_dir, "generator", "q&as")
 JSON_PATH = os.path.join(base_dir, "generator", "q&as", "qs.json")
 
 def load_json(path: str):
@@ -129,7 +130,7 @@ def agent_w_tools_node(state, agent, name):
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
             # si hubo tool_call, eliminar exactamente el número de mensajes de regaño
-            print(f"MESSAGES: {state['messages']}")
+            # print(f"MESSAGES: {state['messages']}")
 
             # Elimina los últimos 'contador_regaño' mensajes de regaño
             while contador_regaño > 0 and state["messages"][-1] == instruction_message:
@@ -150,8 +151,17 @@ def agent_w_tools_node(state, agent, name):
 
 def define_context_string(context):
     answer_choice = context[0]["answer"]
-    answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
-    return f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+    answer_string = ""
+    
+    if len(answer_choice) == 1:
+        answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
+    elif answer_choice[0].lower() in ['a', 'b', 'c', 'd'] and answer_choice[1] in ['.', ')']:
+        answer_string = answer_choice[2:]
+    else:
+        answer_string = answer_choice
+        
+    final_evaluation_string = f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+    return final_evaluation_string
 
 def choose_random_story():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
