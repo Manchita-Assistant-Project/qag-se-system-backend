@@ -162,7 +162,7 @@ def evaluate_with_embeddings(human_questions, generated_question):
     return avg_similarity
 
 # Usar LLM solo si la similitud cae por debajo de un umbral
-def conditional_evaluation(generated_question, threshold=0.6):
+def conditional_evaluation(generated_question: str, threshold: float):
     context = get_context()
     print("Got context")
     # similarity = evaluate_with_embeddings(human_questions, generated_question)
@@ -205,17 +205,14 @@ def structure_output_metrics(evaluation: str) -> float:
 
     return average
 
-def evaluate_similarity_tool(generated_question: str, threshold: float=0.75):
-    # dataset = load_dataset(dataset_path)
-    # human_questions = dataset["Pregunta"].to_list()
-       
+def evaluate_quality_tool(generated_question: str, threshold: float):       
     response = conditional_evaluation(generated_question, threshold)
     similarity = structure_output_metrics(response)
     
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(generated_question: str, feedback: str, similarity: float, question_type: int):
+def refine_question(generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
@@ -240,7 +237,7 @@ def refine_question(generated_question: str, feedback: str, similarity: float, q
         
     Similarity pasado: "{similarity}"
     
-    Modifica la pregunta generada para que las métricas en el feedback promedien 0.75.
+    Modifica la pregunta generada para que las métricas en el feedback promedien {threshold}.
     
     ---------------------------------------------------------------------------------
     Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
@@ -271,11 +268,8 @@ def refine_question(generated_question: str, feedback: str, similarity: float, q
     print(f"LLM response: {response}")
     return response
 
-def refine_question_tool(generated_question: str, feedback: str, similarity: float, question_type: int, dataset_path: str=QANDAS_EVALUATION_DATASET):
-    # dataset = load_dataset(dataset_path)
-    # human_questions = dataset["Pregunta"].to_list()
-    
-    response = refine_question(generated_question, feedback, similarity, question_type)
+def refine_question_tool(generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):   
+    response = refine_question(generated_question, feedback, similarity, question_type, threshold)
     
     return response
 
@@ -332,7 +326,7 @@ def question_seen_tool(question: dict, question_type: int):
     print(f"Valoración: {matches}")
     return float(matches)
 
-def question_seen_embeddings_tool(question: dict, question_type: int, threshold=0.86, hdf5_file='embeddings.h5'):
+def question_seen_embeddings_tool(question: dict, question_type: int, threshold: float, hdf5_file='embeddings.h5'):
     # Obtener el modelo de embedding
     embedding_model = chroma_utils.get_embedding_function()
     question_embedding = embedding_model.embed_query(question["question"])

@@ -9,7 +9,12 @@ class Question(TypedDict):
     question_difficulty: str
     question_answers: str
     approved: bool
+    
+class Threshold(TypedDict):
+    similarity_threshold: float
+    quality_threshold: float
 
 class State(TypedDict):
     messages: Annotated[list[AnyMessage], add_messages]
     question: Optional[Question]
+    threshold: Optional[Threshold]

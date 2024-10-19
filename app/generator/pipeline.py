@@ -172,14 +172,14 @@ def structure_output_metrics(evaluation: str) -> float:
 
     return average
 
-def evaluate_similarity_tool(generated_question: str, threshold: float=0.75):      
+def evaluate_similarity_tool(generated_question: str, threshold: float):      
     response = conditional_evaluation(generated_question, threshold)
     similarity = structure_output_metrics(response)
     
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(generated_question: str, feedback: str, question_type: int):
+def refine_question(generated_question: str, feedback: str, question_type: int, threshold: float):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
@@ -202,7 +202,7 @@ def refine_question(generated_question: str, feedback: str, question_type: int):
     
     "{feedback}"
         
-    Modifica la pregunta generada para que las métricas en el feedback promedien 0.75.
+    Modifica la pregunta generada para que las métricas en el feedback promedien {threshold}.
     
     ---------------------------------------------------------------------------------
     Es muy importante que la pregunta que generes no sea igual a ninguna pregunta

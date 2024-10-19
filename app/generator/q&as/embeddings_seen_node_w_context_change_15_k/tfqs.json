@@ -1,0 +1,194 @@
+{
+    "content": [
+        {
+            "question": "¿La Fanpage Bienestar Bellas Artes tiene más de 500 seguidores?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La cuenta de correo bienestaruniversitario@bellasartes.edu.co se utiliza exclusivamente para enviar información a los estudiantes sobre proyectos, servicios y actividades próximas de Bienestar Universitario? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La estrategia de segmentación del público objetivo de la Fanpage Bienestar Bellas Artes es altamente efectiva para generar valor? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿La Resolución No. 051 del Instituto Departamental de Bellas Artes fue expedida en la última década? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "b",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La página web de Bienestar Bellas Artes es la fuente principal de información sobre las rutas, resoluciones, acuerdos y actas de atención a las poblaciones de interés?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La revista, libro, Fanzine o publicación digital es un tipo de creación objetual? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Sistema de práctica social fue implementado por la VICERRECTORÍA ACADÉMICA en junio de 2008 y logró mejorar significativamente la participación estudiantil? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El promedio de visualizaciones por publicación en la Fanpage Bienestar Bellas Artes es menor a 900? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La página web de Bienestar Bellas Artes se utiliza como un canal de comunicación rápida y efectiva con la comunidad estudiantil? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La homologación de programas de movilidad académica requiere el diligenciamiento de un formato específico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿La publicación digital puede considerarse una forma de creación objetual?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Durante el periodo de Febrero - Junio 2021, se implementó de manera efectiva la coordinación de equidad, inclusión y diversidad en la organización/entidad [especificar contexto/organización]? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La página web de Bienestar Bellas Artes cuenta actualmente con más de 1,000 seguidores? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿La Fanpage Bienestar Bellas Artes utiliza predominantemente la plataforma de correo electrónico para comunicarse con su audiencia? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La página web de Bienestar Bellas Artes es utilizada como el principal canal de comunicación con la comunidad estudiantil? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿La implementación del Sistema de práctica social por parte de la VICERRECTORÍA ACADÉMICA en junio de 2008 tuvo un impacto significativo y positivo en la participación estudiantil? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La página web de Bienestar Bellas Artes proporciona información detallada sobre los proyectos, servicios y actividades próximas de Bienestar Universitario?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El correo electrónico bienestaruniversitario@bellasartes.edu.co es utilizado como el principal canal de comunicación con la comunidad estudiantil?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La página web de Bienestar Bellas Artes brinda información detallada sobre programas y recursos educativos accesibles para personas con discapacidad?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

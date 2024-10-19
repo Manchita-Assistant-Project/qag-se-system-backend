@@ -3,11 +3,10 @@ from typing import Literal
 
 import app.generator.utils as utils
 import app.generator.nodes as nodes
-from app.generator.state import State, Question
+from app.generator.state import State, Question, Threshold
 
 from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage
-from langgraph.errors import GraphRecursionError
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.runnables import RunnableConfig
 
@@ -21,17 +20,19 @@ def question_or_answer_path(state) -> Literal["question_generator", "answer_gene
         return "answer_generator"
     
 def question_approved(state) -> Literal["question_refiner", "context_generator"]:
+    quality_threshold = state["threshold"]["quality_threshold"]
     quality = state["messages"][-1].content.split("|||")[1]
 
-    if float(quality) < 0.75: # ajustar threshold
+    if float(quality) < quality_threshold:
         return "question_refiner"
     else:
         return "context_generator"
     
 def question_already_seen(state) -> Literal["context_generator", "question_evaluator"]:
+    similarity_threshold = state["threshold"]["similarity_threshold"]
     similarity = state["messages"][-1].content.split("|||")[1]
 
-    if float(similarity) >= 0.86: # ajustar threshold
+    if float(similarity) >= similarity_threshold: # ajustar threshold
         return "context_generator"
     else:
         return "question_evaluator"
@@ -74,7 +75,7 @@ workflow.add_edge("question_refiner", "question_evaluator")
 workflow.add_edge("answer_generator", "qanda_saver")
 workflow.add_edge("qanda_saver", END)
 
-def use_graph(question_type: int, question_difficulty_int: int):
+def use_graph(question_type: int, question_difficulty_int: int, similarity_threshold: float, quality_threshold: float):
     # compile the graph
     checkpointer = MemorySaver()
     graph = workflow.compile(
@@ -123,14 +124,17 @@ def use_graph(question_type: int, question_difficulty_int: int):
         question_difficulty=question_difficulty,
         approved=False
     )
-    graph.update_state(thread, { "question": question })
     
-    try:
-        for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, config, stream_mode="values"):
-            print(f"NEXT: {graph.get_state(thread).next}")
-            if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
-                event['messages'][-1].pretty_print()
-    except GraphRecursionError:
-        print("Recursion limit reached")
+    threshold = Threshold(
+        similarity_threshold=similarity_threshold,
+        quality_threshold=quality_threshold
+    )
+    
+    graph.update_state(thread, { "question": question, "threshold": threshold })
+    
+    for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, config, stream_mode="values"):
+        print(f"NEXT: {graph.get_state(thread).next}")
+        if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
+            event['messages'][-1].pretty_print()
 
-# use_graph()
+# use_graph(1, 1, 0.8, 0.75)

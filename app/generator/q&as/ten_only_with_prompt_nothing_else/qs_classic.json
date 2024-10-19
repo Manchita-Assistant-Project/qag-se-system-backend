@@ -119,18 +119,6 @@
             "answer": "d",
             "type": "MCQ",
             "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuáles son las principales líneas de investigación en las que se enfocan los proyectos y semilleros de investigación en el programa de Diseño Gráfico de la Universidad Colegio Mayor del Cauca?",
-            "choices": {
-                "a": "Investigación en comunicación visual",
-                "b": "Investigación en diseño editorial",
-                "c": "Investigación en diseño de marca",
-                "d": "Investigación en diseño web"
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Difícil"
         }
     ]
 }

@@ -10,7 +10,7 @@ def context_generator_node(state):
     if question["approved"] == True: # se genera un contexto basado en la pregunta generada
         result = tools.get_context_tool(question["question"], k=5)
     else:
-        result = tools.get_context_tool()
+        result = tools.get_context_tool(k=15)
         
     return { "messages": [result] }
 
@@ -31,11 +31,12 @@ def question_seen_node(state):
     print("--- QUESTION SEEN ---")
     question = state["question"]
     question_type = question["question_type"]
+    similarity_threshold = state["threshold"]["similarity_threshold"]
     
     generated_question = state["messages"][-1].content
     context = state["messages"][-2].content
     
-    seen = tools.question_seen_embeddings_tool(question, question_type)    
+    seen = tools.question_seen_embeddings_tool(question, question_type, similarity_threshold)    
     
     print(f"Similarity: {seen}")
     
@@ -62,23 +63,28 @@ def answer_generator_node(state):
 def question_evaluator_node(state):
     print('--- QUESTION EVALUATOR ---')
     question = state["question"]
-    generated_question = state["messages"][-1].content
-    quality, feedback = tools.evaluate_similarity_tool(generated_question)
+    quality_threshold = state["threshold"]["quality_threshold"]
     
-    if quality < 0.7:
+    generated_question = state["messages"][-1].content
+    quality, feedback = tools.evaluate_quality_tool(generated_question, quality_threshold)
+    
+    if quality < quality_threshold:
         return { "messages": [f"{feedback}|||{quality}"] }
     
     question["question"] = generated_question if '|||' not in generated_question else generated_question.split('|||')[0]
     question["approved"] = True
+    
     return { "messages": [f"{feedback}|||{quality}"], "question": question }
 
 def question_refiner_node(state):
     print('--- QUESTION REFINER ---')
     question = state["question"]
+    quality_threshold = state["threshold"]["quality_threshold"]
+    
     last_message = state["messages"][-1].content
     feedback, quality = last_message.split("|||")
     
-    response = tools.refine_question_tool(question["question"], feedback, float(quality), question["question_type"])
+    response = tools.refine_question_tool(question["question"], feedback, float(quality), question["question_type"], quality_threshold)
     
     return { "messages": [response] }
 

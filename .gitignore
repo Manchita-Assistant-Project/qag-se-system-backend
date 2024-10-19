@@ -18,6 +18,3 @@ app/database/sqlite3/*
 client_secrets.json
 credentials.json
 settings.yaml
-
-# Q&A Generation Embeddings
-app/generation/embeddings/*
