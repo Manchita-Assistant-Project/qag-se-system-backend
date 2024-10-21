@@ -260,4 +260,4 @@ def use_graph():
                     for event in graph.stream(None, thread, stream_mode="values"):
                         event['messages'][-1].pretty_print()
                             
-use_graph()
+# use_graph()

@@ -22,5 +22,6 @@ EXPOSE 8000
 
 # CMD ["sh", "-c", "python3 -u -m app.generator.loader && python3 -u -m app.generator.generator && uvicorn app.fastapi.main:app --host 0.0.0.0 --port 8000 --reload"]
 # CMD ["sh", "-c", "python3 -u -m app.generator.generator && uvicorn app.fastapi.main:app --host 0.0.0.0 --port 8000 --reload"]
-CMD ["sh", "-c", "uvicorn app.fastapi.main:app --host 0.0.0.0 --port 8000 --reload"]
+# CMD ["sh", "-c", "python -u -m app.generator.a"]
+CMD ["sh", "-c", "uvicorn app.fastapi.main:app --host 0.0.0.0 --port 8000"]
 # CMD ["sh", "-c", "python -u -m app.generator.pipeline"]

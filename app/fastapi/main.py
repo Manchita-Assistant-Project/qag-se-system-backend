@@ -20,6 +20,8 @@ app = FastAPI()
 
 origins = [
     'http://localhost:8080',
+    'https://manchita-gamificado.netlify.app',
+    'https://urban-space-spoon-7xpxgrq75q93x5x6-8080.app.github.dev'
 ]
 
 app.add_middleware(
@@ -122,7 +124,7 @@ async def chat(input_data: ChatInput):
     }
     
     graph = get_or_create_user_graph(input_data.thread_id)
-
+    print(f"GRAPH: {input_data.thread_id} -  {graph.get_state(thread).next}")
     print(f"INPUT DATA: {input_data}")
 
     try:
@@ -201,7 +203,7 @@ def get_questions():
     data = load_json(JSON_PATH)
     
     # solo para preguntas de "Verdadero o Falso"
-    questions = {index + 1: item["question"] for index, item in enumerate(data) if item["type"] == "TFQ"}
+    questions = [item["question"] for item in data if item["type"] == "TFQ"]
     return questions
 
 @app.post('/evaluate')

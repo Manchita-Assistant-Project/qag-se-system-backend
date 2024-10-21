@@ -549,16 +549,6 @@
             "difficulty": "Fácil"
         },
         {
-            "question": "¿Es cierto que el Instituto Departamental de Bellas Artes ofrece talleres gratuitos de animación para jóvenes y adolescentes en Cali, Colombia?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Falso",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
             "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de disminución de barreras en infraestructura física.?",
             "choices": {
                 "a": "Verdadero",

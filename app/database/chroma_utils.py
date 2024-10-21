@@ -74,7 +74,7 @@ def split_documents(documents: list[Document]):
 def get_embedding_function():
     embeddings = OllamaEmbeddings( # revisar acá si hacemos el request nosotros aparte porque hay un nuevo endpoint "http://localhost:11434/api/embed" que aún no se ha actualizado en langchaing-community
         model='nomic-embed-text',
-        # base_url='http://ollama-container:11434'
+        base_url='http://ollama-container:11434'
     )
     return embeddings
 
