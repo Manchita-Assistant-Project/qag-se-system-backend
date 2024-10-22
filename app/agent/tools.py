@@ -110,11 +110,11 @@ def qanda_chooser(game_type: str) -> str:
     data = utils.load_json(json_path)
     
     if game_type == "story":
-        questions = [item for item in data if item["type"] == "MCQ" and item["difficulty"] == "Difícil"]
+        questions = [item["question"] for item in data if item["type"] == "MCQ" and item["difficulty"] == "Difícil"]
     elif game_type == "simple_quiz":
         questions = [item for item in data]
             
-    random_question = random.choice(questions)  
+    random_question = random.choice(questions)
     
     return random_question
 

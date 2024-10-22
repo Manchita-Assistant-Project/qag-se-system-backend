@@ -43,7 +43,7 @@ def question_seen_node(state):
     
     print(f"Similarity: {seen}")
     
-    if seen >= 0.86:
+    if seen >= similarity_threshold:
         return { "messages": [f"{seen}|||{seen}"] }
     
     question["question"] = question_n

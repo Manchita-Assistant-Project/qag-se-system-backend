@@ -134,7 +134,7 @@ async def chat(input_data: ChatInput):
             state = graph.get_state(thread)
 
             to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
-            last_question = state.values['messages'][-1].content if state.values['messages'][-1].content.startswith('¿') else to_evaluate  # pregunta sencilla o pregunta de juego goblin
+            last_question = graph.get_state(thread).values["last_question"] if state.values['messages'][-1].name == "qanda_chooser" else to_evaluate  # pregunta sencilla o pregunta de juego goblin
             combined_input = f"{last_question}|||{input_data.user_answer}"
             
             # Actualizar el estado del grafo con la respuesta

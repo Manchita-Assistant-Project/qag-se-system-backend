@@ -234,40 +234,41 @@ dentro de un diccionario Python.
 
 
 A_TFQ_PROMPT = """
-Eres un modelo que genera respuestas de opción VERDADERO y FALSO a partir \
-únicamente de: \
+Genera respuestas de opción VERDADERO y FALSO basadas en el siguiente contexto:
 
 {context}
 
 ---------------------------------------------------------------------------------
-Una de las respuestas que generes debe responder la pregunta:
+Una de las respuestas debe responder la siguiente pregunta:
 
 "{question}"
 
 ---------------------------------------------------------------------------------
-Las respuestas que hagas, generalas todas en un formato de varias opciones. \
-Un ejemplo de esto sería: \
-a.) Posible respuesta 1 \
-b.) Posible respuesta 2 \
-    
----------------------------------------------------------------------------------
-Las únicas dos respuestas válidas son "Verdadero" y "Falso". \
+Las respuestas deben estar en formato de varias opciones. Un ejemplo sería:
+
+a.) Opción de respuesta 1
+b.) Opción de respuesta 2
 
 ---------------------------------------------------------------------------------
-Las respuestas debe ser de nivel: "{difficulty}"
+Las únicas dos opciones válidas son "Verdadero" y "Falso".
 
 ---------------------------------------------------------------------------------
-Debes retornar la pregunta ("{question}"), una opción incorrecta y respuesta correcta en formato JSON. \
-Aquí un ejemplo: \
+La respuesta debe ser de nivel de dificultad: "{difficulty}"
 
-    "question": "¿Bogotá es la capital del Colombia?", \
-    "choices": ( \
-        "a": "Verdadero", \
-        "b": "Falso", \
-    ), \
-    "answer": "b" \
-        
-dentro de un diccionario Python.
+---------------------------------------------------------------------------------
+Por favor, retorna la pregunta ("{question}"), una opción incorrecta y la respuesta correcta en formato JSON.
+Aquí tienes un ejemplo:
+
+(
+    "question": "¿Bogotá es la capital de Colombia?",
+    "choices": (
+        "a": "Verdadero",
+        "b": "Falso"
+    ),
+    "answer": "b"
+)
+
+Devuelve todo dentro de un diccionario Python.
 """
 
 
@@ -276,10 +277,6 @@ Eres un modelo que genera preguntas de opción múltiple a partir \
 únicamente de: \
 
 "{context}"
-
-E hace lo posible para no generar preguntas parecidas a:
-
-"{generated_questions}"
 
 ---------------------------------------------------------------------------------
 Debes siempre generar diez (10) preguntas. \
@@ -290,14 +287,7 @@ Dos tercios (2/3) de las preguntas deben ser de nivel "Fácil". \
 Un tercio (1/3) de las preguntas deben ser de nivel "Difícil".
 
 ---------------------------------------------------------------------------------
-Ninguna de las preguntas que generes debe ser igual o si quiera parecida en lo \
-más mínimo a alguna de estas otras preguntas viejas e incorrectas:
-
-"{generated_questions}"
-
----------------------------------------------------------------------------------
-Debes siempre retornar las preguntas y las dificultades en una lista de diccionarios
-al estilo Python:
+Debes siempre retornar las preguntas y las dificultades en una estructura JSON:
 
 Aquí un ejemplo: \
 [
@@ -313,47 +303,34 @@ Siempre retorna el formato completo para todas las preguntas.
 
 
 TEN_Q_TFQ_PROMPT = """
-Eres un modelo que genera preguntas de respuesta VERDADERA o FALSA a partir \
-únicamente de: \
+Genera diez (10) preguntas de respuesta VERDADERA o FALSA basadas en el siguiente contexto:
 
 {context}
 
-E hace lo posible para no generar preguntas parecidas a:
-
-"{generated_questions}"
+---------------------------------------------------------------------------------
+Las preguntas deben ser formuladas de manera que solo puedan ser respondidas con "Verdadero" o "Falso".
 
 ---------------------------------------------------------------------------------
-Es importante que la pregunta que generes sólo se pueda responder \
-con únicamente con opciones "Verdadero" o "Falso".
-
-Nunca pongas una opción "No se menciona en el texto" o similar.
+Las preguntas deben ser formuladas siempre como preguntas, no como afirmaciones.
 
 ---------------------------------------------------------------------------------
-Debes siempre generar diez (10) preguntas. \
-    
----------------------------------------------------------------------------------
-Ocho (8) de las preguntas deben ser de nivel "Fácil". \
-    
-Dos (2) de las preguntas deben ser de nivel "Difícil".
+¡Por favor, intenta ser lo más creativo que puedas con las preguntas!
 
 ---------------------------------------------------------------------------------
-Ninguna de las preguntas que generes debe ser igual o si quiera parecida en lo \
-más mínimo a alguna de estas otras preguntas viejas e incorrectas:
-
-"{generated_questions}"
+Ocho (8) de las preguntas deben ser de nivel "Fácil" y dos (2) deben ser de nivel "Difícil".
 
 ---------------------------------------------------------------------------------
-Debes siempre retornar las preguntas y las dificultades en una lista de diccionarios
-al estilo Python:
+Por favor, retorna las preguntas y las dificultades en el siguiente formato JSON:
 
-Aquí un ejemplo: \
 [
     (
-        "question": "¿Cuál es la capital de Colombia?", \
-        "difficulty": "Fácil" \
+        "question": "¿Cuál es la capital de Colombia?",
+        "difficulty": "Fácil"
     ),
+    ...
 ]
 
 ---------------------------------------------------------------------------------
-Siempre retorna el formato completo para todas las preguntas.
+Asegúrate de seguir siempre este formato y estructura para todas las preguntas generadas.
 """
+

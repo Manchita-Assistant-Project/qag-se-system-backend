@@ -1,555 +1,211 @@
 {
     "content": [
         {
-            "question": "¿Cuál es el objetivo general de la asignatura?",
+            "question": "¿Cuál es el objetivo principal del programa de Diseño Gráfico en la Facultad de Artes Visuales y Aplicadas?",
             "choices": {
-                "a": "Brindar al estudiante herramientas y conceptos básicos del uso de la informática en los procesos de creación, producción y difusión de productos desde el campo del diseño y el entorno artístico en general.",
-                "b": "Conocer y comprender las nuevas tecnologías que se están introduciendo al campo del diseño y de las artes para la creación.",
-                "c": "Facilitar al estudiante el aprendizaje de técnicas avanzadas de diseño y producción artística utilizando las herramientas informáticas más innovadoras.",
-                "d": "Fomentar el desarrollo de habilidades digitales en el campo del diseño y las artes, permitiendo al estudiante utilizar las tecnologías de manera efectiva en su trabajo creativo."
+                "a": "Proporcionar habilidades aplicadas a necesidades reales del medio mediante un enfoque sistémico.",
+                "b": "Fomentar la investigación en diseño gráfico a través de la identificación de problemas sociales.",
+                "c": "Desarrollar competencias en la creación de imágenes utilizando técnicas digitales y analógicas.",
+                "d": "Establecer un vínculo entre el diseño gráfico y las demandas del entorno profesional."
             },
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cuál es la bibliografía complementaria recomendada para la asignatura?",
+            "question": "¿Cuáles son algunas aplicaciones prácticas de las habilidades que los estudiantes del programa de Diseño Gráfico pueden utilizar para abordar problemáticas sociales actuales?",
             "choices": {
-                "a": "Libro A",
-                "b": "Libro B",
-                "c": "Libro C",
-                "d": "Libro D"
+                "a": "Diseño de campañas visuales para la concienciación sobre el cambio climático.",
+                "b": "Creación de infografías que informen sobre derechos humanos y su violación.",
+                "c": "Desarrollo de interfaces digitales para facilitar el acceso a servicios comunitarios.",
+                "d": "Producción de contenido gráfico para promover la inclusión social en medios de comunicación."
             },
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Qué vínculos se establecen entre el arte y la sociedad en la asignatura?",
+            "question": "¿Qué tipo de proyectos busca fomentar la Vicerrectoría Académica en el contexto del diseño gráfico?",
             "choices": {
-                "a": "El arte se utiliza como una forma de expresión individual sin relación con la sociedad.",
-                "b": "El arte se utiliza como una forma de crítica social y promueve cambios en la sociedad.",
-                "c": "El arte se utiliza como entretenimiento y no tiene impacto en la sociedad.",
-                "d": "El arte se utiliza como una forma de escapismo y no refleja la realidad social."
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Qué tipo de investigaciones se realizan en el semillero de Dramaturgia Performática en espacios no convencionales?",
-            "choices": {
-                "a": "Investigaciones sobre el uso de tecnología en la dramaturgia",
-                "b": "Investigaciones sobre la relación entre música y dramaturgia",
-                "c": "Investigaciones sobre la representación de género en la dramaturgia",
-                "d": "Investigaciones sobre la interacción entre público y actor en espacios no convencionales"
-            },
-            "answer": "d",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es la función del blog Confessions of an Aca‐Fan?",
-            "choices": {
-                "a": "Compartir noticias y artículos sobre cine",
-                "b": "Publicar reseñas de libros de diseño gráfico",
-                "c": "Promover la inclusión en el campo del diseño gráfico",
-                "d": "Investigar sobre el cine y sus representaciones"
-            },
-            "answer": "c) Promover la inclusión en el campo del diseño gráfico",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el perfil del docente?",
-            "choices": {
-                "a": "Contar con experiencia docente en educación superior de por lo menos 2 años.",
-                "b": "Poseer formación en docencia y experiencia probada en la docencia universitaria en diseño.",
-                "c": "Tener una producción investigativa académica demostrable.",
-                "d": "Todas las anteriores."
+                "a": "Proyectos de investigación aplicada en comunicación visual",
+                "b": "Proyectos de marketing digital para empresas",
+                "c": "Proyectos artísticos sin fines académicos",
+                "d": "Proyectos de emprendimiento en diseño gráfico"
             },
             "answer": "d",
             "type": "MCQ",
             "difficulty": "Fácil"
         },
         {
-            "question": "¿Cuál es la importancia de la interdisciplinariedad en el estudio de la poesía popular?",
+            "question": "¿Qué habilidades deben desarrollar los estudiantes para incidir en su entorno a través de la comunicación visual?",
             "choices": {
-                "a": "Permite enriquecer la interpretación vocal de los textos",
-                "b": "Facilita el estudio de la diversidad cultural en Colombia",
-                "c": "Promueve la colaboración entre teatro, poesía, canto y música",
-                "d": "Ayuda a comprender los componentes discursivos del ámbito estético"
-            },
-            "answer": "c",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuáles son algunos de los libros recomendados para la asignatura?",
-            "choices": {
-                "a": "Utopía para realistas",
-                "b": "Teoría de la deriva",
-                "c": "Intuición, acción, creación",
-                "d": "Otro libro"
+                "a": "Capacidades de análisis crítico para evaluar proyectos de diseño.",
+                "b": "Conocimiento avanzado en software de animación y edición digital.",
+                "c": "Aptitudes para la representación gráfica utilizando técnicas mixtas.",
+                "d": "Habilidades interpersonales para establecer redes de colaboración."
             },
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cuál es la relación entre el arte y la memoria histórica institucional y regional?",
+            "question": "¿Qué asignatura permite a los estudiantes explorar la narración gráfica antes de la animación?",
             "choices": {
-                "a": "El arte no tiene relación con la memoria histórica",
-                "b": "El arte permite preservar y transmitir la memoria histórica",
-                "c": "El arte es independiente de la memoria histórica",
-                "d": "La memoria histórica no tiene influencia en el arte"
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es la importancia de implementar propuestas en publicaciones digitales?",
-            "choices": {
-                "a": "Atraer a un público más amplio",
-                "b": "Mejorar la calidad de los contenidos",
-                "c": "Facilitar la distribución y acceso a la información",
-                "d": "Generar interacción y participación del público"
-            },
-            "answer": "c",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el impacto del diseño gráfico en la sociedad?",
-            "choices": {
-                "a": "El diseño gráfico tiene un impacto mínimo en la sociedad.",
-                "b": "El diseño gráfico tiene un impacto significativo en la sociedad al comunicar mensajes visuales de manera efectiva.",
-                "c": "El diseño gráfico no tiene ningún impacto en la sociedad.",
-                "d": "El impacto del diseño gráfico en la sociedad depende del contexto y la forma en que se utilice."
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es la función del semillero de Animación en Bellas Artes?",
-            "choices": {
-                "a": "Explorar técnicas de animación tradicional",
-                "b": "Realizar cortos animados con personajes creados por los estudiantes",
-                "c": "Investigar sobre la relación entre arte y sostenibilidad",
-                "d": "Desarrollar habilidades de emprendimiento cultural"
-            },
-            "answer": "b) Realizar cortos animados con personajes creados por los estudiantes",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Qué se busca lograr con el proyecto Reconocimiento Resultado de Material docente?",
-            "choices": {
-                "a": "Mejorar la calidad del material docente",
-                "b": "Evaluar el desempeño del docente",
-                "c": "Reconocer el resultado del material docente",
-                "d": "Promover el uso de material docente"
-            },
-            "answer": "c) Reconocer el resultado del material docente",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Qué tipo de acciones promueve el proyecto de investigación Sondas de Profundidad?",
-            "choices": {
-                "a": "Acciones de investigación",
-                "b": "Acciones de diseño",
-                "c": "Acciones de producción",
-                "d": "Acciones de impresión"
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es la importancia de promover el desarrollo y fortalecimiento de capacidades en los sectores sociales?",
-            "choices": {
-                "a": "Mejora la calidad de vida de las personas.",
-                "b": "Favorece el desarrollo económico.",
-                "c": "Promueve la equidad y la inclusión social.",
-                "d": "Incrementa la competitividad internacional."
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es la función del blog Hipermediaciones: el blog de Carlos A. Scolari?",
-            "choices": {
-                "a": "Publicar investigaciones sobre el cine y sus representaciones",
-                "b": "Producir fragmentos de escrituras híbridas",
-                "c": "Realizar intervenciones en espacios no convencionales",
-                "d": "Generar respuestas de opción múltiple"
-            },
-            "answer": "a) Publicar investigaciones sobre el cine y sus representaciones",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el título del libro de Marcel Martin sobre el lenguaje del cine?",
-            "choices": {
-                "a": "El arte de la cinematografía",
-                "b": "El lenguaje del séptimo arte",
-                "c": "Cine y comunicación digital",
-                "d": "La gramática del cine"
-            },
-            "answer": "b) El lenguaje del séptimo arte",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el objetivo del proyecto editorial del Instituto Departamental de Bellas Artes?",
-            "choices": {
-                "a": "Fomentar la integración entre las diferentes disciplinas del saber.",
-                "b": "Desarrollar proyectos para la producción y elaboración de contenidos e imágenes.",
-                "c": "Incentivar al estudiante al desarrollo de habilidades para el manejo de herramientas y dominio en procesos de impresión.",
-                "d": "Todas las anteriores."
+                "a": "Narración Visual",
+                "b": "Diseño Editorial",
+                "c": "Ilustración Avanzada",
+                "d": "Narración Gráfica"
             },
             "answer": "d",
             "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es el objetivo del blog Investigaciones sobre el Cine y sus Representaciones?",
-            "choices": {
-                "a": "Promover la industria cinematográfica en Cali",
-                "b": "Analizar las representaciones en el cine contemporáneo",
-                "c": "Publicar investigaciones sobre el cine caleño",
-                "d": "Compartir información sobre el cine colombiano"
-            },
-            "answer": "b) Analizar las representaciones en el cine contemporáneo",
-            "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cuáles son algunos de los blogs relacionados con el transmedia?",
+            "question": "¿Qué impacto tienen los diferentes tipos de medios digitales, como la fotografía y la animación, en la evolución del diseño gráfico según el texto?",
             "choices": {
-                "a": "Blog Investigaciones sobre el Cine y sus Representaciones",
-                "b": "Blog de Kaly drama",
-                "c": "Blog de Diseño gráfico",
-                "d": "Blog de Bellas Artes"
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el objetivo de la asignatura en relación a las condiciones físicas del hombre?",
-            "choices": {
-                "a": "Promover el desarrollo físico y saludable del hombre.",
-                "b": "Investigar y analizar las condiciones físicas del hombre.",
-                "c": "Mejorar la comunicación visual en relación a las condiciones físicas del hombre.",
-                "d": "Desarrollar competencias investigativas en relación a las condiciones físicas del hombre."
+                "a": "Permiten una mayor experimentación en la narración visual.",
+                "b": "Reducen la importancia de la comunicación visual.",
+                "c": "Establecen un vínculo directo con técnicas tradicionales.",
+                "d": "No tienen impacto significativo en el diseño gráfico."
             },
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Fácil"
         },
         {
-            "question": "¿Cuál es el libro recomendado para el estudio del cine?",
+            "question": "¿Qué principios orientan las decisiones institucionales en el ámbito de Bienestar Institucional?",
             "choices": {
-                "a": "Historia del Arte",
-                "b": "Historia de la Belleza",
-                "c": "Diccionario de Cine",
-                "d": "Tesis y Monografías"
+                "a": "La flexibilidad y adaptación a contextos cambiantes",
+                "b": "La integración de conocimientos científicos y éticos",
+                "c": "La promoción de la responsabilidad social y el desarrollo humano",
+                "d": "La priorización de la investigación sobre la práctica profesional"
             },
             "answer": "c",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cuál es el título del libro de Ira Konigsberg sobre cine?",
+            "question": "¿Qué se menciona sobre la flexibilidad del programa de diseño en el documento?",
             "choices": {
-                "a": "Historia del Cine",
-                "b": "El Lenguaje del Cine",
-                "c": "Introducción al Cine",
-                "d": "El Arte del Cine"
+                "a": "Permite una integración de asignaturas electivas que enriquecen la formación del estudiante.",
+                "b": "Es un aspecto que limita la creatividad del diseñador en su proceso de aprendizaje.",
+                "c": "Facilita la adaptación de los contenidos a las demandas cambiantes del mercado laboral.",
+                "d": "Se considera un elemento secundario en la estructura del currículo del diseño."
             },
-            "answer": "b) El Lenguaje del Cine",
+            "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cuál es el objetivo general de la asignatura Plasmar en un escenario o muestra, el trabajo resultante de dicho análisis, mediante artículos, conciertos, performances o muestras gráﬁcas?",
+            "question": "¿Qué asignatura del programa de Diseño Gráfico se relaciona con la práctica de la fotografía para animación?",
             "choices": {
-                "a": "Realizar investigaciones en el área de diseño gráfico",
-                "b": "Diseñar escenarios y muestras gráficas",
-                "c": "Analizar y mostrar el resultado del análisis en artículos, conciertos, performances o muestras gráficas",
-                "d": "Crear artículos, conciertos, performances o muestras gráficas"
+                "a": "Fotografía y Animación",
+                "b": "Diseño Tipográfico",
+                "c": "Historia del Diseño Gráfico",
+                "d": "Narración Gráfica y Audiovisual"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Qué componente del programa de Diseño Gráfico enfatiza la relación entre el arte contemporáneo y la transformación social?",
+            "choices": {
+                "a": "La interdisciplinariedad en proyectos artísticos",
+                "b": "La capacidad crítica y discursiva en diseño",
+                "c": "El uso de medios digitales en la comunicación visual",
+                "d": "La integración de saberes en la formación profesional"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué asignatura del programa aborda la relación entre historia, cuerpo e identidad en el contexto del diseño gráfico?",
+            "choices": {
+                "a": "Diseño y Cultura Visual",
+                "b": "Historia del Diseño Gráfico",
+                "c": "Identidad y Representación",
+                "d": "Estética y Sociedad"
             },
             "answer": "c",
             "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Qué se busca lograr con el proyecto de Ilustración “La balada de Nadia y Daniel” o “La magia del amor”?",
-            "choices": {
-                "a": "Promover el arte urbano en la comunidad",
-                "b": "Explorar la relación entre el teatro y el cine",
-                "c": "Fomentar la escritura y la interpretación vocal de textos",
-                "d": "Destacar el trabajo de los egresados de Bellas Artes"
-            },
-            "answer": "c",
-            "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cómo influye la poesía popular en la cultura colombiana?",
+            "question": "¿Qué tipo de estrategias se propone implementar en la Facultad para mejorar la comunicación interna y externa?",
             "choices": {
-                "a": "La poesía popular no tiene influencia en la cultura colombiana",
-                "b": "La poesía popular es una forma de expresión artística que ha influido en la música y la literatura colombiana",
-                "c": "La poesía popular ha contribuido a la formación de la identidad cultural colombiana",
-                "d": "La poesía popular solo es apreciada por un pequeño grupo de personas en Colombia"
-            },
-            "answer": "b) La poesía popular es una forma de expresión artística que ha influido en la música y la literatura colombiana",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el enfoque principal de los recursos educativos que se están buscando identificar durante el periodo Febrero - Junio 2021?",
-            "choices": {
-                "a": "Diseño universal para el Aprendizaje",
-                "b": "Sensibilización y prevención de las Violencias basadas en Género y Violencia Sexual",
-                "c": "Ruta de atención a violencias basadas en género",
-                "d": "Socialización de protocolos y rutas de atención educativa para el enfoque diferencial"
-            },
-            "answer": "d",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es el objetivo del semillero de Diseño, Arte y Sostenibilidad?",
-            "choices": {
-                "a": "Fomentar la investigación en diseño y arte",
-                "b": "Promover la sostenibilidad en el diseño y arte",
-                "c": "Desarrollar habilidades creativas en diseño y arte",
-                "d": "Explorar nuevas técnicas en diseño y arte"
-            },
-            "answer": "b) Promover la sostenibilidad en el diseño y arte",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el objetivo del semillero de Investigación en Diseño?",
-            "choices": {
-                "a": "Fomentar la creatividad en el diseño gráfico",
-                "b": "Promover la investigación en el campo del diseño",
-                "c": "Desarrollar proyectos de diseño sostenible",
-                "d": "Estudiar el impacto del diseño en la sociedad"
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es la importancia de la diversidad en el campo del arte?",
-            "choices": {
-                "a": "Permite la inclusión de diferentes perspectivas y experiencias en la creación artística.",
-                "b": "Facilita la competencia entre artistas.",
-                "c": "Limita la creatividad y originalidad en el arte.",
-                "d": "Promueve la uniformidad y homogeneidad en las obras de arte."
+                "a": "Crear espacios de encuentro para estudiantes y docentes",
+                "b": "Reducir el número de asignaturas electivas",
+                "c": "Limitar la participación de egresados en proyectos",
+                "d": "Aumentar la carga horaria de clases teóricas"
             },
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Fácil"
         },
         {
-            "question": "¿Cuál es la función del blog Comparativa de Medios (MIT)?",
+            "question": "¿Qué institución expide la Resolución No. 051 que regula el sistema de práctica social?",
             "choices": {
-                "a": "Proporcionar información sobre medios de comunicación",
-                "b": "Realizar comparativas entre diferentes medios de comunicación",
-                "c": "Analizar el impacto de los medios de comunicación en la sociedad",
-                "d": "Promover la interacción entre los medios de comunicación y los usuarios"
+                "a": "Ministerio de Educación Nacional",
+                "b": "Universidad Nacional de Colombia",
+                "c": "Instituto Colombiano de Bienestar Familiar",
+                "d": "Asociación Colombiana de Universidades"
             },
-            "answer": "b) Realizar comparativas entre diferentes medios de comunicación",
+            "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Qué tipo de proyectos se desarrollan en el semillero de Animación?",
+            "question": "¿Qué tipo de asignaturas se incluyen en la formación de los futuros artistas según el documento?",
             "choices": {
-                "a": "Proyectos relacionados con la economía naranja",
-                "b": "Proyectos de diseño y construcción participativas",
-                "c": "Proyectos de fotografía como medio de expresión",
-                "d": "Proyectos de programación de actividades por sesión o clase"
+                "a": "Técnicas de representación gráfica analógicas y digitales",
+                "b": "Historia del arte y su impacto social",
+                "c": "Diseño de comunicación visual y señalética",
+                "d": "Teoría y práctica de la fotografía y multimedia"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué tipo de estrategias se implementan para promover el bienestar institucional en la Facultad de Artes Visuales y Aplicadas?",
+            "choices": {
+                "a": "Talleres de creatividad y reflexión crítica para la comunidad académica.",
+                "b": "Programas de apoyo psicológico y emocional para estudiantes y docentes.",
+                "c": "Espacios de discusión interdisciplinaria y colaboración en proyectos.",
+                "d": "Incentivos económicos para fomentar la investigación y la creación artística."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué rol desempeña la Vicerrectoría Académica en la implementación del sistema de práctica social en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Supervisa el desarrollo de las prácticas sociales.",
+                "b": "Establece políticas educativas y de práctica social.",
+                "c": "No tiene ninguna injerencia en el sistema.",
+                "d": "Proporciona recursos económicos para las prácticas."
             },
             "answer": "b",
             "type": "MCQ",
             "difficulty": "Fácil"
         },
         {
-            "question": "¿Cuál es la relación entre la música y la tecnología en el contexto actual?",
+            "question": "¿Qué aspecto destaca la Facultad de Artes Visuales y Aplicadas en su enfoque educativo?",
             "choices": {
-                "a": "La tecnología ha reemplazado por completo la música en el contexto actual.",
-                "b": "La música ha evolucionado gracias a los avances tecnológicos en la producción y distribución.",
-                "c": "La música y la tecnología son dos campos completamente independientes.",
-                "d": "La tecnología ha limitado la creatividad en la música actual."
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es la importancia de la interdisciplinariedad en el estudio de las artes plásticas?",
-            "choices": {
-                "a": "Permite la integración de diferentes disciplinas artísticas en la creación",
-                "b": "Favorece la exploración de nuevas técnicas y conceptos en el arte",
-                "c": "Promueve la colaboración y el intercambio de ideas entre artistas",
-                "d": "Amplía el horizonte creativo y estimula la innovación"
+                "a": "La promoción de la investigación-creación a través de la interdisciplinariedad.",
+                "b": "La exclusividad del arte plástico sin considerar otras disciplinas.",
+                "c": "La imposición de un currículo rígido que no permite la flexibilidad.",
+                "d": "La falta de interacción entre el diseño gráfico y las artes visuales."
             },
             "answer": "a",
             "type": "MCQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿Cuál es la diferencia entre el cine y el teatro?",
-            "choices": {
-                "a": "El cine utiliza imágenes en movimiento, mientras que el teatro se basa en la actuación en vivo.",
-                "b": "El cine utiliza escenarios reales, mientras que el teatro utiliza escenarios ficticios.",
-                "c": "El cine es más interactivo que el teatro.",
-                "d": "El cine es más antiguo que el teatro."
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es el perfil que debe tener un docente en el Instituto Departamental de Bellas Artes?",
-            "choices": {
-                "a": "Experiencia en el campo de la animación",
-                "b": "Experiencia como diseñador e ilustrador independiente",
-                "c": "Experiencia como docente desde el año 2022",
-                "d": "Experiencia trabajando con clientes como Instagram, Hernán Casciari, Dawer y Damper, y Maréh"
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el título del libro de Paul Virilio sobre la máquina de visión?",
-            "choices": {
-                "a": "La velocidad de liberación",
-                "b": "La mirada acelerada",
-                "c": "El ojo digital",
-                "d": "La percepción instantánea"
-            },
-            "answer": "b) La mirada acelerada",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es la función del blog Storycode?",
-            "choices": {
-                "a": "Compartir información sobre cine y sus representaciones",
-                "b": "Publicar fragmentos de escrituras híbridas",
-                "c": "Hacer intervenciones en espacios no convencionales",
-                "d": "Generar respuestas de opción múltiple"
-            },
-            "answer": "a) Compartir información sobre cine y sus representaciones",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es la relación entre la poesía popular y la música?",
-            "choices": {
-                "a": "La poesía popular y la música son formas de expresión artística completamente independientes.",
-                "b": "La música es un elemento fundamental en la poesía popular, ya que ayuda a transmitir las emociones y sentimientos del poema.",
-                "c": "La poesía popular y la música tienen una relación simbiótica, en la que se complementan y enriquecen mutuamente.",
-                "d": "La poesía popular y la música tienen una relación de oposición, ya que representan dos formas distintas de expresión artística."
-            },
-            "answer": "c) La poesía popular y la música tienen una relación simbiótica, en la que se complementan y enriquecen mutuamente.",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el propósito principal del proyecto de investigación en Diseño, Arte y Sostenibilidad?",
-            "choices": {
-                "a": "Generar obras de arte que sean sostenibles",
-                "b": "Investigar las relaciones entre diseño, arte y sostenibilidad",
-                "c": "Promover la divulgación y publicación de experiencias en diseño, arte y sostenibilidad",
-                "d": "Desarrollar propuestas de investigación creación en diseño, arte y sostenibilidad"
-            },
-            "answer": "b",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Qué tipo de creación objetual se espera de los estudiantes?",
-            "choices": {
-                "a": "Creación de obras de arte",
-                "b": "Creación de proyectos científicos",
-                "c": "Creación de estructuras arquitectónicas",
-                "d": "Creación de programas de computadora"
-            },
-            "answer": "b) Creación de proyectos científicos",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Qué tipo de investigaciones se realizan en el semillero de Animación Experimental?",
-            "choices": {
-                "a": "Investigaciones sobre técnicas de animación",
-                "b": "Investigaciones sobre diseño sostenible",
-                "c": "Investigaciones sobre historia del diseño",
-                "d": "Investigaciones sobre performance"
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿Cuál es el propósito principal del proyecto de investigación en Animación?",
-            "choices": {
-                "a": "Crear productos, servicios o sistemas",
-                "b": "Realizar seguimiento a las convocatorias de investigación",
-                "c": "Cumplir y hacer cumplir las disposiciones legales",
-                "d": "Participar en el Comité́ Institucional de Investigaciones"
-            },
-            "answer": "a) Crear productos, servicios o sistemas",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿Cuál es el título del libro de Carlos A. Scolari que aborda el fenómeno del transmedia?",
-            "choices": {
-                "a": "Transmedia Storytelling",
-                "b": "Transmedia Literacy",
-                "c": "Transmedia Communication",
-                "d": "Transmedia Experience"
-            },
-            "answer": "a",
-            "type": "MCQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El Instituto Departamental de Bellas Artes cuenta con una orquesta juvenil en el Conservatorio Antonio María Valencia y se encuentra ubicado en Cali, Colombia.",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una oferta de semilleros pertenecientes al grupo Aisthesis: Teoría y creación?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Fácil"
-        },
-        {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de disminución de barreras en infraestructura física.?",
+            "question": "¿Los semilleros de investigación en Bellas Artes se enfocan en la creación y reflexión personal?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -559,7 +215,17 @@
             "difficulty": "Difícil"
         },
         {
-            "question": "Verdadero o Falso: El compromiso del Instituto Departamental de Bellas Artes con su comunidad interna y externa es fundamental para su funcionamiento.",
+            "question": "¿El Instituto Departamental de Bellas Artes, reconocido por su enfoque innovador en la educación artística, se ubica en la ciudad de Cali, Colombia?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Es verdadero que el Instituto Departamental de Bellas Artes implementa programas de pasantías que han mostrado un impacto positivo en la carrera profesional de sus estudiantes?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
@@ -569,84 +235,94 @@
             "difficulty": "Fácil"
         },
         {
-            "question": "¿El Instituto Departamental de Bellas Artes cuenta con una política de inclusión y diversidad?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "Verdadero",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El compromiso del Instituto Departamental de Bellas Artes con su comunidad interna y externa es fundamental para su funcionamiento.",
+            "question": "¿Es cierto que el Instituto Departamental de Bellas Artes promueve métodos innovadores en su enfoque de educación artística?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
             },
             "answer": "a",
             "type": "TFQ",
-            "difficulty": "Difícil"
+            "difficulty": "Fácil"
         },
         {
-            "question": "¿El Instituto Departamental de Bellas Artes se encuentra ubicado en Cali, Colombia?",
-            "choices": {
-                "a": "Verdadero",
-                "b": "Falso"
-            },
-            "answer": "a",
-            "type": "TFQ",
-            "difficulty": "Difícil"
-        },
-        {
-            "question": "Verdadero o Falso: El Instituto Departamental de Bellas Artes se enfoca exclusivamente en la producción cinematográfica.",
+            "question": "¿El Instituto Departamental de Bellas Artes se dedica únicamente a la enseñanza de artes plásticas?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
             },
             "answer": "b",
             "type": "TFQ",
-            "difficulty": "Fácil"
+            "difficulty": "Difícil"
         },
         {
-            "question": "¿Es correcto afirmar que el objetivo principal del Instituto Departamental de Bellas Artes es promover la inclusión y diversidad en el campo de las artes en Cali, Colombia?",
+            "question": "¿Es falso que el Instituto Departamental de Bellas Artes se localiza en una de las principales ciudades artísticas de Colombia?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
             },
-            "answer": "Verdadero",
+            "answer": "a",
             "type": "TFQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "Verdadero o Falso: El objetivo principal del Instituto Departamental de Bellas Artes es promover la inclusión y diversidad en el campo de las artes en Cali, Colombia.",
+            "question": "¿Es cierto que el Instituto Departamental de Bellas Artes ha implementado programas específicos para fomentar la inclusión de grupos diversos en sus actividades académicas y comunitarias?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
             },
-            "answer": "Verdadero",
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Es incorrecto afirmar que el Instituto Departamental de Bellas Artes está situado en la vibrante ciudad de Cali, Colombia?",
+            "choices": {
+                "a": ") Verdadero",
+                "b": ") Falso"
+            },
+            "answer": "b",
             "type": "TFQ",
             "difficulty": "Difícil"
         },
         {
-            "question": "¿El Instituto Departamental de Bellas Artes tiene como objetivo principal promover la inclusión y diversidad en el campo de las artes en Cali, Colombia? (Verdadero o Falso)",
+            "question": "¿Es falso que el Instituto Departamental de Bellas Artes tenga su sede en la ciudad de Cali, Colombia?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
             },
-            "answer": "Verdadero",
+            "answer": "b",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿La bibliografía complementaria incluye trabajos sobre cine y diseño gráfico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Es correcto afirmar que el Instituto Departamental de Bellas Artes, centro cultural vital, se encuentra en la ciudad de Cali, reconocida por su rica tradición artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "a",
             "type": "TFQ",
             "difficulty": "Fácil"
         },
         {
-            "question": "¿El Instituto Departamental de Bellas Artes ofrece talleres gratuitos de animación para jóvenes y adolescentes en Cali, Colombia? (Verdadero o Falso)",
+            "question": "¿Es cierto que el Instituto Departamental de Bellas Artes desarrolla iniciativas concretas para garantizar la equidad y diversidad en su oferta educativa y cultural?",
             "choices": {
                 "a": "Verdadero",
                 "b": "Falso"
             },
-            "answer": "Verdadero",
+            "answer": "b",
             "type": "TFQ",
-            "difficulty": "Fácil"
+            "difficulty": "Difícil"
         }
     ]
 }
