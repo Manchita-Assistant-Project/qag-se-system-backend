@@ -396,12 +396,12 @@ def find_most_different_question(questions: list, question_type: int, threshold:
 
         # Calcular la similitud coseno entre el embedding de la pregunta y los almacenados
         similarities = cosine_similarity([question_embedding], stored_embeddings)
-        max_similarity = max(similarities[0])
+        curr_similarity = min(similarities[0])
 
-        print(f"{max_similarity}")
+        print(f"{curr_similarity}")
         # Verificar si la similitud es menor al umbral y si es la menor encontrada hasta ahora
-        if max_similarity < threshold and max_similarity < min_similarity:
-            min_similarity = max_similarity
+        if curr_similarity < threshold and curr_similarity < min_similarity:
+            min_similarity = curr_similarity
             most_different_question = question_dict
 
     # Si se encontró una pregunta por debajo del umbral, guardar su embedding
