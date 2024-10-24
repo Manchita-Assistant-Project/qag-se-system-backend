@@ -3,7 +3,8 @@ from typing import Literal
 
 import app.agent.utils as utils
 import app.agent.nodes as nodes
-from app.agent.state import State
+from app.agent.state import State, ChromaDatabase
+import app.database.chroma_utils as chroma_utils
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END
@@ -159,6 +160,14 @@ def use_graph():
         }
     }
 
+    db_id = 'NKNKNK'
+    db = chroma_utils.get_db(db_id)
+    
+    db_obj = ChromaDatabase(
+        db_id=db_id,
+        db=db
+    )
+
     questions = [
         'hola!',
         'hazme una pregunta!',
@@ -179,7 +188,7 @@ def use_graph():
     # while True:
     for query in questions:
         # query = input("You: ")
-        graph.update_state(thread, {"thread_id": thread_id})
+        graph.update_state(thread, {"thread_id": thread_id, "db_chroma": db_obj})
         # print(f"SNAPSHOT {query}: {snapshot}")
         for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
             print(f"TOOL USED {graph.get_state(thread).values['messages'][-1].name}")

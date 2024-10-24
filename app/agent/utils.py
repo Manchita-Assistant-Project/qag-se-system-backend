@@ -117,7 +117,6 @@ def agent_node(state, agent, name):
     }
     
 def agent_w_tools_node(state, agent, name):
-    
     # mensaje de regaño si no se hizo un tool call
     instruction_message = """
     ¡No hiciste un tool call! ¡Haz el respectivo tool call! No generes texto, solo haz el tool call.

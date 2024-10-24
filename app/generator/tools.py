@@ -15,7 +15,7 @@ import app.database.chroma_utils as chroma_utils
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-from langchain_openai import AzureChatOpenAI
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
@@ -31,6 +31,7 @@ os.environ["AZURE_OPENAI_ENDPOINT"] = config.AZURE_OPENAI_ENDPOINT
 os.environ["OPENAI_API_TYPE"] = config.OPENAI_API_TYPE
 os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
+MODEL_NAME = config.OPENAI_MODEL_4OMINI
 load_dotenv()
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,9 +53,10 @@ class QuestionsOutputList(BaseModel):
 def load_dataset(path: str) -> pd.DataFrame:
     return pd.read_csv(path, sep=";")
 
-def get_context(query: str="", k: int=90):
-    embedding_function = chroma_utils.get_embedding_function()
-    db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
+def get_context(db_id: str, query: str="", k: int=90):
+    db = chroma_utils.get_db(db_id)
+    # embedding_function = chroma_utils.get_embedding_function()
+    # db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
     
     # Search the DB -> top k most relevant chunks to the query.
     results = db.similarity_search_with_score(query, k)
@@ -63,8 +65,8 @@ def get_context(query: str="", k: int=90):
 
     return context_text
 
-def get_context_tool(query: str="", k: int=90):
-    context = get_context(query, k)
+def get_context_tool(db_id: str, query: str="", k: int=90):
+    context = get_context(db_id, query, k)
     return context
 
 def question_generator_tool(question_type: int, difficulty: str, context: str):
@@ -108,10 +110,10 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
     
     return response_text
 
-def ten_questions_generator_tool(question_type: int, difficulty: str, context: str):
+def ten_questions_generator_tool(db_id: str, question_type: int, difficulty: str, context: str):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
-    generated_questions_list = utils.load_json(correct_file)
+    generated_questions_list = utils.load_json(db_id, correct_file)
 
     generated_questions = [question["question"] for question in generated_questions_list]
 
@@ -120,9 +122,14 @@ def ten_questions_generator_tool(question_type: int, difficulty: str, context: s
     generated_questions_string = utils.structure_generated_questions_string(generated_questions)
     # print(generated_questions_string)
     
-    llm = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0.8,
+    # llm = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.8,
+    # )
+    
+    llm = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=0.8
     )
     
     types = [TEN_Q_MCQ_PROMPT, Q_OAQ_PROMPT, TEN_Q_TFQ_PROMPT]
@@ -141,8 +148,13 @@ def ten_questions_generator_tool(question_type: int, difficulty: str, context: s
     return response_text["questions"]
 
 def answer_generator_tool(q_type: int, question: str, difficulty: str, context: str):
-    llm = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # llm = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.7
+    # )
+    
+    llm = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=0.7
     )
     
@@ -183,24 +195,26 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
 
     # return "ERROR"
 
-def conditional_evaluation(generated_question: str, threshold: float):
-    context = get_context()
+def conditional_evaluation(db_id: str, generated_question: str, threshold: float):
+    context = get_context(db_id)
     print("Got context")
-    similarity = 0.5
-    if similarity < threshold:
-        llm = AzureChatOpenAI(
-            deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-            temperature=0.2
-        )
-        
-        prompt_template = ChatPromptTemplate.from_template(Q_EVALUATION_PROMPT)
-        prompt = prompt_template.format(generated_question=generated_question, context=context)
-        response = llm.invoke(prompt).content
-        print(f"LLM response: {response}")
-        
-        return response
-    else:
-        return f"High similarity detected ({similarity}), skipping LLM evaluation."
+    # llm = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.2
+    # )
+    
+    llm = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=0.2
+    )
+    
+    print(f"Evaluating: {generated_question}")
+    prompt_template = ChatPromptTemplate.from_template(Q_EVALUATION_PROMPT)
+    prompt = prompt_template.format(generated_question=generated_question, context=context)
+    response = llm.invoke(prompt).content
+    print(f"LLM response: {response}")
+    
+    return response
 
 def structure_output_metrics(evaluation: str) -> float:
     clarity_pattern = r"Clarity:\s*((0|1)(\.\d+)?)"
@@ -224,17 +238,17 @@ def structure_output_metrics(evaluation: str) -> float:
 
     return average
 
-def evaluate_quality_tool(generated_question: str, threshold: float):       
-    response = conditional_evaluation(generated_question, threshold)
+def evaluate_quality_tool(db_id: str, generated_question: str, threshold: float):       
+    response = conditional_evaluation(db_id, generated_question, threshold)
     similarity = structure_output_metrics(response)
     
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):
+def refine_question(db_id: str, generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
-    generated_questions_list = utils.load_json(correct_file)
+    generated_questions_list = utils.load_json(db_id, correct_file)
 
     generated_questions = [question["question"] for question in generated_questions_list]
     generated_questions_string = utils.structure_generated_questions_string(generated_questions)
@@ -280,8 +294,13 @@ def refine_question(generated_question: str, feedback: str, similarity: float, q
     
     No retornes nunca texto como "Pregunta mejorada: ..." o "Versión mejorada: ...". o nada similar.
     """
-    llm = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # llm = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=1
+    # )
+    
+    llm = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=1
     )
     
@@ -289,8 +308,8 @@ def refine_question(generated_question: str, feedback: str, similarity: float, q
     print(f"LLM response: {response}")
     return response
 
-def refine_question_tool(generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):   
-    response = refine_question(generated_question, feedback, similarity, question_type, threshold)
+def refine_question_tool(db_id: str, generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):   
+    response = refine_question(db_id, generated_question, feedback, similarity, question_type, threshold)
     
     return response
 
@@ -332,8 +351,13 @@ def question_seen_tool(question: dict, question_type: int):
         Retorna siempre una valoración para cada pregunta y al final la valoración más alta entre todas.
         """
 
-        llm = AzureChatOpenAI(
-            deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+        # llm = AzureChatOpenAI(
+        #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+        #     temperature=1
+        # )
+        
+        llm = ChatOpenAI(
+            model=MODEL_NAME,
             temperature=1
         )
         
@@ -370,18 +394,18 @@ def question_seen_embeddings_tool(question: dict, question_type: int, threshold:
 
     return max_similarity
 
-def find_most_different_question(questions: list, question_type: int, threshold: float, hdf5_file='embeddings.h5'):
+def find_most_different_question(db_id: str, questions: list, question_type: int, threshold: float, hdf5_file='embeddings.h5'):
     # Obtener el modelo de embedding
     embedding_model = chroma_utils.get_embedding_function()
 
     # Cargar embeddings almacenados
-    stored_embeddings = utils.load_embeddings_hdf5(question_type, hdf5_file)
+    stored_embeddings = utils.load_embeddings_hdf5(question_type, db_id, hdf5_file)
 
     # Si no hay embeddings almacenados, guarda el primero y retorna
     if len(stored_embeddings) == 0:
         current_question = utils.add_question_marks(questions[0]["question"])
         first_question_embedding = embedding_model.embed_query(current_question)
-        utils.save_embedding_hdf5(first_question_embedding, question_type, hdf5_file)
+        utils.save_embedding_hdf5(first_question_embedding, question_type, db_id, hdf5_file)
         return questions[0], 0  # retorna la primera pregunta y similitud 0
 
     # Inicializamos variables para almacenar la pregunta con menor similitud
@@ -391,12 +415,12 @@ def find_most_different_question(questions: list, question_type: int, threshold:
     # Iterar sobre las preguntas y calcular la similitud coseno de cada una
     for question_dict in questions:
         question_text = question_dict["question"]
-        question_text = utils.add_question_marks(questions[0]["question"])
+        question_text = utils.add_question_marks(question_text)
         question_embedding = embedding_model.embed_query(question_text)
 
         # Calcular la similitud coseno entre el embedding de la pregunta y los almacenados
         similarities = cosine_similarity([question_embedding], stored_embeddings)
-        curr_similarity = min(similarities[0])
+        curr_similarity = min(similarities[0]) # encontrar la menor similitud
 
         print(f"{curr_similarity}")
         # Verificar si la similitud es menor al umbral y si es la menor encontrada hasta ahora
@@ -407,11 +431,11 @@ def find_most_different_question(questions: list, question_type: int, threshold:
     # Si se encontró una pregunta por debajo del umbral, guardar su embedding
     if most_different_question:
         question_embedding = embedding_model.embed_query(most_different_question["question"])
-        utils.save_embedding_hdf5(question_embedding, question_type, hdf5_file)
+        utils.save_embedding_hdf5(question_embedding, question_type, db_id, hdf5_file)
 
     # Retornar la pregunta con la menor similitud y su valor
     return most_different_question, min_similarity
 
-def save_question_tool(question: dict, question_type: str):
-    utils.update_json(question_type, question)
-    utils.update_json('qs', question)
+def save_question_tool(db_id: str, question: dict, question_type: str):
+    utils.update_json(db_id, question_type, question)
+    utils.update_json(db_id, 'qs', question)

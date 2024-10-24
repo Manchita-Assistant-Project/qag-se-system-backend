@@ -1,18 +1,19 @@
 import os
+import time
 
 import app.generator.utils as utils
 import app.generator.gdrive as gdrive
 import app.database.chroma_utils as chroma_utils
 
-def main_load():
+def main_load(chroma_path: str, file_location: str):
     """
     Main function to load the data into the Chroma database.
     """
-    documents = chroma_utils.load_documents()
+    documents = chroma_utils.load_documents(file_location)
     print(f"📚 Loaded {len(documents)} pages")
     chunks = chroma_utils.split_documents(documents)
     print(f"🔪 Split into {len(chunks)} chunks")
-    chroma_utils.add_to_chroma(chunks)
+    chroma_utils.add_to_chroma(chroma_path, chunks)
     print("🚀 Data loaded successfully!")
 
 if __name__ == "__main__":
@@ -39,7 +40,7 @@ if __name__ == "__main__":
         # inicia el loop desde el archivo encontrado
         for each_file in files_in_gdrive[index_specific_file:]:
             download_path = os.path.join(chroma_utils.FILES_PATH, each_file['title'])
-            gdrive.download_file_from_drive(each_file, download_path)
+            # gdrive.download_file_from_drive(each_file, download_path)
             try:
                 print("🗄️ Loading data into Chroma")
                 main_load()  # proceso de recorte de chunks y guardado en la base de datos

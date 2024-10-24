@@ -1,17 +1,24 @@
+import os
 import json
+import time
 import uuid
-from typing import Optional
+import shutil
+from typing import List, Optional
 
-from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, File, UploadFile, HTTPException
 
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
+from app.agent.state import ChromaDatabase
 import app.agent.tools as tools
 from app.agent.graph import workflow
+import app.generator.loader as loader
+import app.generator.generator as generator
+import app.database.chroma_utils as chroma_utils
 from app.agent.utils import JSON_PATH, load_json
 
 app = FastAPI()
@@ -48,11 +55,6 @@ def home():
 # Función de Chat principal #
 # ========================= #
 
-class ChatInput(BaseModel):
-    query: str
-    thread_id: str = None
-    user_answer: Optional[str] = None  # Campo "opcional" para manejar la interrupción
-
 story_game_tools = [
     "first_character",
     "second_character",
@@ -62,7 +64,7 @@ story_game_tools = [
 
 user_graphs = {}
 
-def get_or_create_user_graph(thread_id):
+def get_or_create_user_graph(thread_id: str, db_id: str):
     global user_graphs
     print(f"THREAD_ID: {thread_id}")
     
@@ -75,8 +77,24 @@ def get_or_create_user_graph(thread_id):
             interrupt_before=["human_interaction"],  # Especificar nodo de interrupción
         )
         
+        exists = chroma_utils.knowledge_base_exists(db_id)
+        if (exists == False):
+            return None
+        
+        db = chroma_utils.get_db(db_id)
+        db_obj = ChromaDatabase(
+            db_id=db_id,
+            db=db
+        )
+        
         # Establecer el estado inicial del grafo con el thread_id
-        initial_state = {"thread_id": thread_id, "messages": [], "step": 0}
+        initial_state = {
+            "thread_id": thread_id,
+            "db_chroma": db_obj,
+            "messages": [],
+            "step": 0
+        }
+        
         new_graph.update_state({"configurable": {"thread_id": thread_id}}, initial_state)
         
         user_graphs[thread_id] = new_graph
@@ -85,6 +103,12 @@ def get_or_create_user_graph(thread_id):
 
     print(f"TOTAL GRAPHS: {len(user_graphs)}")
     return user_graphs[thread_id]
+
+class ChatInput(BaseModel):
+    query: str
+    thread_id: str = None
+    db_id: Optional[str] = None
+    user_answer: Optional[str] = None  # Campo "opcional" para manejar la interrupción
 
 @app.post("/chat")
 async def chat(input_data: ChatInput):
@@ -124,7 +148,7 @@ async def chat(input_data: ChatInput):
     }
     
     graph = get_or_create_user_graph(input_data.thread_id)
-    print(f"GRAPH: {input_data.thread_id} -  {graph.get_state(thread).next}")
+    print(f"GRAPH: {input_data.thread_id} - {graph.get_state(thread).next}")
     print(f"INPUT DATA: {input_data}")
 
     try:
@@ -198,9 +222,11 @@ class QuestionEvaluation(BaseModel):
     question: str
     answer: str
 
-@app.get('/questions')
-def get_questions():    
-    data = load_json(JSON_PATH)
+@app.get('/questions/{db_id}')
+def get_questions(db_id: str):
+    # data = load_json(JSON_PATH) # cambiar constante de rutas
+    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+    data = load_json(json_path)
     
     # solo para preguntas de "Verdadero o Falso"
     questions = [item["question"] for item in data if item["type"] == "TFQ"]
@@ -212,7 +238,7 @@ def evaluate_query(input: QuestionEvaluation):
     return {"evaluation": False if "incorrecta" in evaluation else True}
 
 # ======================================= #
-# Endpoints para los contadores de puntos #
+# Endpoint para los contadores de puntos #
 # ======================================= #
 
 @app.get('/user_points_counter/{user_id}')
@@ -222,3 +248,53 @@ def get_user_asked_questions(user_id: str):
         'asked_questions': tools.asked_questions_retrieval(user_id),
         'current_points': tools.points_only_retrieval(user_id)
     }
+    
+# ================================================================= #
+# Endpoint para verificar la existencia de una base de conocimiento #
+# ================================================================= #
+
+@app.get('/knowledge_base_exists/{bd_id}')  
+def knowledge_base_exists(bd_id: str):
+    return { 'database_path': chroma_utils.knowledge_base_exists(bd_id) }
+
+# ==================================== #
+# Endpoint para hacer la carga de PDFs #
+# ==================================== #
+
+@app.post("/upload_file")
+async def upload_pdf(files: List[UploadFile] = File(...)):
+    db_id = chroma_utils.generate_bd_id()
+    print(f"DB_ID: {db_id}")
+    for file in files:
+        # Validar que cada archivo sea un PDF o un archivo de Word
+        if file.content_type not in ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"]:
+            raise HTTPException(status_code=400, detail=f"El archivo '{file.filename}' no es un PDF ni un archivo de Word.")
+
+        # Guardar el archivo temporalmente en el servidor
+        files_location = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'files')
+        file_location = os.path.join(files_location, file.filename)
+        
+        chroma_utils.verify_directory_exists(files_location)
+        chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as'))
+        chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'knowledge'))
+        chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'embeddings'))
+        
+        with open(file_location, "wb") as f:
+            shutil.copyfileobj(file.file, f)
+
+        # Carga el archivo a la base de conocimiento
+        chroma_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'knowledge')
+        loader.main_load(chroma_path, file_location)
+        
+    # Generar el archivo JSON con las preguntas y respuestas
+    quality_threshold = 0.6
+    mcq_similarity_threshold = 0.8
+    tfq_similarity_threshold = 0.96
+    print("GENERATING Q&As")
+    generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id)
+    
+    qandas_json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+    with open(qandas_json_path, 'r') as f:
+        data = json.load(f)
+    
+    return data

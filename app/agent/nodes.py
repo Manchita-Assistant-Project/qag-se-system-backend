@@ -26,6 +26,9 @@ def single_tools_tool_node(state):
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"] 
 
+    db_id = state["db_chroma"]["db_id"]
+    # db_chroma = state["db_chroma"]["db"]
+
     # get last user message
     for each_message in state["messages"][::-1]:
         if isinstance(each_message, HumanMessage):
@@ -44,11 +47,11 @@ def single_tools_tool_node(state):
 
     elif tool_call == "rag_search":
         print('RAG SEARCH')
-        result = tools.rag_search(f"{user_message.content} ({ai_message.tool_calls[0]['args']['query']})")
+        result = tools.rag_search(f"{user_message.content} ({ai_message.tool_calls[0]['args']['query']})", db_id)
         print(f"Result from rag_search: {result}")
 
     elif tool_call == "feedback_provider":
-        result = tools.feedback_provider(last_question)
+        result = tools.feedback_provider(last_question, db_id)
         print(f"Result from feedback_provider: {result}")
 
     else:
@@ -69,7 +72,9 @@ def chooser_tool_node(state):
     tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
     tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"]
     
-    question = tools.qanda_chooser("simple_quiz")
+    db_id = state["db_chroma"]["db_id"]
+    
+    question = tools.qanda_chooser("simple_quiz", db_id)
     choices_string = ''
     for key, value in question['choices'].items():
         choices_string += f"{key}: {value}\n"
@@ -89,7 +94,9 @@ def evaluation_tool_node(state):
     last_message = state["messages"][-1].content
     print(f"[EVALUATION_NODE] last_message: {last_message}")
     
-    evaluation = tools.qanda_evaluation(last_message)
+    db_id = state["db_chroma"]["db_id"]
+    
+    evaluation = tools.qanda_evaluation(last_message, db_id)
         
     print(f"[EVALUATION_NODE] response: {evaluation}")
 

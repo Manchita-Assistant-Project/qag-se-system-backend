@@ -3,7 +3,7 @@ import random
 import importlib
 from typing import Tuple
 
-from langchain_openai import AzureChatOpenAI
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from langchain_core.messages import AIMessage
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
@@ -24,20 +24,26 @@ os.environ["AZURE_OPENAI_ENDPOINT"] = config.AZURE_OPENAI_ENDPOINT
 os.environ["OPENAI_API_TYPE"] = config.OPENAI_API_TYPE
 os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
 os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
+MODEL_NAME = config.OPENAI_MODEL_4OMINI
 load_dotenv()
 
 embedding_function = chroma_utils.get_embedding_function()
-db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
+# db = Chroma(persist_directory=chroma_utils.CHROMA_PATH, embedding_function=embedding_function)
 
-def qanda_generation() -> str:
+def qanda_generation(db: Chroma) -> str:
     """
     Saves questions and answers to the JSON file.
     """
     query = ""
     json_path = utils.JSON_PATH
 
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.2
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=0.2
     )
 
@@ -53,11 +59,12 @@ def qanda_generation() -> str:
     utils.update_json(json_path, response_text.split('\n\n'))
     return response_text
 
-def qanda_evaluation(input_data: str) -> str:
+def qanda_evaluation(input_data: str, db_id: str) -> str:
     """
     Evaluates the given answer to a question.
     """
-    json_path = utils.JSON_PATH
+    # json_path = utils.JSON_PATH
+    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
     data = utils.load_json(json_path) 
 
     question, answer = input_data.split('|||')
@@ -65,8 +72,13 @@ def qanda_evaluation(input_data: str) -> str:
     
     context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.2
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=0.2
     )
     
@@ -82,15 +94,24 @@ def qanda_evaluation(input_data: str) -> str:
     print(f"RESPONSE: {response_text}")
     return response_text
 
-def rag_search(query: str) -> str:
+def rag_search(query: str, db_id: str) -> str:
     """
     Responds when asked about an specific topic about the context.
     """
     print(f"QUERY: {query}")
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-        temperature=0
+
+    db = chroma_utils.get_db(db_id)
+
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=0.2
     )
+
     results = db.similarity_search_with_score(query, k=8)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
@@ -102,11 +123,11 @@ def rag_search(query: str) -> str:
 
     return response_text
 
-def qanda_chooser(game_type: str) -> str:
+def qanda_chooser(game_type: str, db_id: str) -> str:
     """
     Chooses a random question from the JSON file based on the game type.
     """
-    json_path = utils.JSON_PATH                
+    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')             
     data = utils.load_json(json_path)
     
     if game_type == "story":
@@ -118,16 +139,22 @@ def qanda_chooser(game_type: str) -> str:
     
     return random_question
 
-def feedback_provider(question: str) -> str:
+def feedback_provider(question: str, db_id: str) -> str:
     """
     Provides feedback based on the given question.
     """
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.8
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=0.8
     )
 
-    json_path = utils.JSON_PATH
+    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
     data = utils.load_json(json_path)
 
     context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
@@ -153,8 +180,13 @@ def points_retrieval(user_id: str) -> str:
     """
     current_points = sqlite_utils.get_points(user_id)
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=0.2
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=0.2
     )
     
@@ -185,14 +217,19 @@ def asked_questions_retrieval(user_id: str) -> int:
     """
     return sqlite_utils.get_asked_questions(user_id)
 
-def narrator_tool(current_story: str, step: int) -> str:
+def narrator_tool(current_story: str, step: int, db_id: str) -> str:
     """
     Narrates a story based on the chosen prompts.
     """
     print(f"Current step: {step}")
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=1
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=1
     )
 
@@ -240,8 +277,13 @@ def first_character(current_story: str):
     """
     question = qanda_chooser("story")
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=1
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=1
     )
     
@@ -263,8 +305,13 @@ def second_character(current_story: str):
     """
     question = qanda_chooser("story")
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=1
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=1
     )
     
@@ -286,8 +333,13 @@ def third_character(current_story: str):
     """
     question = qanda_chooser("story")
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=1
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=1
     )
     
@@ -320,8 +372,13 @@ def lifes_retrieval(user_id: str, current_story: Story, lost_live: bool) -> Tupl
     step = current_story["step"]
     personality = current_story["character_personality"]
     
-    model = AzureChatOpenAI(
-        deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    # model = AzureChatOpenAI(
+    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
+    #     temperature=1
+    # )
+    
+    model = ChatOpenAI(
+        model=MODEL_NAME,
         temperature=1
     )
     
