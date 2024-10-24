@@ -119,27 +119,61 @@ No tienes por qué poner el tipo de la pregunta en la pregunta que generes.
 
 
 Q_EVALUATION_PROMPT = """
-Evaluate the following generated question.
+Dada la definición de las siguientes métricas de evaluación humanas:
 
-Generated question: "{generated_question}"
+- Gramaticalidad: Mide la corrección gramatical de la pregunta generada, independientemente del contexto.
 
-Use this context to evaluate the generated question:
+- Adecuación: Examina la corrección semántica de la pregunta sin importar el contexto.
 
-"{context}"
+- Relevancia: Mide el grado en que la pregunta generada es pertinente y está alineada con el contexto dado.
 
-Evaluate the generated question based on the following criteria, providing a score from 0 to 1 for each, along with a brief explanation:
+- Complejidad: Estima el nivel de razonamiento o esfuerzo cognitivo requerido para responder la pregunta generada.
 
-- Clarity: Is the question easy to understand, and does it clearly include the key concepts being asked about? The question should explicitly mention important elements rather than leaving them implied. For example, if referring to a subject, the question should not be vague like "What is the goal of this subject?" but should specify clearly what it refers to. A score of 1 indicates the question is clear and unambiguous, while a lower score suggests vagueness or potential confusion.
+- Novedad: Mide la originalidad y el carácter distintivo de la pregunta generada en comparación con una pregunta estándar para el contexto dado.
 
-- Relevance: How closely does the question align with the provided context? Does it directly relate to the content, or does it feel tangential or unrelated? A score of 1 reflects that the question is highly relevant to the context, while a lower score suggests that the question may not directly address the information provided.
+Evalúa la siguiente pregunta generada: "{generated_question}"
 
-- Complexity: Does the question demonstrate a deeper level of thinking, or is it overly simplistic? This criterion looks at how much thought the question requires to answer and if it challenges the reader to reflect or analyze. A score of 1 indicates that the question is appropriately challenging for the context, while a lower score suggests it is too basic or too advanced for the situation.
+Use this context to evaluate the generated question: "{context}"
 
-- Originality: Is the question unique, or does it seem like a standard question that could be asked about any similar situation? If the generated question feels generic or overused, penalize originality. A score of 1 indicates a highly original and creative question, while a lower score should be given for questions that seem commonplace.
+Proporciona una calificación entre 0 y 1 para cada criterio e incluye una breve justificación para la puntuación asignada a cada uno.
 
-Provide a score from 0 to 1 for each criterion and include a brief justification for the score assigned to each.
+Siempre retorna las cinco (5) métricas de evaluación y su respectiva justificación.
+"""
 
-Always return the four (4) scores.
+
+Q_REFINER_PROMPT = """
+Dado esta retroalimentación que contiene métricas de evaluación humanas:
+
+"{feedback}"
+
+Modifica la siguiente pregunta: "{generated_question}"
+
+Ten en cuenta que la pregunta tuvo un valor de calidad final de: {quality}
+
+--------------------------------------------------------------------------------
+Modifica la pregunta generada para que las métricas en el feedback promedien {threshold}
+
+---------------------------------------------------------------------------------
+Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
+en este arreglo de preguntas:
+
+{generated_questions_string}
+
+----------------------------------------------------------------------------------
+¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
+
+----------------------------------------------------------------------------------
+Nunca cambies el tipo de pregunta!
+
+Tipo de la pregunta: "{question_type}"
+    
+----------------------------------------------------------------------------------
+Nunca retornes la misma pregunta generada. ¡Siempre mejórala!
+
+----------------------------------------------------------------------------------
+Solo retorna la versión mejorada de la pregunta generada.
+
+No retornes nunca texto como "Pregunta mejorada: ..." o "Versión mejorada: ...". o nada similar.
 """
 
 

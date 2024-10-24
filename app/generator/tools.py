@@ -20,7 +20,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
 from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT, \
-                                       HARDER_Q_PROMPT, \
+                                       HARDER_Q_PROMPT, Q_REFINER_PROMPT, \
                                        A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT, \
                                        Q_EVALUATION_PROMPT, TEN_Q_MCQ_PROMPT, TEN_Q_TFQ_PROMPT
                                        
@@ -217,25 +217,28 @@ def conditional_evaluation(db_id: str, generated_question: str, threshold: float
     return response
 
 def structure_output_metrics(evaluation: str) -> float:
-    clarity_pattern = r"Clarity:\s*((0|1)(\.\d+)?)"
-    relevance_pattern = r"Relevance:\s*((0|1)(\.\d+)?)"
-    complexity_pattern = r"Complexity:\s*((0|1)(\.\d+)?)"
-    originality_pattern = r"Originality:\s*((0|1)(\.\d+)?)"
+    grammaticality_pattern = r"Gramaticalidad:\s*((0|1)(\.\d+)?)"
+    appropiateness_pattern = r"Adecuación:\s*((0|1)(\.\d+)?)"
+    relevance_pattern = r"Relevancia:\s*((0|1)(\.\d+)?)"
+    complexity_pattern = r"Complejidad:\s*((0|1)(\.\d+)?)"
+    novelty_pattern = r"Novedad:\s*((0|1)(\.\d+)?)"
 
-    clarity = re.search(clarity_pattern, evaluation)
+    grammaticality = re.search(grammaticality_pattern, evaluation)
+    appropiateness = re.search(appropiateness_pattern, evaluation)
     relevance = re.search(relevance_pattern, evaluation)
     complexity = re.search(complexity_pattern, evaluation)
-    originality = re.search(originality_pattern, evaluation)
+    novelty = re.search(novelty_pattern, evaluation)
 
-    clarity_score = float(clarity.group(1)) if clarity else 0
+    gramamaticality_score = float(grammaticality.group(1)) if grammaticality else 0
+    appropiateness_score = float(appropiateness.group(1)) if appropiateness else 0
     relevance_score = float(relevance.group(1)) if relevance else 0
     complexity_score = float(complexity.group(1)) if complexity else 0
-    originality_score = float(originality.group(1)) if originality else 0
+    novelty_score = float(novelty.group(1)) if novelty else 0
+    
+    print(f"Grammaticality: {gramamaticality_score} | Appropiateness: {appropiateness_score} | Relevance: {relevance_score} | Complexity: {complexity_score} | Novelty: {novelty_score}")
 
-    print(f"Clarity: {clarity_score} | Relevance: {relevance_score} | Complexity: {complexity_score} | Originality: {originality_score}")
-
-    average = round((clarity_score + relevance_score + complexity_score + originality_score) / 4, 2)
-
+    average = round((gramamaticality_score + appropiateness_score + relevance_score + complexity_score + novelty_score) / 5, 3)
+    
     return average
 
 def evaluate_quality_tool(db_id: str, generated_question: str, threshold: float):       
@@ -245,7 +248,7 @@ def evaluate_quality_tool(db_id: str, generated_question: str, threshold: float)
     print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
-def refine_question(db_id: str, generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):
+def refine_question(db_id: str, generated_question: str, feedback: str, quality: float, question_type: int, threshold: float):
     files = ['mcqs', 'oaqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(db_id, correct_file)
@@ -259,41 +262,6 @@ def refine_question(db_id: str, generated_question: str, feedback: str, similari
         3: "Verdadero o Falso"
     }
     
-    refinement_prompt = f"""
-    Modifica la siguiente pregunta generada basándote en el feedback proporcionado.
-    
-    Pregunta generada: "{generated_question}"
-    
-    Usa este feedback para mejorar la pregunta generada:
-    
-    "{feedback}"
-        
-    Similarity pasado: "{similarity}"
-    
-    Modifica la pregunta generada para que las métricas en el feedback promedien {threshold}.
-    
-    ---------------------------------------------------------------------------------
-    Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
-    en este arreglo de preguntas:
-
-    {generated_questions_string}
-    
-    ----------------------------------------------------------------------------------
-    ¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
-    
-    ----------------------------------------------------------------------------------
-    Nunca cambies el tipo de pregunta!
-    
-    Tipo de la pregunta: "{question_type_to_string[question_type]}"
-        
-    ----------------------------------------------------------------------------------
-    Nunca retornes la misma pregunta generada. ¡Siempre mejórala!
-    
-    ----------------------------------------------------------------------------------
-    Solo retorna la versión mejorada de la pregunta generada.
-    
-    No retornes nunca texto como "Pregunta mejorada: ..." o "Versión mejorada: ...". o nada similar.
-    """
     # llm = AzureChatOpenAI(
     #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
     #     temperature=1
@@ -304,7 +272,16 @@ def refine_question(db_id: str, generated_question: str, feedback: str, similari
         temperature=1
     )
     
-    response = llm.invoke(refinement_prompt).content
+    prompt_template = ChatPromptTemplate.from_template(Q_REFINER_PROMPT)
+    prompt = prompt_template.format(
+        feedback=feedback,
+        generated_question=generated_question,
+        quality=quality,
+        threshold=threshold,
+        generated_questions_string=generated_questions_string,
+        question_type=question_type_to_string[question_type]
+    )
+    response = llm.invoke(prompt).content
     print(f"LLM response: {response}")
     return response
 
@@ -439,3 +416,25 @@ def find_most_different_question(db_id: str, questions: list, question_type: int
 def save_question_tool(db_id: str, question: dict, question_type: str):
     utils.update_json(db_id, question_type, question)
     utils.update_json(db_id, 'qs', question)
+    
+{
+    'question': '¿Qué término se utilizaba en el siglo XIX para referirse a la "infancia de la patria" en América Latina?',
+    'choices': {
+        'a': 'Adolescencia del país',
+        'b': 'Infancia de la nación',
+        'c': 'Juventud patriótica',
+        'd': 'Niñez de la república'
+    },
+    'answer': 'b'
+}
+
+{
+    'question': '¿Qué técnica se utiliza para detectar cambios semánticos en palabras a lo largo del tiempo en el estudio?',
+    'choices': {
+        'a': 'Análisis de sentimientos mediante redes neuronales',
+        'b': 'Uso de gráficos de uso diacónico de palabras',
+        'c': 'Enfoque de aprendizaje no supervisado en contextos semánticos',
+        'd': 'Implementación de modelos de regresión para correlacionar significados'
+    },
+    'answer': 'b'
+}

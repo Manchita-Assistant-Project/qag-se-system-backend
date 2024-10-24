@@ -8,10 +8,8 @@ def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: f
     utils.delete_all_content_hdf5(db_id, hdf5_file='embeddings.h5')
     
     # preguntas "Opción Múltiple"
-    # similarity_threshold = 0.8
-    # quality_threshold = 0.75
     print("Generating MCQs...")
-    for i in range(1, 21):
+    for i in range(1, 21): # 21
         question_type = 1
         if (i % 3 == 0):
             question_difficulty_int = 1
@@ -33,9 +31,8 @@ def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: f
             continue
     
     # preguntas "Verdadero o Falso"
-    # similarity_threshold = 0.96
     print("Generating TFQs...")
-    for i in range(1, 11):
+    for i in range(1, 11): # 11
         question_type = 3
         if (i % 3 == 0):
             question_difficulty_int = 1

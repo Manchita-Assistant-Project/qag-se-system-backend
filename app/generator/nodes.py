@@ -134,8 +134,12 @@ def data_saver_tool(state):
     if question_format is None or question_format == "ERROR":
         return
     
-    double_quotes_string = question_format.replace("'", '"')
+    double_quotes_string = question_format.replace('"', '/')
+    double_quotes_string = double_quotes_string.replace("'", '"')
+    double_quotes_string = double_quotes_string.replace("/", "'")
+    print(double_quotes_string)
     question_format_dict = json.loads(double_quotes_string)
+    print(question_format_dict)
 
     type_to_string = {
         1: "MCQ",

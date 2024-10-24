@@ -287,7 +287,7 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
         loader.main_load(chroma_path, file_location)
         
     # Generar el archivo JSON con las preguntas y respuestas
-    quality_threshold = 0.6
+    quality_threshold = 0.75
     mcq_similarity_threshold = 0.8
     tfq_similarity_threshold = 0.96
     print("GENERATING Q&As")
