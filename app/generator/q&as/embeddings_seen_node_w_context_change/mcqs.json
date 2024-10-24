@@ -1,0 +1,256 @@
+{
+    "content": [
+        {
+            "question": "¿Cuáles son los temas de investigación abordados en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Investigación en artes plásticas",
+                "b": "Investigación en música popular",
+                "c": "Investigación en relación entre arte y archivo",
+                "d": "Investigación en contaminación medioambiental"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los temas centrales abordados en la asignatura del Instituto Departamental de Bellas Artes en relación a la reflexión crítica sobre la naturaleza humana?",
+            "choices": {
+                "a": "Alcances culturales del Renacimiento en diálogo con el humanismo",
+                "b": "Ideas representativas de la estética de la Ilustración",
+                "c": "Presupuestos conceptuales de la estética trascendental",
+                "d": "Análisis de manifestaciones del orden social naturalizadas"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los nombres de los profesores principales en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Juan Pérez, María Gómez, Carlos López, Ana Martínez",
+                "b": "Pablo Rodríguez, Laura Sánchez, Andrés González, Sofía Ramírez",
+                "c": "Luis Fernández, Andrea García, Javier Torres, Carla Vargas",
+                "d": "Manuel Rodríguez, Ana López, Felipe Gómez, Laura Torres"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias utilizadas en el semillero de interpretación vocal interdisciplinario del Instituto Departamental de Bellas Artes para fomentar la colaboración entre el teatro, la poesía, el canto y la música?",
+            "choices": {
+                "a": "Organización de talleres y encuentros interdisciplinarios.",
+                "b": "Realización de proyectos de investigación-creación en artes.",
+                "c": "Promoción de la escritura y la interpretación vocal de textos.",
+                "d": "Desarrollo de estrategias de resignificación de la memoria en el campo del arte."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los objetivos específicos de la asignatura en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Fomentar la creatividad y expresión artística de los estudiantes.",
+                "b": "Desarrollar habilidades técnicas en diversas disciplinas artísticas.",
+                "c": "Promover el conocimiento y apreciación del arte en sus diferentes manifestaciones.",
+                "d": "Investigar y experimentar con nuevos enfoques y técnicas artísticas."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el correo electrónico de contacto para obtener información sobre el semillero de Animación e interactividad en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "semillero@bellasartes.edu.co",
+                "b": "contacto@bellasartes.edu.co",
+                "c": "informacion@bellasartes.edu.co",
+                "d": "animacion@bellasartes.edu.co"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las teorías utilizadas en el Instituto Departamental de Bellas Artes para analizar la relación entre el ser humano y el arte?",
+            "choices": {
+                "a": "Teoría del Arte como Imitación",
+                "b": "Teoría del Arte como Expresión",
+                "c": "Teoría del Arte como Transformación",
+                "d": "Teoría del Arte como Representación"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el enfoque principal de la carrera de Diseño Gráfico en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Desarrollar habilidades técnicas en diseño gráfico",
+                "b": "Promover la creatividad y la experimentación en el diseño",
+                "c": "Enseñar los fundamentos teóricos del diseño gráfico",
+                "d": "Fomentar la investigación en diseño gráfico"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las habilidades y destrezas específicas que se espera que los estudiantes del Instituto Departamental de Bellas Artes desarrollen en su formación en el campo de las artes visuales y plásticas?",
+            "choices": {
+                "a": "Dominio de las técnicas de pintura clásica y romántica del siglo XIX",
+                "b": "Creatividad e innovación en el uso de materiales y técnicas artísticas",
+                "c": "Conocimiento y comprensión de la historia del arte",
+                "d": "Habilidades de comunicación visual y expresión artística"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias implementadas por el Instituto Departamental de Bellas Artes para fomentar la colaboración y la interdisciplinariedad entre las diferentes áreas de las artes?",
+            "choices": {
+                "a": "Realizar actividades de investigación-creación en conjunto con otras instituciones educativas.",
+                "b": "Organizar talleres y prácticas formativas con artistas reconocidos internacionalmente.",
+                "c": "Promover proyectos interdisciplinarios que involucren a estudiantes de todas las facultades.",
+                "d": "Establecer convenios de colaboración con museos y centros culturales."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Qué impacto tiene la implementación de un enfoque transdisciplinario en la formación de los estudiantes del Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Permite a los estudiantes desarrollar habilidades en diversas disciplinas artísticas.",
+                "b": "Fomenta la colaboración y el trabajo en equipo entre los estudiantes.",
+                "c": "Promueve la creatividad e innovación en los proyectos artísticos.",
+                "d": "Facilita la conexión entre el arte y otros campos de conocimiento."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el impacto de la formación ofrecida por el Instituto Departamental de Bellas Artes en el desarrollo cultural de la sociedad?",
+            "choices": {
+                "a": "Promueve la diversidad cultural y el intercambio de ideas",
+                "b": "Fomenta la participación ciudadana en actividades culturales",
+                "c": "Contribuye al enriquecimiento del patrimonio artístico",
+                "d": "Genera oportunidades de empleo en el sector cultural"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es la bibliografía complementaria recomendada en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Libros de Ciencias Sociales",
+                "b": "Libros de Matemáticas",
+                "c": "Libros de Arte",
+                "d": "Libros de Medicina"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son los principios fundamentales de la construcción utilizados en el Instituto Departamental de Bellas Artes para la creación artística?",
+            "choices": {
+                "a": "Aplicar métodos adecuados de presentación y concreción",
+                "b": "Creación de estilos de párrafo y carácter",
+                "c": "Eliminación de estilos",
+                "d": "Importación de estructuras de un impreso"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los principales logros y contribuciones del Instituto Departamental de Bellas Artes en el desarrollo cultural de la sociedad?",
+            "choices": {
+                "a": "Promoción de artistas locales",
+                "b": "Fomento de la educación artística",
+                "c": "Organización de eventos culturales",
+                "d": "Apoyo a proyectos culturales comunitarios"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los principales elementos que definen la identidad cultural de la sociedad según el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "La diversidad étnica y cultural",
+                "b": "La música y la danza",
+                "c": "Las artes visuales y aplicadas",
+                "d": "La gastronomía y la moda"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas que se pueden implementar para promover un mayor bienestar universitario en el Instituto Departamental de Bellas Artes y lograr un impacto significativo en la comunidad estudiantil?",
+            "choices": {
+                "a": "Crear una aplicación móvil para que los estudiantes puedan acceder fácilmente a información sobre los servicios y actividades de Bienestar Universitario.",
+                "b": "Organizar eventos culturales y artísticos en colaboración con otras instituciones educativas para promover la participación y el intercambio entre los estudiantes.",
+                "c": "Implementar programas de mentoría entre estudiantes de diferentes programas académicos para fomentar la colaboración y el apoyo mutuo.",
+                "d": "Establecer convenios con empresas y organizaciones externas para ofrecer oportunidades de prácticas profesionales y empleo a los estudiantes."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las competencias necesarias para que un docente del Instituto Departamental de Bellas Artes pueda responder de manera crítica y coherente a los interrogantes sobre el ser humano y sus condiciones físicas, afectivas, cognitivas, sociales, políticas y espirituales?",
+            "choices": {
+                "a": "Capacidad de reflexión y autocritica durante el proceso de aprendizaje",
+                "b": "Capacidad para incorporarse a la resolución de problemas",
+                "c": "Visión crítica de la dimensión formativa y de la incidencia estética y social del arte y el diseño",
+                "d": "Capacidad de tomar posición en los debates epistemológicos y metodológicos de la estética con otras disciplinas"
+            },
+            "answer": "abcd",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los métodos utilizados en el Instituto Departamental de Bellas Artes para el desarrollo de proyectos de investigación en el campo de las artes visuales?",
+            "choices": {
+                "a": "Observación y exploración de fuentes",
+                "b": "Desarrollo de metodologías propias",
+                "c": "Experimentación",
+                "d": "Asignación de sentido y concreción del proceso en un proyecto plástico"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el enfoque principal del semillero de interpretación vocal interdisciplinario del Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Estudio y práctica del teatro",
+                "b": "Promoción de la escritura y la interpretación vocal de textos",
+                "c": "Exploración de la relación entre teatro y cine",
+                "d": "Investigación y creación en artes y sus áreas afines"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el papel de la representación artística en la crítica social y política en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "La representación artística permite cuestionar y reflexionar sobre temas sociales y políticos desde diferentes perspectivas.",
+                "b": "La representación artística no tiene ninguna influencia en la crítica social y política.",
+                "c": "La representación artística se limita a expresar emociones y sentimientos sin abordar temas sociales y políticos.",
+                "d": "La representación artística es una forma de entretenimiento sin ninguna implicación social o política."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

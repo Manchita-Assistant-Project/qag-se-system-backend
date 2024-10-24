@@ -113,7 +113,7 @@ Solo dile que ha perdido una vida y le recuerdas la pregunta:
 
 {question}
 
-Las vidas aún le quedan al viajero:
+Las vidas que aún le quedan al viajero:
 
 {lifes}
 

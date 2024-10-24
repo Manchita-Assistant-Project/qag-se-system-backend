@@ -1,0 +1,558 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es el objetivo general de la asignatura?",
+            "choices": {
+                "a": "Brindar al estudiante herramientas y conceptos básicos del uso de la informática en los procesos de creación, producción y difusión de productos desde el campo del diseño y el entorno artístico en general.",
+                "b": "Conocer y comprender las nuevas tecnologías que se están introduciendo al campo del diseño y de las artes para la creación.",
+                "c": "Promover el desarrollo de habilidades creativas y tecnológicas en los estudiantes.",
+                "d": "Fomentar el uso de la informática como herramienta de trabajo en el campo del diseño y las artes."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Qué desafíos enfrentan las industrias creativas al implementar estrategias transmedia en proyectos de publicación digital en el campo del arte?",
+            "choices": {
+                "a": "Dificultad para mantener la coherencia narrativa en diferentes plataformas",
+                "b": "Falta de conocimiento técnico para desarrollar contenido interactivo",
+                "c": "Limitaciones en la accesibilidad y disponibilidad de tecnología",
+                "d": "Escasez de talento creativo en el campo digital"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las teorías contemporáneas más destacadas que exploran la interrelación entre el teatro, la poesía, el canto y la música en la práctica y estudio de la poesía popular en Colombia, y cómo estas teorías han impactado en la evolución de la poesía popular en el país?",
+            "choices": {
+                "a": "Teoría de la intertextualidad",
+                "b": "Teoría del performance",
+                "c": "Teoría de la comunicación",
+                "d": "Teoría del lenguaje poético"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son algunos títulos de libros recomendados como bibliografía complementaria para el estudio del cine en el contexto de las artes visuales?",
+            "choices": {
+                "a": "Tom and Jerry: 50 Years of Cat and Mouse",
+                "b": "Tex Avery: King of Cartoons",
+                "c": "Bugs Bunny: Fifty Years and Only One Grey Hare",
+                "d": "Looney Tunes and Merrie Melodies: A Complete Illustrated Guide to the Warner Brothers Cartoons"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Qué desafíos éticos y legales específicos se presentan al implementar estrategias transmedia en proyectos de publicación digital en el campo del arte, considerando la convergencia de diferentes medios y la propagación de contenido en múltiples plataformas?",
+            "choices": {
+                "a": "Protección de los derechos de autor",
+                "b": "Privacidad y manipulación de datos personales",
+                "c": "Dificultad para mantener la integridad del contenido",
+                "d": "Competencia desleal y plagio"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es la función principal del Semillero de Animación e Interactividad en el Instituto Departamental de Bellas Artes según su impacto en el desarrollo de habilidades creativas y tecnológicas en los estudiantes?",
+            "choices": {
+                "a": "Promover la experimentación y reflexión en diversas formas de expresión como la animación, el cine y el diseño web.",
+                "b": "Brindar espacios de práctica y formación en técnicas de animación y diseño digital.",
+                "c": "Fomentar la investigación y el desarrollo de proyectos audiovisuales interactivos.",
+                "d": "Proporcionar herramientas digitales para la edición de imágenes y video."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las diferentes estrategias específicas implementadas por el Instituto Departamental de Bellas Artes para fomentar la inclusión y diversidad en su comunidad estudiantil?",
+            "choices": {
+                "a": "Implementación de programas de becas para estudiantes de bajos recursos",
+                "b": "Creación de espacios de diálogo y reflexión sobre diversidad cultural",
+                "c": "Incorporación de asignaturas relacionadas con inclusión y diversidad en el plan de estudios",
+                "d": "Organización de eventos y actividades que promuevan la integración de diferentes grupos sociales"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son algunas de las fuentes bibliográficas complementarias recomendadas para el estudio del cine en el contexto de las artes visuales?",
+            "choices": {
+                "a": "Introducción al cine: Análisis, teoría y práctica",
+                "b": "Historia del cine: Teoría y géneros cinematográficos",
+                "c": "El lenguaje del cine: Introducción a la semiótica cinematográfica",
+                "d": "El cine como arte: Una introducción a la estética cinematográfica"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son los semilleros de investigación disponibles en el Instituto Departamental de Bellas Artes y qué proyectos o investigaciones están llevando a cabo actualmente en el contexto descrito?",
+            "choices": {
+                "a": "Semillero de Investigación en Creación Artística",
+                "b": "Semillero de Investigación en Artes y Diseño",
+                "c": "Semillero de Investigación en Procesos de Investigación Artística y Creativa",
+                "d": "Semillero de Investigación en Investigación Científica en Artes"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cómo se pueden implementar estrategias efectivas para fomentar la inclusión y diversidad en la comunidad estudiantil del Instituto Departamental de Bellas Artes en el contexto de la educación en artes visuales y aplicadas?",
+            "choices": {
+                "a": "Organizar eventos culturales que celebren la diversidad",
+                "b": "Establecer programas de mentoría entre estudiantes de diferentes orígenes",
+                "c": "Crear espacios de diálogo y reflexión sobre la inclusión y diversidad",
+                "d": "Incorporar obras de artistas de diversas culturas en el currículo"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los desafíos específicos que enfrentan los proyectos de publicación digital en el campo del arte al implementar estrategias transmedia y cómo pueden superarse?",
+            "choices": {
+                "a": "La falta de conocimientos técnicos para implementar estrategias transmedia.",
+                "b": "La dificultad para mantener la coherencia narrativa en diferentes plataformas.",
+                "c": "La falta de interés del público en participar en experiencias transmedia.",
+                "d": "La falta de recursos económicos para desarrollar proyectos transmedia."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias más efectivas para promover la convergencia de medios y la propagación de contenido en múltiples plataformas en el campo del arte digital y cómo pueden adaptarse exitosamente a escenarios específicos como museos o festivales de arte digital?",
+            "choices": {
+                "a": "Utilizar las redes sociales como herramienta principal de difusión",
+                "b": "Realizar colaboraciones con otros artistas y proyectos relacionados",
+                "c": "Organizar eventos y exposiciones que integren diferentes disciplinas artísticas",
+                "d": "Desarrollar aplicaciones móviles interactivas para brindar una experiencia inmersiva"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los principales obstáculos que enfrenta el Instituto Departamental de Bellas Artes en la implementación de estrategias de inclusión y diversidad en su comunidad estudiantil en relación a la formación en métodos y técnicas de construcción en las artes visuales y aplicadas?",
+            "choices": {
+                "a": "Falta de recursos económicos",
+                "b": "Resistencia al cambio por parte del personal docente",
+                "c": "Falta de apoyo y reconocimiento por parte de la comunidad artística",
+                "d": "Poca participación de los estudiantes en actividades extracurriculares"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las implicaciones éticas y legales de la implementación de estrategias transmedia en proyectos de publicación digital en el campo del arte?",
+            "choices": {
+                "a": "La violación de derechos de autor al utilizar contenido protegido sin autorización.",
+                "b": "El riesgo de difundir información falsa o engañosa a través de diferentes medios digitales.",
+                "c": "La falta de privacidad y protección de datos personales de los usuarios que participan en los proyectos transmedia.",
+                "d": "La posibilidad de generar adicción y dependencia en los usuarios al consumo de contenido artístico digital."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles estrategias específicas implementa el Instituto Departamental de Bellas Artes para fomentar la diversidad e inclusión en su comunidad estudiantil en el contexto de las artes visuales y aplicadas?",
+            "choices": {
+                "a": "Implementación de becas y programas de apoyo económico para estudiantes de bajos recursos",
+                "b": "Creación de espacios de diálogo y discusión para promover la diversidad de opiniones",
+                "c": "Organización de eventos y exposiciones que celebren la diversidad cultural y artística",
+                "d": "Implementación de políticas de inclusión que garanticen el acceso equitativo a la educación artística"
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son algunos recursos bibliográficos recomendados para el estudio del cine en el contexto de las artes visuales?",
+            "choices": {
+                "a": "Introducción al cine de David Bordwell",
+                "b": "El lenguaje cinematográfico de Michael Rabiger",
+                "c": "El arte cinematográfico de David Bordwell y Kristin Thompson",
+                "d": "La historia del cine de Mark Cousins"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias más efectivas utilizadas en la implementación de narrativas transmedia en el cine y las artes visuales, considerando la interacción entre diferentes plataformas, la participación activa del público y la creación colaborativa de contenido, y cómo estas estrategias han impactado en la evolución de estas formas de arte?",
+            "choices": {
+                "a": "Integrar múltiples plataformas y medios para contar una historia de manera complementaria",
+                "b": "Fomentar la participación del público a través de la creación de contenido colaborativo",
+                "c": "Utilizar técnicas de gamificación para incentivar la interacción del público",
+                "d": "Establecer alianzas con marcas y empresas para financiar y promocionar proyectos transmedia"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las implicaciones éticas y legales de la implementación de estrategias transmedia en el cine y las artes visuales, considerando la interacción entre diferentes plataformas, la participación activa del público y la creación colaborativa de contenido?",
+            "choices": {
+                "a": "Aumento del control y la privacidad de los datos personales del público.",
+                "b": "Mayor exposición a la desinformación y la manipulación de la información.",
+                "c": "Reducción de la diversidad y la originalidad en la creación artística.",
+                "d": "Incremento de la brecha digital y la exclusión de ciertos grupos de la sociedad."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son algunos recursos bibliográficos recomendados para el estudio del cine en el contexto de las artes visuales?",
+            "choices": {
+                "a": "El lenguaje cinematográfico: Estética de la imagen en movimiento",
+                "b": "Historia del cine mundial",
+                "c": "Guía práctica de dirección cinematográfica",
+                "d": "El cine y las artes visuales: Una relación compleja"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "Cuáles son las implicaciones éticas y legales que enfrentan los museos y festivales de arte digital al promover la convergencia de medios y la propagación de contenido en múltiples plataformas en el campo del arte digital?",
+            "choices": {
+                "a": "Violación de derechos de autor y propiedad intelectual",
+                "b": "Difusión de contenido inapropiado o ofensivo",
+                "c": "Manipulación y distorsión de la información",
+                "d": "Desigualdad de acceso a la tecnología y exclusión digital"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los desafíos específicos que enfrentan los artistas visuales y cineastas al implementar narrativas transmedia, considerando la interacción entre diferentes plataformas, la participación activa del público y la creación colaborativa de contenido, y cómo estos desafíos han influido en la evolución de estas formas de arte?",
+            "choices": {
+                "a": "Dificultad para mantener la coherencia narrativa a través de múltiples plataformas",
+                "b": "Falta de control sobre la interpretación del público debido a la participación activa",
+                "c": "Dificultad para coordinar la creación colaborativa de contenido",
+                "d": "Limitaciones técnicas para implementar narrativas transmedia"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias más efectivas para promover la convergencia de medios y la propagación de contenido en múltiples plataformas en el campo del arte digital y cómo pueden adaptarse exitosamente a escenarios específicos como museos o festivales de arte digital?",
+            "choices": {
+                "a": "Utilizar las redes sociales como herramienta principal para la difusión de contenido.",
+                "b": "Desarrollar colaboraciones con otros artistas y organizaciones del campo del arte digital.",
+                "c": "Implementar tecnologías de realidad virtual y aumentada para crear experiencias inmersivas.",
+                "d": "Organizar eventos y exposiciones que combinen arte digital con otras disciplinas artísticas."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el objetivo específico del curso de cine en el contexto de las artes visuales y aplicadas, enfocado en promover la creatividad y comprensión de los diferentes aspectos de la producción cinematográfica en relación a otras disciplinas artísticas?",
+            "choices": {
+                "a": "Fomentar la colaboración entre artistas de diferentes disciplinas para crear proyectos cinematográficos innovadores.",
+                "b": "Explorar la relación entre el cine y otras formas de expresión artística, como la pintura y la danza.",
+                "c": "Capacitar a los estudiantes en el uso de herramientas y técnicas cinematográficas para producir sus propias obras de arte.",
+                "d": "Investigar la influencia del cine en la sociedad y analizar su impacto en otras disciplinas artísticas."
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son algunas de las estrategias específicas utilizadas por el Instituto Departamental de Bellas Artes para promover la inclusión y diversidad en su comunidad estudiantil dentro del ámbito de las artes visuales y aplicadas?",
+            "choices": {
+                "a": "Implementación de programas de mentoría para estudiantes de grupos minoritarios",
+                "b": "Creación de espacios de diálogo y reflexión sobre diversidad e inclusión",
+                "c": "Promoción de exposiciones y eventos que destaquen la diversidad cultural",
+                "d": "Incorporación de asignaturas obligatorias sobre inclusión y diversidad en el plan de estudios"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son los desafíos específicos que enfrenta la implementación de proyectos de arte digital en museos o festivales de arte y qué estrategias pueden utilizarse para superarlos de manera efectiva?",
+            "choices": {
+                "a": "Falta de presupuesto y recursos técnicos",
+                "b": "Resistencia al cambio y falta de comprensión de la tecnología",
+                "c": "Dificultad para integrar el arte digital en la experiencia del visitante",
+                "d": "Limitaciones de espacio y seguridad"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es la función principal del Semillero de Animación e Interactividad en el Instituto Departamental de Bellas Artes y cómo contribuye al desarrollo de habilidades creativas y tecnológicas de los estudiantes en el ámbito de las artes digitales?",
+            "choices": {
+                "a": "Promover la investigación y experimentación en diversas formas de expresión artística",
+                "b": "Brindar espacios de reflexión y aprendizaje sobre técnicas de animación y diseño web",
+                "c": "Fomentar el desarrollo de habilidades creativas y tecnológicas de los estudiantes",
+                "d": "Organizar eventos y exhibiciones para difundir el trabajo de los estudiantes"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias más efectivas para promover la convergencia de medios y la propagación de contenido en múltiples plataformas en el campo del arte digital y cómo pueden adaptarse exitosamente a escenarios específicos como exposiciones de arte digital o espacios de arte interactivo?",
+            "choices": {
+                "a": "Crear contenido interactivo que permita la participación activa del público",
+                "b": "Utilizar plataformas de redes sociales para compartir y promocionar el contenido",
+                "c": "Colaborar con otros artistas y profesionales del campo del arte digital",
+                "d": "Utilizar técnicas de marketing digital para aumentar la visibilidad del contenido"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los desafíos éticos y legales más complejos que enfrentan los proyectos de publicación digital en el campo del arte al implementar estrategias transmedia y cuáles podrían ser enfoques creativos para abordarlos de manera efectiva?",
+            "choices": {
+                "a": "Protección de derechos de autor y propiedad intelectual",
+                "b": "Privacidad y protección de datos personales",
+                "c": "Desinformación y fake news",
+                "d": "Acceso equitativo y brecha digital"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los principales desafíos que enfrenta la implementación de estrategias de narrativas transmedia y creación colaborativa de contenido en proyectos de publicación digital en el campo del arte?",
+            "choices": {
+                "a": "Falta de participación de la audiencia",
+                "b": "Coordinación y colaboración entre diferentes plataformas y medios",
+                "c": "Dificultad para mantener la coherencia narrativa en diferentes canales",
+                "d": "Limitaciones técnicas y de recursos"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los recursos bibliográficos complementarios recomendados para el estudio del cine en el contexto de las artes visuales y aplicadas que sea innovador y poco convencional?",
+            "choices": {
+                "a": "Revista Imago #7",
+                "b": "Blog Investigaciones sobre el Cine y sus Representaciones",
+                "c": "Ponencias de la convocatoria interna 2017 de Bellas Artes Institución Universitaria del Valle",
+                "d": "Blog Narración en el Cine Colombiano"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias más efectivas de convergencia de medios y propagación de contenido en el campo del arte digital para adaptarse exitosamente a escenarios específicos como exposiciones de arte digital o espacios de arte interactivo?",
+            "choices": {
+                "a": "Utilizar tecnologías de realidad virtual para crear experiencias inmersivas.",
+                "b": "Crear contenido interactivo que permita la participación activa del público.",
+                "c": "Utilizar redes sociales y plataformas digitales para difundir el arte digital.",
+                "d": "Colaborar con otros artistas y profesionales del campo para generar proyectos multidisciplinarios."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con programas de investigación y promoción específicos para cada disciplina artística en Colombia?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Las técnicas transmedia tienen un impacto significativo en la creación de experiencias inmersivas interactivas dentro del programa de investigación del Instituto Departamental de Bellas Artes, especialmente en el ámbito del arte digital? ¿En qué medida este impacto se manifiesta en la producción y recepción de obras de arte digital en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas específicos de investigación y promoción para cada una de las disciplinas artísticas, como la música, la danza, el teatro y las artes visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Es cierto que los programas de formación en animación y arte interactivo ofrecidos por el Instituto Departamental de Bellas Artes se basan principalmente en influencias teóricas y conceptuales específicas relacionadas con la animación y el arte interactivo contemporáneo, y también exploran la corriente del arte digital y la vanguardia tecnológica?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? Does the Instituto Departamental de Bellas Artes in Colombia have specific research and promotion programs for each artistic discipline, such as music, dance, theater, and visual arts?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Es cierto que la investigación llevada a cabo por el Instituto Departamental de Bellas Artes en Colombia puede tener implicaciones éticas y morales que impacten negativamente en la promoción de la diversidad y la inclusión en el perfil del docente?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los objetivos específicos de los programas de investigación y promoción ofrecidos por el Instituto Departamental de Bellas Artes en Colombia para cada disciplina artística?",
+            "choices": {
+                "a": "Promover la investigación y creación musical en Valencia",
+                "b": "Fortalecer la proyección social en todas las disciplinas artísticas",
+                "c": "Fomentar la investigación en el contexto de Bellas Artes",
+                "d": "Impulsar la innovación tecnológica en la danza"
+            },
+            "answer": "c",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Los programas de investigación y promoción del Instituto Departamental de Bellas Artes en Colombia para cada disciplina artística son generalmente relevantes y desafiantes en términos de complejidad, incluyendo aspectos como la innovación y la experimentación en cada área artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas específicos de investigación y promoción para cada disciplina artística, como música, danza, teatro y artes visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como la música, la danza, el teatro y las artes visuales? ¿Estos programas garantizan oportunidades únicas y destacadas para cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El objetivo principal del semillero de investigación y creación de Diseño Gráfico en el Instituto Departamental de Bellas Artes en Colombia es impulsar la innovación y fomentar la excelencia académica en el campo del diseño gráfico en el ámbito artístico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿En el Instituto Departamental de Bellas Artes de Colombia, existen programas de investigación y promoción específicos para fomentar la innovación y la excelencia académica en cada disciplina artística? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas brindan oportunidades únicas y destacadas para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas están diseñados para fomentar la innovación y la excelencia académica en cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas brindan oportunidades únicas y destacadas para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ha llevado a cabo investigaciones sobre la aplicación de técnicas de animación en proyectos transmedia, resultando en experiencias innovadoras y disruptivas en la industria del arte digital? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas específicos de investigación y promoción para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas aseguran oportunidades sobresalientes para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        }
+    ]
+}

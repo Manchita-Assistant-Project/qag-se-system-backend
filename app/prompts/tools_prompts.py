@@ -36,9 +36,9 @@ Aquí un ejemplo: \
 
 
 EVALUATE_PROMPT = """
-Basado única y exclusivamente en las preguntas, opciones y respuesta única de: \
+Basado única y excluvisamente en esta cadena: \
 
-{context}
+`{context}`
 ----------------------------------------------------------------
 
 Responde de forma corta si la respuesta: \

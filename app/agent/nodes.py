@@ -1,10 +1,10 @@
 import re
 import functools
 
-from app.graph.state import Story
-from app.graph.utils import agent_node, agent_w_tools_node
-from app.graph.agents import single_tools_agent, character_agent
-import app.graph.tools as tools
+import app.agent.tools as tools
+from app.agent.state import Story
+from app.agent.utils import agent_node, agent_w_tools_node
+from app.agent.agents import single_tools_agent, character_agent
 
 from langgraph.prebuilt import ToolNode
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
@@ -16,7 +16,7 @@ single_tools_node = functools.partial(agent_node, agent=single_tools_agent, name
 character_node = functools.partial(agent_w_tools_node, agent=character_agent, name="Character")
 
 # single_tools_tool_node = ToolNode(single_tools)
-chooser_tool_node = ToolNode([tools.qanda_chooser])
+# chooser_tool_node = ToolNode([tools.qanda_chooser])
 
 def single_tools_tool_node(state): 
     user_message = state["messages"][0]
@@ -64,6 +64,21 @@ def single_tools_tool_node(state):
 
     return response
 
+def chooser_tool_node(state):
+    ai_message = state["messages"][-1]
+    tool_call = ai_message.additional_kwargs["tool_calls"][0]["function"]["name"]
+    tool_call_id = ai_message.additional_kwargs["tool_calls"][0]["id"]
+    
+    question = tools.qanda_chooser("simple_quiz")
+    choices_string = ''
+    for key, value in question['choices'].items():
+        choices_string += f"{key}: {value}\n"
+        
+    question_string = f"{question['question']}\n{choices_string}"
+    tool_result = ToolMessage(content=question_string, name=tool_call, tool_call_id=tool_call_id)
+    
+    return {"messages": [tool_result], "last_question": question["question"]}
+
 def human_interaction(state):
     pass
 
@@ -74,7 +89,7 @@ def evaluation_tool_node(state):
     last_message = state["messages"][-1].content
     print(f"[EVALUATION_NODE] last_message: {last_message}")
     
-    evaluation = tools.qanda_evaluation(last_message)    
+    evaluation = tools.qanda_evaluation(last_message)
         
     print(f"[EVALUATION_NODE] response: {evaluation}")
 
@@ -90,7 +105,7 @@ def points_updater_tool_node(state):
 
     if "incorrecta" not in (last_message.content).lower():
         tools.points_updater(state["thread_id"], points=1)
-        print(f"CURRENT POINTS: {tools.points_retrieval(state['thread_id'])}")
+        # print(f"CURRENT POINTS: {tools.points_retrieval(state['thread_id'])}")
         
     # en cualquier caso, aumentar 1 al número de preguntas hechas.
     tools.asked_questions_updater(state["thread_id"])

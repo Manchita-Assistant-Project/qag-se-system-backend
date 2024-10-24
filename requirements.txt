@@ -1,12 +1,23 @@
 python-dotenv
 PyPDF2
+PyDrive2
+IPython
+unstructured
+python-docx
+openpyxl
+networkx
 pypdf
 faiss-cpu
 tiktoken
+# pysqlite3-binary
 chromadb
 langchain==0.2.7
 langchain_community==0.2.7
 langchain_openai==0.1.15
+langchain_ollama==0.1.1
 langgraph
 fastapi
 uvicorn
+pandas
+scikit-learn
+h5py

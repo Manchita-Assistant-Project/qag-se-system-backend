@@ -1,9 +1,9 @@
 import uuid
 from typing import Literal
 
-import app.graph.utils as utils
-import app.graph.nodes as nodes
-from app.graph.state import State
+import app.agent.utils as utils
+import app.agent.nodes as nodes
+from app.agent.state import State
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END
@@ -80,7 +80,7 @@ def should_continue_or_another_try(state) -> Literal["human_interaction", "__end
         print("Another try")
         return "human_interaction"
     else:
-        return END    
+        return END
 
 # building the graph
 workflow = StateGraph(State)
@@ -163,8 +163,8 @@ def use_graph():
         'hola!',
         'hazme una pregunta!',
         'quiero jugar las historias!',
-        'cuántos puntos tengo?',
-        # 'sigue con el juego!',
+        # 'cuántos puntos tengo?',
+        'sigue con el juego!',
         # 'sigue!',
         # 'termina!',
         # 'hazme otra!',
@@ -182,6 +182,7 @@ def use_graph():
         graph.update_state(thread, {"thread_id": thread_id})
         # print(f"SNAPSHOT {query}: {snapshot}")
         for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
+            print(f"TOOL USED {graph.get_state(thread).values['messages'][-1].name}")
             event['messages'][-1].pretty_print()
 
         tool_used = graph.get_state(thread).values['messages'][-1].name
@@ -199,7 +200,7 @@ def use_graph():
         # interrupción para el camino quiz
         if (is_not_single_use and is_not_character_game):
             user_answer = input('You: ')
-            question = event["messages"][-1].content if event["messages"][-1].content[0] == '¿' else graph.get_state(thread).values["current_story"]["to_evaluate"] # pregunta sencilla o pregunta de juego character
+            question = graph.get_state(thread).values["last_question"] if (event["messages"][-1].name == "qanda_chooser") else graph.get_state(thread).values["current_story"]["to_evaluate"] # pregunta sencilla o pregunta de juego character
             
             combined_input = f"{question}|||{user_answer}"
             print(combined_input)
@@ -260,19 +261,4 @@ def use_graph():
                     for event in graph.stream(None, thread, stream_mode="values"):
                         event['messages'][-1].pretty_print()
                             
-
 # use_graph()
-
-"""
-Para el juego de duendes:
-- definir cómo se pasa de un duende a otro, es decir, si se pasa el duende del puente,
-  qué debe decir el usuario para seguir? o debería ser secuencial:
-  narrador -> puente -> H-I-L -> evaluation -> update tries -> casa -> H-I-L -> evaluation -> update tries -> castillo H-I-L -> evaluation -> update tries -> fin
-- arísta condicional desde evaluation a points_updater_tool_node. si venía del juego de duendes, debe ir por el lado de un nuevo nodo que
-  lleve cuenta de los corazones (sería chévere mostrarlos siempre con emojis -> siempre me refiero luego de cada duende o cuando pierde uno) (no creo que se necesite bd
-  porque la idea es que si se inicia el juego, se termine en la misma sesión; ya sea ganando o perdiendo).
-  
-Para el frontend:
-- Opción para que el usuario cargue el o los PDFs con los que quiera trabajar.
-
-"""

@@ -1,0 +1,21 @@
+from typing import Annotated, Dict, List, Optional
+from typing_extensions import TypedDict
+
+from langgraph.graph.message import AnyMessage, add_messages
+
+class Question(TypedDict):
+    question: str
+    question_type: int
+    question_difficulty: str
+    question_answers: str
+    approved: bool
+    
+class Threshold(TypedDict):
+    similarity_threshold: float
+    quality_threshold: float
+
+class State(TypedDict):
+    messages: Annotated[list[AnyMessage], add_messages]
+    question: Optional[Question]
+    threshold: Optional[Threshold]
+    questions: Optional[List[Dict[str, str]]]

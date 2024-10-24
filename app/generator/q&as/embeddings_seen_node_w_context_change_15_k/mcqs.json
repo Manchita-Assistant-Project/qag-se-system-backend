@@ -1,0 +1,210 @@
+{
+    "content": [
+        {
+            "question": "¿Cuál es el promedio de visualizaciones por publicación en la Fanpage de la Escuela de Bellas Artes de Buenos Aires en Facebook?",
+            "choices": {
+                "a": "500",
+                "b": "800",
+                "c": "900",
+                "d": "1200"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es la estrategia principal utilizada por la Escuela de Bellas Artes para difundir el bienestar universitario entre sus estudiantes?",
+            "choices": {
+                "a": "Implementación de programas de emprendimiento estudiantil",
+                "b": "Ofrecimiento de servicios educativos, artísticos y culturales",
+                "c": "Uso de recursos CREE del impuesto a la equidad",
+                "d": "Desarrollo de proyectos de investigación y creación/construcción de comunidad"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es uno de los canales de comunicación utilizados por la Escuela de Bellas Artes para difundir información sobre proyectos, servicios y actividades relacionadas con el bienestar universitario?",
+            "choices": {
+                "a": "Fanpage Bienestar Bellas Artes - Oficial en Facebook",
+                "b": "Mailing a través del correo bienestaruniversitario@bellasartes.edu.co",
+                "c": "Manzana de los deseos",
+                "d": "Foros sobre la actividad laboral de los diseñadores de Bellas Artes"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Cuál es el objetivo principal de la Coordinación de Equidad, Inclusión y Diversidad durante el periodo de Febrero - Junio 2021 en la Escuela de Bellas Artes de Buenos Aires?",
+            "choices": {
+                "a": "Promover el desarrollo de la práctica investigativa en los estudiantes del Instituto Departamental de Bellas Artes.",
+                "b": "Generar habilidades para la investigación en artes en entornos comunitarios y con enfoque social.",
+                "c": "Realizar talleres y prácticas formativas con personas, colectivos o instituciones que hagan parte de nuevos movimientos de Diseño y creación.",
+                "d": "Incluir actividades de 2015 con descripción completa."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el nivel de accesibilidad de los recursos educativos para la población con discapacidad en la Escuela de Bellas Artes de Buenos Aires durante el periodo de Febrero - Junio 2021?",
+            "choices": {
+                "a": "Muy accesible",
+                "b": "Accesible",
+                "c": "Poco accesible",
+                "d": "No accesible"
+            },
+            "answer": "c",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las plataformas digitales utilizadas por la Escuela de Bellas Artes de Buenos Aires para promover la implementación de la revista digital?",
+            "choices": {
+                "a": "Facebook",
+                "b": "Instagram",
+                "c": "Twitter",
+                "d": "YouTube"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el número actual de seguidores en la Fanpage de la Escuela de Bellas Artes de Buenos Aires en Facebook?",
+            "choices": {
+                "a": "500",
+                "b": "900",
+                "c": "1200",
+                "d": "1500"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los pasos específicos requeridos para completar el proceso de homologación de programas de movilidad académica en la Escuela de Bellas Artes de Buenos Aires?",
+            "choices": {
+                "a": "Diligenciar el formato de plan de homologación.",
+                "b": "Enviar el video a Youtube y proporcionar el enlace.",
+                "c": "Revisar el plan de estudios del programa de interés.",
+                "d": "Enviar los soportes pertinentes al correo jefe.disenografico@bellasartes.edu.co."
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el propósito principal de la Resolución No. 051 de junio 24 de 2008 emitida por la Vicerrectoría Académica en la Escuela de Bellas Artes de Buenos Aires?",
+            "choices": {
+                "a": "Establecer el sistema de práctica social en la institución",
+                "b": "Ampliar la cobertura del programa ofrecido en CERES",
+                "c": "Definir la misión y visión institucional de Bellas Artes",
+                "d": "Implementar el Proyecto Educativo Institucional (PEI)"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el nombre de la publicación digital realizada por la Escuela de Bellas Artes de Buenos Aires en el año 2020?",
+            "choices": {
+                "a": "Arte Digital 2020",
+                "b": "Bellas Artes en la Era Digital",
+                "c": "Arte y Tecnología en Buenos Aires",
+                "d": "Escuela de Bellas Artes en la Era Digital"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias específicas utilizadas por la Escuela de Bellas Artes de Buenos Aires para adquirir servicios y plataformas digitales en el periodo de febrero a junio de 2021?",
+            "choices": {
+                "a": "Realizar una subasta en línea para adquirir los servicios y plataformas digitales.",
+                "b": "Realizar alianzas estratégicas con empresas de tecnología para obtener los servicios y plataformas digitales.",
+                "c": "Realizar una campaña de crowdfunding para financiar la adquisición de los servicios y plataformas digitales.",
+                "d": "Utilizar fondos propios para comprar los servicios y plataformas digitales."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los requisitos específicos para recopilar y subir documentos a la página web de la Escuela de Bellas Artes de Buenos Aires durante el periodo de Febrero - Junio 2021?",
+            "choices": {
+                "a": "Realizar un curso en línea sobre manejo de la plataforma de la página web.",
+                "b": "Ser estudiante de la Escuela de Bellas Artes de Buenos Aires.",
+                "c": "Enviar una solicitud por correo electrónico para obtener acceso a la página web.",
+                "d": "Presentar una propuesta de diseño para la página web."
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son las estrategias utilizadas por la Fanpage Bienestar Bellas Artes - Oficial para generar valor y segmentar su público objetivo?",
+            "choices": {
+                "a": "Mailing y Manzana de los deseos",
+                "b": "Fanpage y Alianzas estratégicas",
+                "c": "Mailing y Alianzas estratégicas",
+                "d": "Fanpage y Manzana de los deseos"
+            },
+            "answer": "b",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el porcentaje de crecimiento en el número de seguidores en la Fanpage de Bienestar Bellas Artes en el último año?",
+            "choices": {
+                "a": "10%",
+                "b": "20%",
+                "c": "30%",
+                "d": "40%"
+            },
+            "answer": "c) 30%",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuál es el término correcto para referirse a la técnica de representación de objetos en una pintura mediante la utilización de un solo punto de fuga?",
+            "choices": {
+                "a": "Perspectiva a un punto de fuga",
+                "b": "Perspectiva a dos puntos de fuga",
+                "c": "Perspectiva a tres puntos de fuga",
+                "d": "Perspectiva atmosférica",
+                "e": "Todas las anteriores son incorrectas"
+            },
+            "answer": "a",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Cuáles son los requisitos y el procedimiento necesario para solicitar y utilizar plataformas digitales o servicios en la Escuela de Bellas Artes de Buenos Aires, con el fin de implementar propuestas de creación objetual o talleres independientes de creación en el periodo de febrero a junio de 2021?",
+            "choices": {
+                "a": "Presentar una solicitud por escrito a la dirección de la Escuela de Bellas Artes.",
+                "b": "Completar un formulario en línea disponible en el sitio web de la Escuela de Bellas Artes.",
+                "c": "Realizar una entrevista con el coordinador de proyectos digitales de la Escuela de Bellas Artes.",
+                "d": "Participar en un proceso de selección y evaluación de propuestas por parte de un comité de expertos."
+            },
+            "answer": "d",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "De acuerdo con el contexto proporcionado, la pregunta más difícil de opción múltiple que puedo generar es:\n\n¿Cuál es la fecha exacta en la que se publicó la Resolución No. 051 que establece el Sistema de práctica social en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "A": "Junio 24 de 2008",
+                "B": "Febrero - Junio 2021",
+                "C": "Septiembre 2021",
+                "D": "No se menciona en el contexto",
+                "E": "Ninguna de las anteriores"
+            },
+            "answer": "A) Junio 24 de 2008",
+            "type": "MCQ",
+            "difficulty": "Difícil"
+        }
+    ]
+}

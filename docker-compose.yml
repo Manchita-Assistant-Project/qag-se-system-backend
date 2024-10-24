@@ -26,15 +26,46 @@ services:
       else 
         echo 'Model nomic-embed-text already exists'; 
       fi
-    "]
+      
+#      if [ ! -f /root/.ollama/models/llama3.1 ]; then 
+#        docker exec ollama-container ollama pull llama3.1 && 
+#        echo 'llama3.1 completed'; 
+#      else 
+#        echo 'Model llama3.1 already exists'; 
+#      fi
+#    "]
 
-      # docker exec ollama-container ollama pull bge-m3 &&
-      # echo 'bge-m3 completed' &&
-      # docker exec ollama-container ollama pull llama3 &&
-      # echo 'llama3 completed'
+  fastapi-app:
+    build:
+      context: .  # Usa tu Dockerfile ubicado en el directorio actual
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"  # Puerto para tu aplicación FastAPI
+    depends_on:
+      - ollama  # Asegura que 'ollama' esté listo antes de correr FastAPI
+    volumes:
+      - ./app:/code/app
+      - ./files:/code/files
+      - ./client_secrets.json:/code/client_secrets.json
+      - ./credentials.json:/code/credentials.json
+      - ./:/code  # Para otros archivos que estés usando
+      - ./app/database/chroma:/code/app/database/chroma   # Volumen para Chroma
+      - ./app/database/sqlite3:/code/app/database/sqlite3 # Volumen para SQLite3
+      # - questions-volume:/code/app/generator/q&as    # Volumen para las preguntas
+      - ./app/generator/q&as:/code/app/generator/q&as
+    networks:
+      - shared-network
+    environment:
+      OLLAMA_URL: http://ollama-container:11434
 
 volumes:
   models-volume:
+    driver: local
+  chroma-db-volume:        # Volumen persistente para Chroma
+    driver: local
+  sqlite3-db-volume:       # Volumen persistente para SQLite3
+    driver: local
+  questions-volume:        # Volumen persistente para las preguntas
     driver: local
 
 networks:

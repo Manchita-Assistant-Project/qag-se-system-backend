@@ -9,8 +9,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
 import app.config as config
-import app.graph.utils as utils
-from app.graph.state import Story
+import app.agent.utils as utils
+from app.agent.state import Story
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
 from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
@@ -58,12 +58,12 @@ def qanda_evaluation(input_data: str) -> str:
     Evaluates the given answer to a question.
     """
     json_path = utils.JSON_PATH
-    data = utils.load_json(json_path)       
+    data = utils.load_json(json_path) 
 
     question, answer = input_data.split('|||')
     print(f"QUESTION: {question} | ANSWER: {answer}")
     
-    context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+    context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -102,15 +102,19 @@ def rag_search(query: str) -> str:
 
     return response_text
 
-def qanda_chooser() -> str: # ¡¡acá falta el tema del modelo, para que retorne frases más bonitas y no solo la pregunta!!
+def qanda_chooser(game_type: str) -> str:
     """
-    It does not generate questions.
-    Chooses a random question ONLY from the JSON file.
+    Chooses a random question from the JSON file based on the game type.
     """
-    json_path = utils.JSON_PATH
+    json_path = utils.JSON_PATH                
     data = utils.load_json(json_path)
-    questions = [each_qandas["question"] for each_qandas in data[0]['questions']]
-    random_question = random.choice(questions)  
+    
+    if game_type == "story":
+        questions = [item["question"] for item in data if item["type"] == "MCQ" and item["difficulty"] == "Difícil"]
+    elif game_type == "simple_quiz":
+        questions = [item for item in data]
+            
+    random_question = random.choice(questions)
     
     return random_question
 
@@ -126,7 +130,7 @@ def feedback_provider(question: str) -> str:
     json_path = utils.JSON_PATH
     data = utils.load_json(json_path)
 
-    context = [each_qanda for each_qanda in data[0]['questions'] if each_qanda['question'] == question]
+    context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
     
     print(f"CONTEXT: {context}")
 
@@ -224,7 +228,7 @@ def verify_tool_call(message: AIMessage) -> bool:
             
     return False
 
-single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, qanda_evaluation, narrator_tool]    
+single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, narrator_tool] # qanda_evaluation    
 
 # ================== #
 # STORIES GAME TOOLS #
@@ -234,7 +238,7 @@ def first_character(current_story: str):
     """
     Calls the first character and returns it's response.
     """
-    question = qanda_chooser()
+    question = qanda_chooser("story")
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -257,7 +261,7 @@ def second_character(current_story: str):
     """
     Calls the second character and returns it's response.
     """
-    question = qanda_chooser()
+    question = qanda_chooser("story")
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -280,7 +284,7 @@ def third_character(current_story: str):
     """
     Calls the third character and returns it's response.
     """
-    question = qanda_chooser()
+    question = qanda_chooser("story")
     
     model = AzureChatOpenAI(
         deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],

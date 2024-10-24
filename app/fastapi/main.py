@@ -10,9 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
-from app.graph.utils import JSON_PATH
-from app.graph.graph import workflow
-import app.graph.tools as tools
+import app.agent.tools as tools
+from app.agent.graph import workflow
+from app.agent.utils import JSON_PATH, load_json
 
 app = FastAPI()
 
@@ -20,6 +20,8 @@ app = FastAPI()
 
 origins = [
     'http://localhost:8080',
+    'https://manchita-gamificado.netlify.app',
+    'https://urban-space-spoon-7xpxgrq75q93x5x6-8080.app.github.dev'
 ]
 
 app.add_middleware(
@@ -122,7 +124,7 @@ async def chat(input_data: ChatInput):
     }
     
     graph = get_or_create_user_graph(input_data.thread_id)
-
+    print(f"GRAPH: {input_data.thread_id} -  {graph.get_state(thread).next}")
     print(f"INPUT DATA: {input_data}")
 
     try:
@@ -132,7 +134,7 @@ async def chat(input_data: ChatInput):
             state = graph.get_state(thread)
 
             to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
-            last_question = state.values['messages'][-1].content if state.values['messages'][-1].content.startswith('¿') else to_evaluate  # pregunta sencilla o pregunta de juego goblin
+            last_question = graph.get_state(thread).values["last_question"] if state.values['messages'][-1].name == "qanda_chooser" else to_evaluate  # pregunta sencilla o pregunta de juego goblin
             combined_input = f"{last_question}|||{input_data.user_answer}"
             
             # Actualizar el estado del grafo con la respuesta
@@ -198,10 +200,10 @@ class QuestionEvaluation(BaseModel):
 
 @app.get('/questions')
 def get_questions():    
-    with open(JSON_PATH, encoding='utf-8') as f:
-        data = json.load(f)
+    data = load_json(JSON_PATH)
     
-    questions = {question["question"] for question in data["content"][0]["questions"]}
+    # solo para preguntas de "Verdadero o Falso"
+    questions = [item["question"] for item in data if item["type"] == "TFQ"]
     return questions
 
 @app.post('/evaluate')

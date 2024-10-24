@@ -1,0 +1,174 @@
+{
+    "content": [
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con programas de investigación y promoción específicos para cada disciplina artística en Colombia?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Las técnicas transmedia tienen un impacto significativo en la creación de experiencias inmersivas interactivas dentro del programa de investigación del Instituto Departamental de Bellas Artes, especialmente en el ámbito del arte digital? ¿En qué medida este impacto se manifiesta en la producción y recepción de obras de arte digital en el Instituto Departamental de Bellas Artes?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas específicos de investigación y promoción para cada una de las disciplinas artísticas, como la música, la danza, el teatro y las artes visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Es cierto que los programas de formación en animación y arte interactivo ofrecidos por el Instituto Departamental de Bellas Artes se basan principalmente en influencias teóricas y conceptuales específicas relacionadas con la animación y el arte interactivo contemporáneo, y también exploran la corriente del arte digital y la vanguardia tecnológica?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? Does the Instituto Departamental de Bellas Artes in Colombia have specific research and promotion programs for each artistic discipline, such as music, dance, theater, and visual arts?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿Es cierto que la investigación llevada a cabo por el Instituto Departamental de Bellas Artes en Colombia puede tener implicaciones éticas y morales que impacten negativamente en la promoción de la diversidad y la inclusión en el perfil del docente?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿Los programas de investigación y promoción del Instituto Departamental de Bellas Artes en Colombia para cada disciplina artística son generalmente relevantes y desafiantes en términos de complejidad, incluyendo aspectos como la innovación y la experimentación en cada área artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas específicos de investigación y promoción para cada disciplina artística, como música, danza, teatro y artes visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como la música, la danza, el teatro y las artes visuales? ¿Estos programas garantizan oportunidades únicas y destacadas para cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El objetivo principal del semillero de investigación y creación de Diseño Gráfico en el Instituto Departamental de Bellas Artes en Colombia es impulsar la innovación y fomentar la excelencia académica en el campo del diseño gráfico en el ámbito artístico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿En el Instituto Departamental de Bellas Artes de Colombia, existen programas de investigación y promoción específicos para fomentar la innovación y la excelencia académica en cada disciplina artística? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas brindan oportunidades únicas y destacadas para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas están diseñados para fomentar la innovación y la excelencia académica en cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas brindan oportunidades únicas y destacadas para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ha llevado a cabo investigaciones sobre la aplicación de técnicas de animación en proyectos transmedia, resultando en experiencias innovadoras y disruptivas en la industria del arte digital? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia ofrece programas específicos de investigación y promoción para cada disciplina artística, como música, danza, teatro y artes visuales? ¿Estos programas aseguran oportunidades sobresalientes para el desarrollo de cada disciplina artística?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes en Colombia cuenta con programas de investigación y promoción específicos para cada disciplina artística, como música, danza, teatro y artes visuales? (Verdadero o Falso)",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        }
+    ]
+}

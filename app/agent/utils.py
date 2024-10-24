@@ -10,8 +10,8 @@ from langchain_core.messages import ToolMessage
 from langchain_core.runnables import RunnableLambda
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-# JSON_PATH = "app/generator/q&as/qs.json"
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+QS_PATH = os.path.join(base_dir, "generator", "q&as")
 JSON_PATH = os.path.join(base_dir, "generator", "q&as", "qs.json")
 
 def load_json(path: str):
@@ -33,7 +33,7 @@ def update_json(path: str, data: list):
 
 def generate_graph_image(runnable):
     i = runnable.get_graph().draw_mermaid_png()
-    with open("graph.png", "wb") as png:
+    with open("app/agent/graph.png", "wb") as png:
         png.write(i)
 
 def handle_tool_error(state) -> dict:
@@ -53,7 +53,6 @@ def create_tool_node_with_fallback(tools: list) -> dict:
     return ToolNode(tools).with_fallbacks(
         [RunnableLambda(handle_tool_error)], exception_key="error"
     )
-
 
 def _print_event(event: dict, _printed: set, max_length=1500):
     current_state = event.get("dialog_state")
@@ -98,14 +97,16 @@ def create_character_agent(llm, tools, systems_message: str, characters: list):
         [
             (
                 "system",
-                "{systems_message}. Select one of: {characters}",
+                # "{systems_message}. Select one of: {characters}",
+                "{systems_message}.",
             ),
             MessagesPlaceholder(variable_name="messages"),
         ]
     )
-    prompt = prompt.partial(systems_message=systems_message, characters=characters)
+    # prompt = prompt.partial(systems_message=systems_message, characters=characters)
+    prompt = prompt.partial(systems_message=systems_message)
     if tools:
-        return prompt | llm.bind_tools(tools)
+        return prompt | llm.bind_tools(tools, tool_choice="auto")
     else:
         return prompt | llm
     
@@ -116,22 +117,32 @@ def agent_node(state, agent, name):
     }
     
 def agent_w_tools_node(state, agent, name):
-    instruction_message = {"role": "user", "content": "ÓYEME BOBO, HAZ LA LLAMADA!!"}
-
+    
+    # mensaje de regaño si no se hizo un tool call
+    instruction_message = """
+    ¡No hiciste un tool call! ¡Haz el respectivo tool call! No generes texto, solo haz el tool call.
+    """
+    contador_regaño = 0  # Inicializamos un contador para los mensajes de regaño
+    
     while True:
         result = agent.invoke(state)
-        print(f"RESULT: {result}")
 
         # verifica si se hizo un tool call
         if hasattr(result, 'additional_kwargs') and ('tool_calls' in result.additional_kwargs):
-            # si hubo tool_call, elimina el mensaje de regaño
-            if instruction_message in state["messages"]:
-                state["messages"].remove(instruction_message)
+            # si hubo tool_call, eliminar exactamente el número de mensajes de regaño
+            # print(f"MESSAGES: {state['messages']}")
+
+            # Elimina los últimos 'contador_regaño' mensajes de regaño
+            while contador_regaño > 0 and state["messages"][-1] == instruction_message:
+                state["messages"].pop()
+                contador_regaño -= 1  # Decrementa el contador
+
             break
 
         # si no hizo el tool call, agrega la instrucción para que lo haga
-        if instruction_message not in state["messages"]:
-            state["messages"].append(instruction_message)
+        state["messages"].append(instruction_message)
+        contador_regaño += 1  # Incrementamos el contador por cada iteración sin tool call
+
         print(f"Waiting for agent {name} to do a tool call...")
 
     return {
@@ -140,8 +151,17 @@ def agent_w_tools_node(state, agent, name):
 
 def define_context_string(context):
     answer_choice = context[0]["answer"]
-    answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
-    return f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+    answer_string = ""
+    
+    if len(answer_choice) == 1:
+        answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
+    elif answer_choice[0].lower() in ['a', 'b', 'c', 'd'] and answer_choice[1] in ['.', ')']:
+        answer_string = answer_choice[2:]
+    else:
+        answer_string = answer_choice
+        
+    final_evaluation_string = f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+    return final_evaluation_string
 
 def choose_random_story():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

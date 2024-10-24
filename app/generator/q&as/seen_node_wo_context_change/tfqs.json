@@ -1,0 +1,114 @@
+{
+    "content": [
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes cuenta con reconocimiento oficial a nivel nacional e internacional como institución de formación en artes escénicas y visuales?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en música y artes escénicas además de las áreas artísticas mencionadas en el contexto?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes es oficialmente reconocido a nivel nacional e internacional como institución de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de maestría en alguna disciplina artística reconocidos a nivel nacional e internacional?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Falso",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes es reconocido oficialmente a nivel nacional e internacional como una institución de formación en diseño gráfico, cine, música y otras disciplinas artísticas?",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Difícil"
+        },
+        {
+            "question": "¿El Instituto Departamental de Bellas Artes ofrece programas de formación en diseño gráfico, cine, música y otras disciplinas mencionadas en el contexto artístico?|||0.0",
+            "choices": {
+                "a": "Verdadero",
+                "b": "Falso"
+            },
+            "answer": "Verdadero",
+            "type": "TFQ",
+            "difficulty": "Fácil"
+        }
+    ]
+}
