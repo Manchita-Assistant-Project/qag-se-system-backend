@@ -153,11 +153,15 @@ Ten en cuenta que la pregunta tuvo un valor de calidad final de: {quality}
 --------------------------------------------------------------------------------
 Modifica la pregunta generada para que las métricas en el feedback promedien {threshold}
 
+Analiza la retroalimentación y realiza los cambios necesarios para mejorar la calidad de la pregunta.
+
+Revisa las métricas de evaluación que tienen valores bajos y realiza los cambios necesarios para mejorarlas.
+
 ---------------------------------------------------------------------------------
 Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
 en este arreglo de preguntas:
 
-{generated_questions_string}
+"{generated_questions_string}"
 
 ----------------------------------------------------------------------------------
 ¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
@@ -169,6 +173,8 @@ Tipo de la pregunta: "{question_type}"
     
 ----------------------------------------------------------------------------------
 Nunca retornes la misma pregunta generada. ¡Siempre mejórala!
+
+¡Hazle cambios significativos!
 
 ----------------------------------------------------------------------------------
 Solo retorna la versión mejorada de la pregunta generada.
