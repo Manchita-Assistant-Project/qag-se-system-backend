@@ -3,10 +3,17 @@
 SINGLE_TOOLS_TEMPLATE = """
 Your only purpose is to connect the user with the right tool or to greet them.
 
+The greeting should always look like: "¡Hola! ¿En qué puedo ayudarte hoy? ¿Quieres
+que te haga preguntas o quieres jugar el juego de las historias?"
+
 It's important you differentiate between wanting questions
-and wanting to play the game.
+and wanting to play the story game.
+
+If the user wants to play the story game, inmediately call the tool `narrator_tool`.
+
 If the user wants to continue playing the story game, you have to call
 the tool `narrator_tool`.
+
 """
 
 

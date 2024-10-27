@@ -13,12 +13,14 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 
-from app.agent.state import ChromaDatabase
+# from app.agent.state import ChromaDatabase
 import app.agent.tools as tools
 from app.agent.graph import workflow
 import app.generator.loader as loader
 import app.generator.generator as generator
+import app.agent.utils as utils
 import app.database.chroma_utils as chroma_utils
+import app.database.sqlite_utils as sqlite_utils
 from app.agent.utils import JSON_PATH, load_json
 
 app = FastAPI()
@@ -56,10 +58,12 @@ def home():
 # ========================= #
 
 story_game_tools = [
-    "first_character",
-    "second_character",
-    "third_character",
-    "lifes_retrieval",
+    "character",
+    "character_first_interaction",
+    "character_life_lost",
+    "character_success_or_failure",
+    "character_loop_interaction",
+    "lives_retrieval",
 ]
 
 user_graphs = {}
@@ -67,6 +71,7 @@ user_graphs = {}
 def get_or_create_user_graph(thread_id: str, db_id: str):
     global user_graphs
     print(f"THREAD_ID: {thread_id}")
+    print(f"DB_ID: {db_id}")
     
     # Verifica si existe el grafo para el thread_id
     if thread_id not in user_graphs:
@@ -77,22 +82,23 @@ def get_or_create_user_graph(thread_id: str, db_id: str):
             interrupt_before=["human_interaction"],  # Especificar nodo de interrupción
         )
         
+        utils.generate_graph_image(new_graph)
+        
         exists = chroma_utils.knowledge_base_exists(db_id)
         if (exists == False):
             return None
         
-        db = chroma_utils.get_db(db_id)
-        db_obj = ChromaDatabase(
-            db_id=db_id,
-            db=db
-        )
+        # db = chroma_utils.get_db(db_id)
+        # db_obj = ChromaDatabase(
+        #     db_id=db_id
+        # )
         
         # Establecer el estado inicial del grafo con el thread_id
         initial_state = {
             "thread_id": thread_id,
-            "db_chroma": db_obj,
-            "messages": [],
-            "step": 0
+            "db_chroma": db_id,
+            "db_sqlite": db_id,
+            "messages": []
         }
         
         new_graph.update_state({"configurable": {"thread_id": thread_id}}, initial_state)
@@ -147,7 +153,8 @@ async def chat(input_data: ChatInput):
         }
     }
     
-    graph = get_or_create_user_graph(input_data.thread_id)
+    print(input_data)
+    graph = get_or_create_user_graph(input_data.thread_id, input_data.db_id)
     print(f"GRAPH: {input_data.thread_id} - {graph.get_state(thread).next}")
     print(f"INPUT DATA: {input_data}")
 
@@ -179,11 +186,13 @@ async def chat(input_data: ChatInput):
                 evaluation_response.append(event['messages'][-1].content)
             
             print(f"EVALUATION RESPONSE: {evaluation_response}")
+            print(f"EVALUATION RESPONSE: {graph.get_state(thread).values['from_story']}")
+            print(f"EVALUATION RESPONSE: {'incorrecta' in evaluation_response[-3]}")
             
             return {
                 "thread_id": input_data.thread_id,
                 "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
-                "is_interrupted": graph.get_state(thread).values["from_story"] and "incorrecta" in evaluation_response[-2]
+                "is_interrupted": graph.get_state(thread).values["from_story"] and "incorrecta" in evaluation_response[-3]
             }
         
         # Si es una interacción inicial (sin interrupción todavía)
@@ -196,7 +205,9 @@ async def chat(input_data: ChatInput):
                 response.append(event['messages'][-1].content)
 
             # Verificar si el flujo fue interrumpido en 'human_interaction'
-            last_tool_call = graph.get_state(thread).values['messages'][-1].name
+            # last_tool_call = graph.get_state(thread).values['messages'][-1].name
+            last_tool_call = list(graph.get_state(thread).metadata['writes'].keys())[0]
+            # print(f"LAST MESSAGE: {graph.get_state(thread).metadata['writes'].keys()}")
             print(f"LAST TOOL CALL: {last_tool_call}")
             is_interrupted = False
             if last_tool_call:
@@ -241,12 +252,12 @@ def evaluate_query(input: QuestionEvaluation):
 # Endpoint para los contadores de puntos #
 # ======================================= #
 
-@app.get('/user_points_counter/{user_id}')
-def get_user_asked_questions(user_id: str):
-    print(f"GETTING POINTS COUNTER FOR USER_ID: {user_id}")
+@app.get('/user_points_counter/{user_id}/{db_id}')
+def get_user_asked_questions(user_id: str, db_id: str):
+    print(f"GETTING POINTS COUNTER FOR USER_ID: {user_id} IN {db_id}")
     return {
-        'asked_questions': tools.asked_questions_retrieval(user_id),
-        'current_points': tools.points_only_retrieval(user_id)
+        'asked_questions': tools.asked_questions_retrieval(user_id, db_id),
+        'current_points': tools.points_only_retrieval(user_id, db_id)
     }
     
 # ================================================================= #
@@ -293,8 +304,20 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
     print("GENERATING Q&As")
     generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id)
     
+    sqlite_utils.create_table(db_id)
+    
     qandas_json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
     with open(qandas_json_path, 'r') as f:
         data = json.load(f)
+    
+    # ¡¡A ESTE JSON TOCA AGREGAR EL CÓDIGO!!
+    # "content": [
+    #   {
+    #       "code": "..."
+    #   },
+    #   {
+    #       "question": "..."
+    #   },
+    # ]
     
     return data

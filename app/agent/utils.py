@@ -173,12 +173,21 @@ def choose_random_story():
     
     return random_story
 
-def load_character_prompt(current_story: str, character: str):
+def load_character_prompt(current_story: str, step: int):
     """
     Carga todos los prompts que cumplen con el patrón {character}_CHARACTER_PROMPT
     desde un módulo dinámicamente.
     Lanza un AttributeError si no se encuentran prompts.
     """
+    
+    step_to_kind = {
+        1: 'FIRST',
+        2: 'SECOND',
+        3: 'THIRD'
+    }
+    
+    print(f"STEP: {step} - {step_to_kind[step]}")
+    
     characters_module_path = f"app.prompts.stories.{current_story}.{current_story}_characters_prompts"
     
     # Importar el módulo dinámicamente
@@ -188,7 +197,7 @@ def load_character_prompt(current_story: str, character: str):
     all_attributes = dir(module)
     
     # Filtrar los prompts que cumplen con el patrón
-    formatted_string = f"{character}_CHARACTER_PROMPT"
+    formatted_string = f"{step_to_kind[step]}_CHARACTER_PROMPT"
     personality_prompts = [attr for attr in all_attributes if re.match(formatted_string + r'', attr)]
     
     if not personality_prompts:
@@ -199,12 +208,19 @@ def load_character_prompt(current_story: str, character: str):
     
     return loaded_prompts
 
-def load_character_personalities(current_story: str, character: str):
+def load_character_personalities(current_story: str, step: int):
     """
     Carga todos los prompts que cumplen con el patrón {character}_CHARACTER_PERSONALITY_.*
     desde un módulo dinámicamente.
     Lanza un AttributeError si no se encuentran prompts.
     """
+    
+    step_to_kind = {
+        1: 'FIRST',
+        2: 'SECOND',
+        3: 'THIRD'
+    }
+    
     characters_module_path = f"app.prompts.stories.{current_story}.{current_story}_characters_personalities"
     
     # Importar el módulo dinámicamente
@@ -214,7 +230,7 @@ def load_character_personalities(current_story: str, character: str):
     all_attributes = dir(module)
     
     # Filtrar los prompts que cumplen con el patrón
-    formatted_string = f"{character}_CHARACTER_PERSONALITY"
+    formatted_string = f"{step_to_kind[step]}_CHARACTER_PERSONALITY"
     personality_prompts = [attr for attr in all_attributes if re.match(formatted_string + r'.*', attr)]
     
     if not personality_prompts:
@@ -249,7 +265,7 @@ def load_character_auxiliar_prompts(current_story: str, step: int):
     {character}_CHARACTER_{kind}_PROMPT
     donde kind puede ser:
         - SUCCESS
-        - LIFES_LOST
+        - LIVES_LOST
         - FAILURE
     desde un módulo dinámicamente.
     Lanza un AttributeError si no se encuentran prompts.
@@ -260,13 +276,15 @@ def load_character_auxiliar_prompts(current_story: str, step: int):
         3: 'THIRD'
     }
     
+    print(f"STEP: {step} - {step_to_kind[step]}")
+    
     characters_module_path = f"app.prompts.stories.{current_story}.{current_story}_characters_prompts"
     
     module = importlib.import_module(characters_module_path)
     
     all_attributes = dir(module)
     
-    kinds = ['SUCCESS', 'LIFES_LOST', 'FAILURE']
+    kinds = ['SUCCESS', 'LIVES_LOST', 'FAILURE']
     
     loaded_prompts = {}
     

@@ -168,17 +168,17 @@ def feedback_provider(question: str, db_id: str) -> str:
 
     return response_text
 
-def points_updater(user_id: str, points: int=1):
+def points_updater(user_id: str, db_id: str, points: int=1):
     """
     Updates the points of the user.
     """
-    sqlite_utils.update_points(user_id, points)
+    sqlite_utils.update_points(user_id, db_id, points)
 
-def points_retrieval(user_id: str) -> str:
+def points_retrieval(user_id: str, db_id: str) -> str:
     """
     Returns the current points count with a message from the LLM.
     """
-    current_points = sqlite_utils.get_points(user_id)
+    current_points = sqlite_utils.get_points(user_id, db_id)
     
     # model = AzureChatOpenAI(
     #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -196,26 +196,26 @@ def points_retrieval(user_id: str) -> str:
     response_text = model.invoke(prompt).content
     return response_text
 
-def points_only_retrieval(user_id: str) -> str:
+def points_only_retrieval(user_id: str, db_id: str) -> str:
     """
     Returns the current points count.
     """
-    return sqlite_utils.get_points(user_id)
+    return sqlite_utils.get_points(user_id, db_id)
 
-def asked_questions_updater(user_id: str):
+def asked_questions_updater(user_id: str, db_id: str):
     """
     Updates the number of questions asked to the user.
     """
-    print(f"Current number of questions asked: {sqlite_utils.get_asked_questions(user_id)}")
-    sqlite_utils.update_asked_questions(user_id)
+    print(f"Current number of questions asked: {sqlite_utils.get_asked_questions(user_id, db_id)}")
+    sqlite_utils.update_asked_questions(user_id, db_id)
     print("Asked questions updated!")
-    print(f"Current number of questions asked: {sqlite_utils.get_asked_questions(user_id)}")
+    print(f"Current number of questions asked: {sqlite_utils.get_asked_questions(user_id, db_id)}")
     
-def asked_questions_retrieval(user_id: str) -> int:
+def asked_questions_retrieval(user_id: str, db_id) -> int:
     """
     Returns the current number of questions asked to the user.
     """
-    return sqlite_utils.get_asked_questions(user_id)
+    return sqlite_utils.get_asked_questions(user_id, db_id)
 
 def narrator_tool(current_story: str, step: int, db_id: str) -> str:
     """
@@ -248,7 +248,8 @@ def narrator_tool(current_story: str, step: int, db_id: str) -> str:
                         getattr(narrator_prompts_module, 'NARRATOR_THREE_PROMPT'),
                         getattr(narrator_prompts_module, 'NARRATOR_FOUR_PROMPT')]
 
-    prompt_template = ChatPromptTemplate.from_template(narrator_prompts[step])
+    print(f"STEP NARRATOR TOOL: {step}")
+    prompt_template = ChatPromptTemplate.from_template(narrator_prompts[step - 1])
     prompt = prompt_template.format(step=step)
 
     response_text = model.invoke(prompt).content
@@ -271,11 +272,17 @@ single_tools = [rag_search, qanda_chooser, feedback_provider, points_retrieval, 
 # STORIES GAME TOOLS #
 # ================== #
 
-def first_character(current_story: str):
+def character_first_interaction(current_story_dict: Story, db_id: str):
     """
-    Calls the first character and returns it's response.
+    Tool that has to be called only when it's the first interaction of a character.
     """
-    question = qanda_chooser("story")
+    
+    # Prompt type:
+    # - "start": cada comentario inicial del personaje
+    # - "evaluation": cada evaluación del personaje -> durante una evaluación (cuando la tiene bien, mal o perdió)
+    # - "interaction": cada interacción del personaje
+    
+    question = qanda_chooser("story", db_id)
     
     # model = AzureChatOpenAI(
     #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -287,85 +294,84 @@ def first_character(current_story: str):
         temperature=1
     )
     
-    character_personality_prompts = utils.load_character_personalities(current_story, 'FIRST')
-    character_prompt = utils.load_character_prompt(current_story, 'FIRST')[0]
+    step = current_story_dict["step"]
+    current_story = current_story_dict["name"]
+    character_personality = current_story_dict["character_personality"]
+        
     character_emoji = utils.find_character_emoji(current_story)
     
+    character_personality_prompts = utils.load_character_personalities(current_story, step)
     character_personality = random.choice(character_personality_prompts)
     
+    character_prompt = utils.load_character_prompt(current_story, step)[0]
+
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
     prompt = prompt_template.format(personality=character_personality, question=question)
 
     response_text = model.invoke(prompt).content
     return f"{character_emoji}  {response_text}", character_personality, question
 
-def second_character(current_story: str):
-    """
-    Calls the second character and returns it's response.
-    """
-    question = qanda_chooser("story")
+def character_success_or_failure(current_story_dict: Story, current_lives: int):
+    model = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=1
+    )
     
-    # model = AzureChatOpenAI(
-    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-    #     temperature=1
-    # )
+    step = current_story_dict["step"]
+    current_story = current_story_dict["name"]
+    character_personality = current_story_dict["character_personality"]
+    
+    character_emoji = utils.find_character_emoji(current_story)
+    
+    auxiliar_prompts = utils.load_character_auxiliar_prompts(current_story, step)
+    success_character_prompt = auxiliar_prompts['SUCCESS']
+    failure_character_prompt = auxiliar_prompts['FAILURE']
+    
+    character_prompt = success_character_prompt if current_lives > 0 else failure_character_prompt
+    # print(f"CHARACTER PROMPT: {character_prompt}")
+    prompt_template = ChatPromptTemplate.from_template(character_prompt)
+    prompt = prompt_template.format(personality=character_personality)
+
+    response_text = model.invoke(prompt).content + '\n\n¡Escribe "¡Sigue!" para continuar con la historia!' if current_lives > 0 else ''
+    return f"{character_emoji}  {response_text}"
+
+def character_life_lost(current_story_dict: Story, current_lives: int):
     
     model = ChatOpenAI(
         model=MODEL_NAME,
         temperature=1
     )
     
-    character_personality_prompts = utils.load_character_personalities(current_story, 'SECOND')
-    character_prompt = utils.load_character_prompt(current_story, 'SECOND')[0]
+    step = current_story_dict["step"]
+    current_story = current_story_dict["name"]
+    question = current_story_dict["to_evaluate"]
+    character_personality = current_story_dict["character_personality"]
+    
     character_emoji = utils.find_character_emoji(current_story)
     
-    character_personality = random.choice(character_personality_prompts)
+    auxiliar_prompts = utils.load_character_auxiliar_prompts(current_story, step)
     
+    lost_life_steps_prompts = [auxiliar_prompts['LIVES_LOST'], auxiliar_prompts['LIVES_LOST'], auxiliar_prompts['LIVES_LOST']]
+    character_prompt = lost_life_steps_prompts[step - 1]
+
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
-    prompt = prompt_template.format(personality=character_personality, question=question)
-    
+    prompt = prompt_template.format(personality=character_personality, question=question, lives=current_lives)
+
     response_text = model.invoke(prompt).content
-    return f"{character_emoji}  {response_text}", character_personality, question
 
-def third_character(current_story: str):
-    """
-    Calls the third character and returns it's response.
-    """
-    question = qanda_chooser("story")
-    
-    # model = AzureChatOpenAI(
-    #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
-    #     temperature=1
-    # )
-    
-    model = ChatOpenAI(
-        model=MODEL_NAME,
-        temperature=1
-    )
-    
-    character_personality_prompts = utils.load_character_personalities(current_story, 'THIRD')
-    character_prompt = utils.load_character_prompt(current_story, 'THIRD')[0]
-    character_emoji = utils.find_character_emoji(current_story)
-    
-    character_personality = random.choice(character_personality_prompts)
-    
-    prompt_template = ChatPromptTemplate.from_template(character_prompt)
-    prompt = prompt_template.format(personality=character_personality, question=question)
-    
-    response_text = model.invoke(prompt).content
-    return f"{character_emoji}  {response_text}", character_personality, question 
+    return f"{character_emoji}  {response_text}", question
 
-def lifes_updater(user_id: str, reset: bool=False):
+def lives_updater(user_id: str, db_id: str, reset: bool=False):
     """
-    Updates the lifes of the user in the story game.
+    Updates the lives of the user in the story game.
     """
-    sqlite_utils.update_lifes(user_id, reset)
+    sqlite_utils.update_lives(user_id, db_id, reset)
 
-def lifes_retrieval(user_id: str, current_story: Story, lost_live: bool) -> Tuple[str, int]:
+def lives_retrieval(user_id: str, db_id: str, current_story: Story, lost_life: bool) -> Tuple[str, int]:
     """
-    Returns the current lifes count of the user in the story game.
+    Returns the current lives count of the user in the story game.
     """
-    current_lifes = sqlite_utils.get_lifes(user_id)
+    current_lives = sqlite_utils.get_lives(user_id, db_id)
     
     name = current_story["name"]
     question = current_story["to_evaluate"]
@@ -377,34 +383,24 @@ def lifes_retrieval(user_id: str, current_story: Story, lost_live: bool) -> Tupl
     #     temperature=1
     # )
     
-    model = ChatOpenAI(
-        model=MODEL_NAME,
-        temperature=1
-    )
+    # model = ChatOpenAI(
+    #     model=MODEL_NAME,
+    #     temperature=1
+    # )
     
-    character_emoji = utils.find_character_emoji(name)
-    auxiliar_prompts = utils.load_character_auxiliar_prompts(name, step)    
-    # success_steps_prompts = [BRIDGE_GOBLIN_SUCCESS_PROMPT, GOBLIN_AT_HOME_SUCCESS_PROMPT, CASTLE_GOBLIN_SUCCESS_PROMPT]
-    # lost_life_steps_prompts = [BRIDGE_GOBLIN_LIFES_LOST_PROMPT, GOBLIN_AT_HOME_LIFES_LOST_PROMPT, CASTLE_GOBLIN_LIFES_LOST_PROMPT]
-    # failure_steps_prompts = [BRIDGE_GOBLIN_FAILURE_PROMPT, GOBLIN_AT_HOME_FAILURE_PROMPT, CASTLE_GOBLIN_FAILURE_PROMPT]
-    success_steps_prompts = [auxiliar_prompts['SUCCESS'], auxiliar_prompts['SUCCESS'], auxiliar_prompts['SUCCESS']]
-    lost_life_steps_prompts = [auxiliar_prompts['LIFES_LOST'], auxiliar_prompts['LIFES_LOST'], auxiliar_prompts['LIFES_LOST']]
-    failure_steps_prompts = [auxiliar_prompts['FAILURE'], auxiliar_prompts['FAILURE'], auxiliar_prompts['FAILURE']]
+    # character_emoji = utils.find_character_emoji(name)
+    # auxiliar_prompts = utils.load_character_auxiliar_prompts(name, step)    
+    # success_steps_prompts = [auxiliar_prompts['SUCCESS'], auxiliar_prompts['SUCCESS'], auxiliar_prompts['SUCCESS']]
+    # lost_life_steps_prompts = [auxiliar_prompts['LIVES_LOST'], auxiliar_prompts['LIVES_LOST'], auxiliar_prompts['LIVES_LOST']]
+    # failure_steps_prompts = [auxiliar_prompts['FAILURE'], auxiliar_prompts['FAILURE'], auxiliar_prompts['FAILURE']]
 
-    kind = 1
-    prompt = success_steps_prompts[step - 1]
-    if lost_live:
-        print("User lost a life!")
-        if current_lifes == 0:
-            kind = 1
-            prompt = failure_steps_prompts[step - 1]
-        else:
-            kind = 2
-            prompt = lost_life_steps_prompts[step - 1]
+    # prompt = success_steps_prompts[step - 1]
+    success = True if lost_life == False else False # True si se completó la evaluación, False si se perdió una vida
     
     print(f"INDEX: {step - 1}")
-    prompt_template = ChatPromptTemplate.from_template(prompt)
-    prompt = prompt_template.format(personality=personality, question=question, lifes=current_lifes)
+    # prompt_template = ChatPromptTemplate.from_template(prompt)
+    # prompt = prompt_template.format(personality=personality, question=question, lives=current_lives)
 
-    response_text = model.invoke(prompt).content
-    return f"{character_emoji}  {response_text}", current_lifes, kind
+    # response_text = model.invoke(prompt).content
+    return current_lives, success
+

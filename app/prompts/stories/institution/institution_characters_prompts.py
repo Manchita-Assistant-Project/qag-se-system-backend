@@ -114,7 +114,7 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + FIRST_CHARACTER_ACLARATION
 
 
-FIRST_CHARACTER_LIFES_LOST_PROMPT = """
+FIRST_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere entrar al Instituto.
@@ -123,9 +123,9 @@ Solo dile que ha perdido una vida y le recuerdas la pregunta:
 
 {question}
 
-Las vidas aún le quedan al visitante:
+Las vidas que aún le quedan al visitante:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al visitante).
 
@@ -171,7 +171,7 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + SECOND_CHARACTER_ACLARATION
 
 
-SECOND_CHARACTER_LIFES_LOST_PROMPT = """
+SECOND_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
@@ -180,9 +180,9 @@ No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuer
 
 {question}
 
-Las vidas aún le quedan al visitante:
+Las vidas que aún le quedan al visitante:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al visitante).
 
@@ -228,7 +228,7 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + THIRD_CHARACTER_ACLARATION
 
 
-THIRD_CHARACTER_LIFES_LOST_PROMPT = """
+THIRD_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
@@ -236,9 +236,9 @@ No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuer
 No le ofrezcas más acertijos, solo dale el permiso.
 {question}
 
-Las vidas aún le quedan al visitante:
+Las vidas que aún le quedan al visitante:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al visitante).
 

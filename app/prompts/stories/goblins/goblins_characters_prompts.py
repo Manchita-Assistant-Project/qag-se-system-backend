@@ -104,7 +104,7 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + FIRST_CHARACTER_ACLARATION
 
 
-FIRST_CHARACTER_LIFES_LOST_PROMPT = """
+FIRST_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere pasar el puente.
@@ -115,7 +115,7 @@ Solo dile que ha perdido una vida y le recuerdas la pregunta:
 
 Las vidas que aún le quedan al viajero:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
 
@@ -161,7 +161,7 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + SECOND_CHARACTER_ACLARATION
 
 
-SECOND_CHARACTER_LIFES_LOST_PROMPT = """
+SECOND_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que le des las necesitadas indicaciones.
@@ -172,7 +172,7 @@ No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuer
 
 Las vidas aún le quedan al viajero:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
 
@@ -219,7 +219,7 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + THIRD_CHARACTER_ACLARATION
 
 
-THIRD_CHARACTER_LIFES_LOST_PROMPT = """
+THIRD_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
@@ -229,7 +229,7 @@ No le ofrezcas más acertijos, solo dale el permiso.
 
 Las vidas aún le quedan al viajero:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
 
