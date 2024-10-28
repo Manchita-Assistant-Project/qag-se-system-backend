@@ -67,7 +67,8 @@ def qanda_evaluation(input_data: str, db_id: str) -> str:
     """
     # json_path = utils.JSON_PATH
     json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
-    data = utils.load_json(json_path) 
+    data = utils.load_json(json_path)
+    right_answer = [item["answer"] for item in data][0]
 
     question, answer = input_data.split('|||')
     print(f"QUESTION: {question} | ANSWER: {answer}")
@@ -90,7 +91,7 @@ def qanda_evaluation(input_data: str, db_id: str) -> str:
     answer = answer if answer != '' else "****"
     
     prompt_template = ChatPromptTemplate.from_template(EVALUATE_PROMPT)
-    prompt = prompt_template.format(context=context_string, answer=answer, question=question)
+    prompt = prompt_template.format(context=context_string, answer=answer, question=question, right_answer=right_answer)
     response_text = model.invoke(prompt).content
     
     print(f"RESPONSE: {response_text}")

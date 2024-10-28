@@ -56,10 +56,12 @@ una respuesta similar sería `saber programar`. \
 ¡No tiene que ser la respuesta tal cuál! \
 Puede ser una respuesta similar o una respuesta que implique la respuesta correcta. \
 
-
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
 
 Si la respuesta `answer` es `****`, responde "La respuesta es incorrecta...".
+
+Si la respuesta es incorrecta, responde "La respuesta es incorrecta..." y \
+agrega la respuesta correcta: "{right_answer}".
 """
 
 
