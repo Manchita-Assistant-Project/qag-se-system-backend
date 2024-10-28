@@ -9,6 +9,7 @@ import app.database.chroma_utils as chroma_utils
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
+from langchain_core.runnables import RunnableConfig
 
 single_use_tools = [
     'rag_search',
@@ -183,8 +184,14 @@ def use_graph():
     thread = {
         "configurable": {
             "thread_id": thread_id,
+            "recursion_limit": 50
         }
     }
+
+    config = RunnableConfig(
+        thread_id=thread_id,
+        recursion_limit=50
+    )
 
     db_id = 'NKNKNK'
     # db = chroma_utils.get_db(db_id)
@@ -216,7 +223,7 @@ def use_graph():
         # query = input("You: ")
         graph.update_state(thread, {"thread_id": thread_id, "db_chroma": db_id})
         # print(f"SNAPSHOT {query}: {snapshot}")
-        for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
+        for event in graph.stream({"messages": [HumanMessage(content=query)]}, config, stream_mode="values"):
             print(f"TOOL USED {graph.get_state(thread).values['messages'][-1].name}")
             event['messages'][-1].pretty_print()
 
@@ -253,7 +260,7 @@ def use_graph():
             )
             print(f"AFTER: {graph.get_state(thread).next}")
             
-            for event in graph.stream(None, thread, stream_mode="values"):
+            for event in graph.stream(None, config, stream_mode="values"):
                 event['messages'][-1].pretty_print()
             
             # interrupción para el camino del juego del character cuando tiene una respuesta incorrecta
@@ -281,7 +288,7 @@ def use_graph():
                             as_node="human_interaction" # acá toca usar ese as_node para que se ejecute como si fuera el nodo 'human_interaction', para que pase bien a evaluar y luego a actualizar vidas
                         )
                         
-                        for event in graph.stream(None, thread, stream_mode="values"):
+                        for event in graph.stream(None, config, stream_mode="values"):
                             event['messages'][-1].pretty_print()
                             
                         snapshot = graph.get_state(thread).values["messages"][-2].content
@@ -293,7 +300,7 @@ def use_graph():
                         print(f"AFTER: {graph.get_state(thread).next}")
                         
                         # i += 1
-                    for event in graph.stream(None, thread, stream_mode="values"):
+                    for event in graph.stream(None, config, stream_mode="values"):
                         event['messages'][-1].pretty_print()
                             
 # use_graph()
