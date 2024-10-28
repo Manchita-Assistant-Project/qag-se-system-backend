@@ -161,6 +161,8 @@ FIRST_CHARACTER_FAILURE_PROMPT = """
 ¡El viajero acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que no puede pasar el puente.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el viajero no tiene más vidas.
 El viaje del viajero terminó...
 Le tienes que decir que no hay forma de que pase el puente.
@@ -237,6 +239,8 @@ SECOND_CHARACTER_FAILURE_PROMPT = """
 ¡El viajero acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el viajero no tiene más vidas.
 El viaje del viajero terminó...
 Le tienes que decir que no hay forma de que le des indicaciones.
@@ -311,6 +315,8 @@ THIRD_CHARACTER_FAILURE_PROMPT = """
 {personality}
 ¡El viajero acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
+
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
 
 En este momento, el viajero no tiene más vidas.
 El viaje del viajero terminó...

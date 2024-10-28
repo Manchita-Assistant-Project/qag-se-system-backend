@@ -53,10 +53,10 @@ def response_or_interaction(state) -> Literal["character", "evaluation_tool"]:
     current_story = state.get("current_story", None)
     step_in_step = current_story["step_in_step"] if current_story else None
 
-    if step_in_step is None:
-        return "evaluation_tool"
-    elif step_in_step == 4:
+    if step_in_step is not None and step_in_step == 4:
         return "character"
+    
+    return "evaluation_tool"
 
 def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool"]:
     tool_used = state["from_story"] if "from_story" in state else False

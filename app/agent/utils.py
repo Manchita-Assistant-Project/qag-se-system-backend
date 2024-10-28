@@ -160,7 +160,7 @@ def define_context_string(context):
         answer_string = answer_choice
         
     final_evaluation_string = f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
-    return final_evaluation_string
+    return final_evaluation_string, answer_string.lower()
 
 def choose_random_story():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

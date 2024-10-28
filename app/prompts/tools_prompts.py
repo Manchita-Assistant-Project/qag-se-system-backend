@@ -59,9 +59,6 @@ Puede ser una respuesta similar o una respuesta que implique la respuesta correc
 Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
 
 Si la respuesta `answer` es `****`, responde "La respuesta es incorrecta...".
-
-Si la respuesta es incorrecta, responde "La respuesta es incorrecta..." y \
-agrega la respuesta correcta: "{right_answer}".
 """
 
 
@@ -129,5 +126,11 @@ Una no posible respuesta sería: "Queso".
 Una no posible respuesta sería: "Dame una pista".
 
 ---------------------------------------------------------------------------------------
+Es muy importate que distingas entre una posible respuesta y algo que te están pidiendo,
+por ejemplo, si te piden pistas o te preguntan quién eres o alguna cosa sobre ti,
+no es una posible respuesta.
+
+---------------------------------------------------------------------------------------
+
 Responde "True" si sí es una posible respuesta a la pregunta.
 """

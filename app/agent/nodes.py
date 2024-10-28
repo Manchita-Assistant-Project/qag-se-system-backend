@@ -96,7 +96,9 @@ def evaluation_tool_node(state):
     
     db_id = state["db_chroma"]
     
-    evaluation = tools.qanda_evaluation(last_message, db_id)
+    game_type = "simple_quiz" if state["from_story"] == False else "story"
+    
+    evaluation = tools.qanda_evaluation(last_message, game_type, db_id)
         
     print(f"[EVALUATION_NODE] response: {evaluation}")
 
@@ -217,6 +219,8 @@ def character_life_lost_node(state):
     return { "messages": [response], "from_story": True }
 
 def character_success_or_failure_node(state):
+    db_id = state["db_chroma"]
+    
     current_story = state["current_story"]
     step = current_story["step"]
     
@@ -224,7 +228,7 @@ def character_success_or_failure_node(state):
     
     current_lives = int(last_message.split("|||")[0])
     
-    response = tools.character_success_or_failure(current_story, current_lives)
+    response = tools.character_success_or_failure(current_story, current_lives, db_id)
     
     if current_lives == 0: # si el usuario se queda sin vidas, se reinicia el juego desde el principio.
         current_story["name"] = None
@@ -255,16 +259,15 @@ def response_classifier_node(state):
     # DEBE RETORNAR STEP_IN_STEP == 2 SI ES RESPUESTA.
     
     ai_message = state["messages"][-2]
-    print(f"[RESPONSE CLASSIFIER NODE] ai_message: {ai_message} - {type(ai_message) == ToolMessage}")
+    # print(f"[RESPONSE CLASSIFIER NODE] ai_message: {ai_message} - {type(ai_message) == ToolMessage}")
     tool_call = ai_message.name if type(ai_message) == ToolMessage else None
-    print(f"[RESPONSE CLASSIFIER NODE] tool_call: {tool_call}")
+    # print(f"[RESPONSE CLASSIFIER NODE] tool_call: {tool_call}")
     last_message = state["messages"][-1].content
     
     if tool_call == None:
         db_id = state["db_chroma"]
         current_story = state["current_story"]
         question = current_story["to_evaluate"]
-        
         
         opinion = tools.response_classifier(question, last_message, db_id)
         print(f"[RESPONSE CLASSIFIER NODE] opinion: {opinion}")

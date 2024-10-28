@@ -171,6 +171,8 @@ FIRST_CHARACTER_FAILURE_PROMPT = """
 ¡El visitante acaba de perder todas sus vidas!
 Desepcionado, le tienes que decir que ha perdido todas sus vidas y que lastimosamente no puede entrar al Instituto.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el visitante no tiene más vidas.
 El viaje del visitante terminó...
 Le tienes que decir que no hay forma de que entre al Instituto.
@@ -247,6 +249,8 @@ SECOND_CHARACTER_FAILURE_PROMPT = """
 ¡El visitante acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el visitante no tiene más vidas.
 El viaje del visitante terminó...
 Le tienes que decir que no hay forma de que lo dejes pasar.
@@ -320,6 +324,8 @@ THIRD_CHARACTER_FAILURE_PROMPT = """
 {personality}
 ¡El visitante acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
+
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
 
 En este momento, el visitante no tiene más vidas.
 El viaje del visitante terminó...

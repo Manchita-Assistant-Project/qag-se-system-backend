@@ -61,15 +61,14 @@ def qanda_generation(db: Chroma) -> str:
     utils.update_json(json_path, response_text.split('\n\n'))
     return response_text
 
-def qanda_evaluation(input_data: str, db_id: str) -> str:
+def qanda_evaluation(input_data: str, game_type: str, db_id: str) -> str:
     """
     Evaluates the given answer to a question.
     """
     # json_path = utils.JSON_PATH
     json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
     data = utils.load_json(json_path)
-    right_answer = [item["answer"] for item in data][0]
-
+    
     question, answer = input_data.split('|||')
     print(f"QUESTION: {question} | ANSWER: {answer}")
     
@@ -85,13 +84,18 @@ def qanda_evaluation(input_data: str, db_id: str) -> str:
         temperature=0.2
     )
     
-    context_string = utils.define_context_string(context)
+    context_string, right_answer = utils.define_context_string(context)
     print(f"CONTEXT STRING: {context_string}")
     
     answer = answer if answer != '' else "****"
     
     prompt_template = ChatPromptTemplate.from_template(EVALUATE_PROMPT)
-    prompt = prompt_template.format(context=context_string, answer=answer, question=question, right_answer=right_answer)
+    prompt = prompt_template.format(context=context_string, answer=answer, question=question)
+    
+    if game_type == "simple_quiz":
+        prompt += f'\nSi la respuesta es incorrecta, responde "La respuesta es incorrecta..." y \
+                    agrega la respuesta correcta: "{right_answer}".'
+    
     response_text = model.invoke(prompt).content
     
     print(f"RESPONSE: {response_text}")
@@ -309,11 +313,19 @@ def character_first_interaction(current_story_dict: Story, db_id: str):
     response_text = model.invoke(prompt).content
     return f"{character_emoji}  {response_text}", character_personality, question
 
-def character_success_or_failure(current_story_dict: Story, current_lives: int):
+def character_success_or_failure(current_story_dict: Story, current_lives: int, db_id: str):
     model = ChatOpenAI(
         model=MODEL_NAME,
         temperature=1
     )
+    
+    question = current_story_dict["to_evaluate"]
+    
+    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+    questions_dict = utils.load_json(json_path)
+
+    context = [each_qanda for each_qanda in questions_dict if each_qanda['question'] == question]    
+    context_string, right_answer = utils.define_context_string(context)
     
     step = current_story_dict["step"]
     current_story = current_story_dict["name"]
@@ -328,7 +340,7 @@ def character_success_or_failure(current_story_dict: Story, current_lives: int):
     character_prompt = success_character_prompt if current_lives > 0 else failure_character_prompt
     # print(f"CHARACTER PROMPT: {character_prompt}")
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
-    prompt = prompt_template.format(personality=character_personality)
+    prompt = prompt_template.format(personality=character_personality, right_answer=right_answer)
 
     response_text = model.invoke(prompt).content + ('\n\n¡Escribe "¡Sigue!" para continuar con la historia!' if current_lives > 0 else '')
     return f"{character_emoji}  {response_text}"
@@ -381,45 +393,45 @@ def character_loop_interaction(current_story_dict: Story, response: str):
 
     return f"{character_emoji}  {response_text}"
 
-# def response_classifier(question: str, query: str, db_id: str):
-#     db = chroma_utils.get_db(db_id)
-    
-#     model = ChatOpenAI(
-#         model=MODEL_NAME,
-#         temperature=0.2
-#     )
-    
-#     results = db.similarity_search_with_score(query, k=90)
-    
-#     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
-    
-#     prompt_template = ChatPromptTemplate.from_template(RESPONSE_CLASSIFIER_PROMPT)
-#     prompt = prompt_template.format(context=context_text, response=query, question=question)
-
-#     response_text = model.invoke(prompt).content
-#     return response_text
-
 def response_classifier(question: str, query: str, db_id: str):
-    embedding_model = chroma_utils.get_embedding_function()
+    db = chroma_utils.get_db(db_id)
     
-    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
-    questions_dict = utils.load_json(json_path)
-    choices_list = [list(each_qanda['choices'].values()) for each_qanda in questions_dict if each_qanda['question'] == question][0]
+    model = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=0.2
+    )
     
-    response_embedded = embedding_model.embed_query(query)
-    print(f"CHOICES: {choices_list}")
-    how_many = 0
-    for each_choice in choices_list:
-        each_choice_embedded = embedding_model.embed_query(each_choice)
-        similarity = cosine_similarity([response_embedded], [each_choice_embedded])[0][0]
-        print(f"SIMILARITY: {similarity}")
-        if similarity <= 0.8:
-            how_many += 1
+    results = db.similarity_search_with_score(query, k=90)
+    
+    context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    
+    prompt_template = ChatPromptTemplate.from_template(RESPONSE_CLASSIFIER_PROMPT)
+    prompt = prompt_template.format(context=context_text, response=query, question=question)
+
+    response_text = model.invoke(prompt).content
+    return True if response_text == "True" else False
+
+# def response_classifier(question: str, query: str, db_id: str):
+#     embedding_model = chroma_utils.get_embedding_function()
+    
+#     json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+#     questions_dict = utils.load_json(json_path)
+#     choices_list = [list(each_qanda['choices'].values()) for each_qanda in questions_dict if each_qanda['question'] == question][0]
+    
+#     response_embedded = embedding_model.embed_query(query)
+#     print(f"CHOICES: {choices_list}")
+#     how_many = 0
+#     for each_choice in choices_list:
+#         each_choice_embedded = embedding_model.embed_query(each_choice)
+#         similarity = cosine_similarity([response_embedded], [each_choice_embedded])[0][0]
+#         print(f"SIMILARITY: {similarity}")
+#         if similarity <= 0.8:
+#             how_many += 1
             
-    if how_many == len(choices_list): # significa que no tiene similitud con ninguna de las opciones
-        return False
+#     if how_many == len(choices_list): # significa que no tiene similitud con ninguna de las opciones
+#         return False
     
-    return True
+#     return True
 
 def lives_updater(user_id: str, db_id: str, reset: bool=False):
     """
