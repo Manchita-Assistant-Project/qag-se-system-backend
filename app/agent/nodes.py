@@ -242,7 +242,40 @@ def character_success_or_failure_node(state):
                                                                                            # en lugar de seguir con el juego.
 
 def character_loop_interaction_node(state):
-    pass
+    current_story = state["current_story"]    
+    
+    last_message = state["messages"][-1].content
+    
+    response = tools.character_loop_interaction(current_story, last_message)
+
+    return { "messages": [response], "from_story": True }
+
+def response_classifier_node(state):
+    # DEBE RETORNAR STEP_IN_STEP == 4 SI ES INTERACCIÓN,
+    # DEBE RETORNAR STEP_IN_STEP == 2 SI ES RESPUESTA.
+    
+    ai_message = state["messages"][-2]
+    print(f"[RESPONSE CLASSIFIER NODE] ai_message: {ai_message} - {type(ai_message) == ToolMessage}")
+    tool_call = ai_message.name if type(ai_message) == ToolMessage else None
+    print(f"[RESPONSE CLASSIFIER NODE] tool_call: {tool_call}")
+    last_message = state["messages"][-1].content
+    
+    if tool_call == None:
+        db_id = state["db_chroma"]
+        current_story = state["current_story"]
+        question = current_story["to_evaluate"]
+        
+        
+        opinion = tools.response_classifier(question, last_message, db_id)
+        print(f"[RESPONSE CLASSIFIER NODE] opinion: {opinion}")
+        if opinion == True:
+            current_story["step_in_step"] = 2 # para que esté listo para el nodo de lives lost.
+        else:
+            current_story["step_in_step"] = 4
+    else:
+        return { "messages": [last_message] }
+    
+    return { "messages": [last_message], "current_story": current_story, "from_story": True }
 
 def lives_updater_tool_node(state):
     """

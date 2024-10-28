@@ -3,10 +3,12 @@ import random
 import importlib
 from typing import Tuple
 
-from langchain_openai import AzureChatOpenAI, ChatOpenAI
+from sklearn.metrics.pairwise import cosine_similarity
+
 from langchain_core.messages import AIMessage
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
 import app.config as config
 import app.agent.utils as utils
@@ -16,7 +18,7 @@ import app.database.sqlite_utils as sqlite_utils
 from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
                                       INTERACTION_PROMPT, \
                                       POINTS_RETRIEVAL_PROMPT, \
-                                      FEEDBACK_PROMPT
+                                      FEEDBACK_PROMPT, RESPONSE_CLASSIFIER_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -277,11 +279,6 @@ def character_first_interaction(current_story_dict: Story, db_id: str):
     Tool that has to be called only when it's the first interaction of a character.
     """
     
-    # Prompt type:
-    # - "start": cada comentario inicial del personaje
-    # - "evaluation": cada evaluación del personaje -> durante una evaluación (cuando la tiene bien, mal o perdió)
-    # - "interaction": cada interacción del personaje
-    
     question = qanda_chooser("story", db_id)
     
     # model = AzureChatOpenAI(
@@ -332,11 +329,10 @@ def character_success_or_failure(current_story_dict: Story, current_lives: int):
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
     prompt = prompt_template.format(personality=character_personality)
 
-    response_text = model.invoke(prompt).content + '\n\n¡Escribe "¡Sigue!" para continuar con la historia!' if current_lives > 0 else ''
+    response_text = model.invoke(prompt).content + ('\n\n¡Escribe "¡Sigue!" para continuar con la historia!' if current_lives > 0 else '')
     return f"{character_emoji}  {response_text}"
 
 def character_life_lost(current_story_dict: Story, current_lives: int):
-    
     model = ChatOpenAI(
         model=MODEL_NAME,
         temperature=1
@@ -351,8 +347,7 @@ def character_life_lost(current_story_dict: Story, current_lives: int):
     
     auxiliar_prompts = utils.load_character_auxiliar_prompts(current_story, step)
     
-    lost_life_steps_prompts = [auxiliar_prompts['LIVES_LOST'], auxiliar_prompts['LIVES_LOST'], auxiliar_prompts['LIVES_LOST']]
-    character_prompt = lost_life_steps_prompts[step - 1]
+    character_prompt = auxiliar_prompts['LIVES_LOST']
 
     prompt_template = ChatPromptTemplate.from_template(character_prompt)
     prompt = prompt_template.format(personality=character_personality, question=question, lives=current_lives)
@@ -360,6 +355,70 @@ def character_life_lost(current_story_dict: Story, current_lives: int):
     response_text = model.invoke(prompt).content
 
     return f"{character_emoji}  {response_text}", question
+
+def character_loop_interaction(current_story_dict: Story, response: str):
+    model = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=1
+    )
+    
+    step = current_story_dict["step"]
+    current_story = current_story_dict["name"]
+    question = current_story_dict["to_evaluate"]
+    character_personality = current_story_dict["character_personality"]
+    
+    character_emoji = utils.find_character_emoji(current_story)
+    
+    auxiliar_prompts = utils.load_character_auxiliar_prompts(current_story, step)
+    
+    character_prompt = auxiliar_prompts['LOOP']
+
+    prompt_template = ChatPromptTemplate.from_template(character_prompt)
+    prompt = prompt_template.format(personality=character_personality, response=response, question=question)
+
+    response_text = model.invoke(prompt).content
+
+    return f"{character_emoji}  {response_text}"
+
+# def response_classifier(question: str, query: str, db_id: str):
+#     db = chroma_utils.get_db(db_id)
+    
+#     model = ChatOpenAI(
+#         model=MODEL_NAME,
+#         temperature=0.2
+#     )
+    
+#     results = db.similarity_search_with_score(query, k=90)
+    
+#     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    
+#     prompt_template = ChatPromptTemplate.from_template(RESPONSE_CLASSIFIER_PROMPT)
+#     prompt = prompt_template.format(context=context_text, response=query, question=question)
+
+#     response_text = model.invoke(prompt).content
+#     return response_text
+
+def response_classifier(question: str, query: str, db_id: str):
+    embedding_model = chroma_utils.get_embedding_function()
+    
+    json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+    questions_dict = utils.load_json(json_path)
+    choices_list = [list(each_qanda['choices'].values()) for each_qanda in questions_dict if each_qanda['question'] == question][0]
+    
+    response_embedded = embedding_model.embed_query(query)
+    print(f"CHOICES: {choices_list}")
+    how_many = 0
+    for each_choice in choices_list:
+        each_choice_embedded = embedding_model.embed_query(each_choice)
+        similarity = cosine_similarity([response_embedded], [each_choice_embedded])[0][0]
+        print(f"SIMILARITY: {similarity}")
+        if similarity <= 0.8:
+            how_many += 1
+            
+    if how_many == len(choices_list): # significa que no tiene similitud con ninguna de las opciones
+        return False
+    
+    return True
 
 def lives_updater(user_id: str, db_id: str, reset: bool=False):
     """

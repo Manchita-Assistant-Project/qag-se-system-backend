@@ -284,7 +284,7 @@ def load_character_auxiliar_prompts(current_story: str, step: int):
     
     all_attributes = dir(module)
     
-    kinds = ['SUCCESS', 'LIVES_LOST', 'FAILURE']
+    kinds = ['SUCCESS', 'LIVES_LOST', 'FAILURE', 'LOOP']
     
     loaded_prompts = {}
     

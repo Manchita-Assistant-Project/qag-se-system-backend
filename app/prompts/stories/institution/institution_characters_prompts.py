@@ -18,7 +18,7 @@ Es importante que incluyas la pregunta dentro de tu respuesta.
 Es importante que nunca respondas la pregunta, solo la haces.
 
 No se te olvide que TÚ eres el que hace la pregunta, no el visitante.
-El viajer no hace preguntas, solo responde las tuyas.
+El viajero no hace preguntas, solo responde las tuyas.
 ¡No respondas la pregunta, solo hazla!
 
 Integra la pregunta dentro de tu respuesta.
@@ -52,7 +52,7 @@ Es importante que incluyas la pregunta dentro de tu respuesta.
 Es importante que nunca respondas la pregunta, solo la haces.
 
 No se te olvide que TÚ eres el que hace la pregunta, no el visitante.
-El viajer no hace preguntas, solo responde las tuyas.
+El viajero no hace preguntas, solo responde las tuyas.
 ¡No respondas la pregunta, solo hazla!
 
 Integra la pregunta dentro de tu respuesta.
@@ -85,7 +85,7 @@ Es importante que incluyas la pregunta dentro de tu respuesta.
 Es importante que nunca respondas la pregunta, solo la haces.
 
 No se te olvide que TÚ eres el que hace la pregunta, no el visitante.
-El viajer no hace preguntas, solo responde las tuyas.
+El viajero no hace preguntas, solo responde las tuyas.
 ¡No respondas la pregunta, solo hazla!
 
 Integra la pregunta dentro de tu respuesta.
@@ -112,6 +112,28 @@ El acertijo con el que TÚ desafías al visitante es:
 
 {question}
 """ + FIRST_CHARACTER_ACLARATION
+
+
+FIRST_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al visitante, pero parece que él no quiere responder.
+
+Te acaba de decir esto: "{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Por ejemplo, si te pregunta algo de tu persona, responde con naturalidad siguiendo tu personalidad.
+
+Por ejemplo, si te pregunta por pistas, debes darle una pista.
+
+-------------------------------------------------------------------------------------------------
+Recuérdale que debe responder el acertijo si quiere entrar al Instituto.
+
+Recuérdale que el acertijo que le hiciste es el siguiente:
+
+"{question}"
+
+"""
 
 
 FIRST_CHARACTER_LIVES_LOST_PROMPT = """
@@ -171,6 +193,25 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + SECOND_CHARACTER_ACLARATION
 
 
+SECOND_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al visitante, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere que le des las instrucciones que necesita.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+""" + SECOND_CHARACTER_ACLARATION
+
+
 SECOND_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
@@ -225,6 +266,25 @@ La haces un acertijo al visitante.
 El acertijo con el que TÚ desafías al visitante es:
 
 {question}
+""" + THIRD_CHARACTER_ACLARATION
+
+
+THIRD_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al visitante, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere que le dejes entrar.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
 """ + THIRD_CHARACTER_ACLARATION
 
 

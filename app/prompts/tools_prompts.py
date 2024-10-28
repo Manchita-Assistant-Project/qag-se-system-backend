@@ -107,3 +107,25 @@ Nunca respondas comenzando con "Asisente: ..."
 
 PUNTOS: {points}
 """
+
+
+RESPONSE_CLASSIFIER_PROMPT = """
+Debes determinar si la respuesta: "{response}"
+Es una posible respuesta a la pregunta: "{question}"
+
+Una posible respuesta no necesariamente es una correcta,
+simplemente es una posible respuesta (correcta o incorrecta).
+
+Por ejemplo, dada la pregunta: "¿Cuál es la capital de Colombia?"
+
+Una posible respuesta sería: "Bogotá".
+
+Otra posible respuesta sería: "Medellín", aún así sea incorrecta.
+
+Una no posible respuesta sería: "Queso".
+
+Una no posible respuesta sería: "Dame una pista".
+
+---------------------------------------------------------------------------------------
+Responde "True" si sí es una posible respuesta a la pregunta.
+"""

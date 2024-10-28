@@ -19,7 +19,12 @@ single_use_tools = [
 
 character_game_tools = [
     'narrator_tool',
-    'first_character'
+    "character",
+    "character_first_interaction",
+    "character_life_lost",
+    "character_success_or_failure",
+    "character_loop_interaction",
+    "lives_retrieval"
 ]
 
 # routing functions
@@ -43,6 +48,15 @@ def should_use_single_tool(state) -> Literal["chooser", "single_tools", "narrato
         
     return "__end__"
 
+def response_or_interaction(state) -> Literal["character", "evaluation_tool"]:
+    current_story = state.get("current_story", None)
+    step_in_step = current_story["step_in_step"] if current_story else None
+
+    if step_in_step is None:
+        return "evaluation_tool"
+    elif step_in_step == 4:
+        return "character"
+
 def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool"]:
     tool_used = state["from_story"] if "from_story" in state else False
 
@@ -61,9 +75,10 @@ def character_or_finish(state) -> Literal["character", "__end__"]:
     else:
         return END
 
-def which_from_character(state) -> Literal["character_first_interaction", "character_life_lost", "character_success_or_failure"]:
+def which_from_character(state) -> Literal["character_first_interaction", "character_life_lost", "character_success_or_failure", "character_loop_interaction"]:
     step_in_step = state["current_story"]["step_in_step"]
-    possible_steps = ["character_first_interaction", "character_life_lost", "character_success_or_failure"]
+    print(f"--- {step_in_step} ---")
+    possible_steps = ["character_first_interaction", "character_life_lost", "character_success_or_failure", "character_loop_interaction"]
     
     next_step = possible_steps[step_in_step - 1]
     print(f"--- {next_step} ---")
@@ -88,6 +103,7 @@ workflow.add_node("single_tools", nodes.single_tools_tool_node)
 
 workflow.add_node("chooser", nodes.chooser_tool_node)
 workflow.add_node("human_interaction", nodes.human_interaction)
+workflow.add_node("response_classifier", nodes.response_classifier_node)
 workflow.add_node("evaluation_tool", nodes.evaluation_tool_node)
 workflow.add_node("points_updater_tool", nodes.points_updater_tool_node)
 
@@ -97,7 +113,7 @@ workflow.add_node("character", nodes.character_node)
 workflow.add_node("character_first_interaction", nodes.character_first_interaction_node)
 workflow.add_node("character_life_lost", nodes.character_life_lost_node)
 workflow.add_node("character_success_or_failure", nodes.character_success_or_failure_node)
-# workflow.add_node("character_loop_interaction", nodes.character_loop_interaction_node)
+workflow.add_node("character_loop_interaction", nodes.character_loop_interaction_node)
 
 workflow.add_node("lives_updater_tool", nodes.lives_updater_tool_node)
 
@@ -107,6 +123,11 @@ workflow.set_entry_point("simple_interaction")
 workflow.add_conditional_edges(
     "simple_interaction",
     should_use_single_tool
+)
+
+workflow.add_conditional_edges(
+    "response_classifier",
+    response_or_interaction
 )
 
 workflow.add_conditional_edges(
@@ -132,7 +153,8 @@ workflow.add_conditional_edges(
 workflow.add_edge("single_tools", END)
 
 workflow.add_edge("chooser", "human_interaction")
-workflow.add_edge("human_interaction", "evaluation_tool")
+# workflow.add_edge("human_interaction", "evaluation_tool")
+workflow.add_edge("human_interaction", "response_classifier")
 workflow.add_edge("points_updater_tool", END)
 
 # workflow.add_edge("narrator", "character")
@@ -141,6 +163,7 @@ workflow.add_edge("points_updater_tool", END)
 # workflow.add_edge("third_character", "human_interaction")
 workflow.add_edge("lives_updater_tool", "character")
 workflow.add_edge("character_first_interaction", "human_interaction")
+workflow.add_edge("character_loop_interaction", "human_interaction")
 workflow.add_edge("character_life_lost", "human_interaction")
 workflow.add_edge("character_success_or_failure", END)
 

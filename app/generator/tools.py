@@ -416,25 +416,3 @@ def find_most_different_question(db_id: str, questions: list, question_type: int
 def save_question_tool(db_id: str, question: dict, question_type: str):
     utils.update_json(db_id, question_type, question)
     utils.update_json(db_id, 'qs', question)
-    
-{
-    'question': '¿Qué término se utilizaba en el siglo XIX para referirse a la "infancia de la patria" en América Latina?',
-    'choices': {
-        'a': 'Adolescencia del país',
-        'b': 'Infancia de la nación',
-        'c': 'Juventud patriótica',
-        'd': 'Niñez de la república'
-    },
-    'answer': 'b'
-}
-
-{
-    'question': '¿Qué técnica se utiliza para detectar cambios semánticos en palabras a lo largo del tiempo en el estudio?',
-    'choices': {
-        'a': 'Análisis de sentimientos mediante redes neuronales',
-        'b': 'Uso de gráficos de uso diacónico de palabras',
-        'c': 'Enfoque de aprendizaje no supervisado en contextos semánticos',
-        'd': 'Implementación de modelos de regresión para correlacionar significados'
-    },
-    'answer': 'b'
-}

@@ -7,7 +7,7 @@ from langgraph.graph.message import AnyMessage, add_messages
 class Story(TypedDict):
     name: Optional[str]
     step: Optional[int]
-    step_in_step: Optional[int] # 1 -> first interaction | 2 -> life lost | 3 -> success or failure
+    step_in_step: Optional[int] # 1 -> first interaction | 2 -> life lost | 3 -> success or failure | 4 -> loop interaction
     prompt_type: Optional[str]
     to_evaluate: Optional[str]
     character_personality: Optional[str]

@@ -104,6 +104,28 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + FIRST_CHARACTER_ACLARATION
 
 
+FIRST_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al viajero, pero parece que él no quiere responder.
+
+Te acaba de decir esto: "{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Por ejemplo, si te pregunta algo de tu persona, responde con naturalidad siguiendo tu personalidad.
+
+Por ejemplo, si te pregunta por pistas, debes darle una pista.
+
+-------------------------------------------------------------------------------------------------
+Recuérdale que debe responder el acertijo si quiere pasar el puente.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+"""
+
+
 FIRST_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
@@ -158,6 +180,25 @@ La haces un acertijo al viajero.
 El acertijo con el que TÚ desafías al viajero es:
 
 {question}
+""" + SECOND_CHARACTER_ACLARATION
+
+
+SECOND_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al viajero, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere las indicaciones.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
 """ + SECOND_CHARACTER_ACLARATION
 
 
@@ -216,6 +257,25 @@ La haces un acertijo al viajero.
 El acertijo con el que TÚ desafías al viajero es:
 
 {question}
+""" + THIRD_CHARACTER_ACLARATION
+
+
+THIRD_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al viajero, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere entrar al castillo.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
 """ + THIRD_CHARACTER_ACLARATION
 
 
