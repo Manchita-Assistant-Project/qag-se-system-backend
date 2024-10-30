@@ -143,7 +143,7 @@ def data_saver_tool(state):
 
     type_to_string = {
         1: "MCQ",
-        2: "OAQ",
+        2: "OEQ",
         3: "TFQ"
     }
     question_format_dict["type"] = type_to_string[question["question_type"]]

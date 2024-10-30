@@ -165,73 +165,73 @@ async def chat(input_data: ChatInput):
     print(f"GRAPH: {input_data.thread_id} - {graph.get_state(thread).next}")
     print(f"INPUT DATA: {input_data}")
 
-    # try:
-    # Si hay una respuesta del usuario tras la interrupción
-    if input_data.user_answer:
-        print("USER ANSWER")
-        state = graph.get_state(thread)
+    try:
+        # Si hay una respuesta del usuario tras la interrupción
+        if input_data.user_answer:
+            print("USER ANSWER")
+            state = graph.get_state(thread)
 
-        to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
-        last_question = graph.get_state(thread).values["last_question"] if state.values['messages'][-1].name == "qanda_chooser" else to_evaluate  # pregunta sencilla o pregunta de juego goblin
-        combined_input = f"{last_question}|||{input_data.user_answer}"
+            to_evaluate = state.values['current_story']["to_evaluate"] if 'current_story' in state.values else ''
+            last_question = graph.get_state(thread).values["last_question"] if state.values['messages'][-1].name == "qanda_chooser" else to_evaluate  # pregunta sencilla o pregunta de juego goblin
+            combined_input = f"{last_question}|||{input_data.user_answer}"
+            
+            # Actualizar el estado del grafo con la respuesta
+            graph.update_state(
+                thread, 
+                {
+                    'messages': [
+                        HumanMessage(content=combined_input),
+                    ],
+                    'last_question': last_question,
+                },
+                as_node="human_interaction"
+            )
+            
+            # Continuar el flujo después de la interrupción
+            evaluation_response = []
+            for event in graph.stream(None, config, stream_mode="values"):
+                evaluation_response.append(event['messages'][-1].content)
+            
+            print(f"EVALUATION RESPONSE: {evaluation_response}")
+            print(f"EVALUATION RESPONSE: {graph.get_state(thread).values['from_story']}")
+            print(f"EVALUATION RESPONSE: {'incorrecta' in evaluation_response[-3]}")
+            
+            return {
+                "thread_id": input_data.thread_id,
+                "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
+                "is_interrupted": graph.get_state(thread).values["from_story"]
+            }
         
-        # Actualizar el estado del grafo con la respuesta
-        graph.update_state(
-            thread, 
-            {
-                'messages': [
-                    HumanMessage(content=combined_input),
-                ],
-                'last_question': last_question,
-            },
-            as_node="human_interaction"
-        )
-        
-        # Continuar el flujo después de la interrupción
-        evaluation_response = []
-        for event in graph.stream(None, config, stream_mode="values"):
-            evaluation_response.append(event['messages'][-1].content)
-        
-        print(f"EVALUATION RESPONSE: {evaluation_response}")
-        print(f"EVALUATION RESPONSE: {graph.get_state(thread).values['from_story']}")
-        print(f"EVALUATION RESPONSE: {'incorrecta' in evaluation_response[-3]}")
-        
+        # Si es una interacción inicial (sin interrupción todavía)
+        else:
+            print("SIMPLE INTERACTION")
+            
+            # Procesar la interacción inicial
+            response = []
+            for event in graph.stream({"messages": [HumanMessage(content=input_data.query)]}, config, stream_mode="values"):
+                response.append(event['messages'][-1].content)
+
+            # Verificar si el flujo fue interrumpido en 'human_interaction'
+            state = graph.get_state(thread)
+            last_tool_call = state.values['messages'][-1].name if state.values['messages'][-1].name is not None else list(state.metadata['writes'].keys())[0]
+            print(f"LAST TOOL CALL: {hasattr(state.values['messages'][-1], 'name')} - {state.values['messages'][-1].name}")
+            print(f"LAST TOOL CALL: {last_tool_call}")
+            
+            is_interrupted = False
+            if last_tool_call:
+                is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in story_game_tools
+            
+            return {
+                "thread_id": input_data.thread_id,
+                "response": response[-1],
+                "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
+            }
+    except Exception as e:
+        print(f"ERROR: {e}")
         return {
             "thread_id": input_data.thread_id,
-            "response": evaluation_response[-1].split("|||")[0] if '|||' in evaluation_response[-1] else evaluation_response[-1],
-            "is_interrupted": graph.get_state(thread).values["from_story"]
+            "response": "Lo siento, no pude procesar tu solicitud."
         }
-    
-    # Si es una interacción inicial (sin interrupción todavía)
-    else:
-        print("SIMPLE INTERACTION")
-        
-        # Procesar la interacción inicial
-        response = []
-        for event in graph.stream({"messages": [HumanMessage(content=input_data.query)]}, config, stream_mode="values"):
-            response.append(event['messages'][-1].content)
-
-        # Verificar si el flujo fue interrumpido en 'human_interaction'
-        state = graph.get_state(thread)
-        last_tool_call = state.values['messages'][-1].name if state.values['messages'][-1].name is not None else list(state.metadata['writes'].keys())[0]
-        print(f"LAST TOOL CALL: {hasattr(state.values['messages'][-1], 'name')} - {state.values['messages'][-1].name}")
-        print(f"LAST TOOL CALL: {last_tool_call}")
-        
-        is_interrupted = False
-        if last_tool_call:
-            is_interrupted = last_tool_call == "qanda_chooser" or last_tool_call in story_game_tools
-        
-        return {
-            "thread_id": input_data.thread_id,
-            "response": response[-1],
-            "is_interrupted": is_interrupted  # Verifica si se requiere input del usuario
-        }
-    # except Exception as e:
-    #     print(f"ERROR: {e}")
-    #     return {
-    #         "thread_id": input_data.thread_id,
-    #         "response": "Lo siento, no pude procesar tu solicitud."
-    #     }
 
 # ========================================== #
 # Endpoints para Juego de Construir la Torre #
@@ -251,9 +251,9 @@ def get_questions(db_id: str):
     questions = [item["question"] for item in data if item["type"] == "TFQ"]
     return questions
 
-@app.post('/evaluate')
-def evaluate_query(input: QuestionEvaluation):
-    evaluation = tools.qanda_evaluation(f"{input.question}|||{input.answer}")
+@app.post('/evaluate/{db_id}')
+def evaluate_query(input: QuestionEvaluation, db_id: str):
+    evaluation = tools.qanda_evaluation(f"{input.question}|||{input.answer}", "simple_quiz", db_id)
     return {"evaluation": False if "incorrecta" in evaluation else True}
 
 # ======================================= #
@@ -308,15 +308,15 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
     # Generar el archivo JSON con las preguntas y respuestas
     quality_threshold = 0.82
     mcq_similarity_threshold = 0.8
-    tfq_similarity_threshold = 0.96
+    tfq_similarity_threshold = 0.85
     print("GENERATING Q&As")
     generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id)
     
     sqlite_utils.create_table(db_id)
     
-    qandas_json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
-    with open(qandas_json_path, 'r') as f:
-        data = json.load(f)
+    # qandas_json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+    # with open(qandas_json_path, 'r') as f:
+    #     data = json.load(f)
     
     # ¡¡A ESTE JSON TOCA AGREGAR EL CÓDIGO!!
     # "content": [
@@ -328,4 +328,4 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
     #   },
     # ]
     
-    return data
+    # return data

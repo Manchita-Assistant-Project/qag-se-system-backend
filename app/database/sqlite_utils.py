@@ -9,6 +9,7 @@ def verify_directory_exists(directory_path):
         print(f"Directory '{directory_path}' already exists.")
 
 def verify_file_exists(file_path):
+    verify_directory_exists(os.path.dirname(file_path))
     if not os.path.exists(file_path):
         with open(file_path, 'w') as f:
             pass

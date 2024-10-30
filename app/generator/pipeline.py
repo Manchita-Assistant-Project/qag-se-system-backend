@@ -19,9 +19,9 @@ from langchain_openai import AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT, \
+from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OEQ_PROMPT, Q_TFQ_PROMPT, \
                                        HARDER_Q_PROMPT, \
-                                       A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT, \
+                                       A_MCQ_PROMPT, A_OEQ_PROMPT, A_TFQ_PROMPT, \
                                        Q_EVALUATION_PROMPT, TEN_Q_MCQ_PROMPT
                                        
 
@@ -61,7 +61,7 @@ def get_context(query: str="", k: int=90):
     return context_text
 
 def question_generator_tool(question_type: int, difficulty: str, context: str):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
 
@@ -77,8 +77,8 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
         temperature=0.7,
     )
     
-    types = [TEN_Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT]
-    # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
+    types = [TEN_Q_MCQ_PROMPT, Q_OEQ_PROMPT, Q_TFQ_PROMPT]
+    # types = [QANDA_MCQ_PROMPT, QANDA_OEQ_PROMPT, QANDA_TFQ_PROMPT]
     
     prompt_template = ChatPromptTemplate.from_template(types[question_type - 1])
     prompt = prompt_template.format(context=context, generated_questions=generated_questions_string)
@@ -98,7 +98,7 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
         temperature=0.7
     )
     
-    types = [A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT]
+    types = [A_MCQ_PROMPT, A_OEQ_PROMPT, A_TFQ_PROMPT]
     
     print(f'PREGUNTA: {question}')
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
@@ -180,7 +180,7 @@ def evaluate_similarity_tool(generated_question: str, threshold: float):
     return similarity, response
 
 def refine_question(generated_question: str, feedback: str, question_type: int, threshold: float):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
 
@@ -258,7 +258,7 @@ def are_the_same(a: str, b: str) -> bool:
     return response  # Asegura que el resultado sea booleano
 
 def question_seen_tool(question: str, question_type: int):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
 
@@ -300,7 +300,7 @@ def question_seen_tool(question: str, question_type: int):
     return float(matches)
     
 def create_new_question_tool(question: str, question_type: int, difficulty: str, context: str):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
 
@@ -408,7 +408,7 @@ def pipeline(question_type: int):
 
         type_to_string = {
             1: "MCQ",
-            2: "OAQ",
+            2: "OEQ",
             3: "TFQ"
         }
         

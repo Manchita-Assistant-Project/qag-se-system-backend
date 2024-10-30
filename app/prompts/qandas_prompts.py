@@ -22,7 +22,7 @@ La pregunta debe ser de nivel: "{difficulty}"
 """
 
 
-Q_OAQ_PROMPT = """
+Q_OEQ_PROMPT = """
 Eres un modelo que genera preguntas de respuesta abierta a partir \
 únicamente de: \
 
@@ -228,30 +228,28 @@ dentro de un diccionario Python.
 """
 
 
-A_OAQ_PROMPT = """
-Eres un modelo que genera respuestas de respuesta abierta a partir \
+A_OEQ_PROMPT = """
+Eres un modelo que genera respuestas a partir \
 únicamente de: \
 
 {context}
 
 ---------------------------------------------------------------------------------
-Una de las respuestas que generes debe responder la pregunta:
+Debes generar cinco (5) respuestas correctas que respondan la pregunta:
 
 "{question}"
 
 ---------------------------------------------------------------------------------
 Las respuestas que hagas, generalas todas en un formato de varias opciones. \
 Un ejemplo de esto sería: \
-a.) Posible respuesta 1 \
-b.) Posible respuesta 2 \
-c.) Posible respuesta 3 \
-d.) Posible respuesta 4 \
+a.) Respuesta correcta 1 \
+b.) Respuesta correcta 2 \
+c.) Respuesta correcta 3 \
+d.) Respuesta correcta 4 \
+e.) Respuesta correcta 5 \
 
 ---------------------------------------------------------------------------------
-Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
-    
----------------------------------------------------------------------------------
-Nunca generes más de cuatro (4) posibles respuestas.
+Haz que las respuestas sean muy variadas entre sí. \
     
 ---------------------------------------------------------------------------------
 Las respuestas debe ser de nivel: "{difficulty}"
@@ -260,12 +258,13 @@ Las respuestas debe ser de nivel: "{difficulty}"
 Debes retornar la pregunta ("{question}"), opciones de respuesta correcta en formato JSON. \
 Aquí un ejemplo: \
 
-    "question": "¿Cuál es la capital de Colombia?", \
+    "question": "¿Cómo ha influido la serie Friends en la cultura popular?", \
     "choices": ( \
-        "a": "Bogotá", \
-        "b": "Medellín", \
-        "c": "Cali", \
-        "d": "Barranquilla" \
+        "a": "Friends popularizó frases icónicas como "We were on a break!" y estilos de vida, convirtiéndose en un fenómeno de referencia en la cultura pop.", \
+        "b": "La serie redefinió las comedias de situación al centrarse en un grupo de amigos, inspirando a numerosas comedias con formatos similares.", \
+        "c": "Friends estableció un estándar de estilo en moda y cortes de cabello, como el peinado "Rachel", que marcó tendencia en los años 90.", \
+        "d": "Su enfoque en temas universales, como el amor y la amistad, la convirtió en una serie que trasciende generaciones y sigue siendo popular hoy en día.", \
+        "e": "La dinámica y química entre los personajes mostró la importancia del elenco en el éxito de una serie, influenciando futuras producciones de comedia." \
     ), \
     "answer": "None" \
         
@@ -342,6 +341,42 @@ Siempre retorna el formato completo para todas las preguntas.
 """
 
 
+TEN_Q_OEQ_PROMPT = """
+Genera diez (10) preguntas de respuesta abierta que permitan respuestas detalladas
+y con múltiples enfoques, basadas en el siguiente contexto:
+
+{context}
+
+---------------------------------------------------------------------------------
+Las preguntas deben ser formuladas siempre como preguntas, no como afirmaciones.
+
+---------------------------------------------------------------------------------
+Intenta que las preguntas sean amplias y favorezcan respuestas largas, diversas y
+con interpretaciones variadas, permitiendo que el respondiente aporte ideas
+propias o analice el contexto en profundidad.
+
+---------------------------------------------------------------------------------
+Ocho (8) de las preguntas deben ser de nivel "Fácil" y dos (2) deben ser de nivel
+"Difícil". Asegúrate de que las preguntas de nivel "Difícil" requieran un análisis
+más profundo del contexto o permitan múltiples perspectivas complejas.
+
+---------------------------------------------------------------------------------
+Por favor, retorna las preguntas y las dificultades en el siguiente formato JSON:
+
+[
+    (
+        "question": "¿De qué manera ha influido la serie Friends en la cultura \
+                     popular y en las relaciones entre amigos en la vida real?",
+        "difficulty": "Fácil"
+    ),
+    ...
+]
+
+---------------------------------------------------------------------------------
+Asegúrate de seguir siempre este formato y estructura para todas las preguntas generadas.
+"""
+
+
 TEN_Q_TFQ_PROMPT = """
 Genera diez (10) preguntas de respuesta VERDADERA o FALSA basadas en el siguiente contexto:
 
@@ -373,4 +408,3 @@ Por favor, retorna las preguntas y las dificultades en el siguiente formato JSON
 ---------------------------------------------------------------------------------
 Asegúrate de seguir siempre este formato y estructura para todas las preguntas generadas.
 """
-

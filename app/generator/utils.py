@@ -96,7 +96,7 @@ def create_empty_hdf5_file(path):
     print(f"Archivo HDF5 '{path}' creado vacío.")
 
 def load_embeddings_hdf5(question_type: int, db_id: str, hdf5_file='embeddings.h5'):
-    types = ['mcqs', 'oaqs', 'tfqs']
+    types = ['mcqs', 'oeqs', 'tfqs']
     correct_file = types[question_type - 1]
 
     path = os.path.join(DATABASES_PATH, db_id, 'embeddings', hdf5_file)
@@ -117,7 +117,7 @@ def load_embeddings_hdf5(question_type: int, db_id: str, hdf5_file='embeddings.h
         return []
 
 def save_embedding_hdf5(embedding, question_type: int, db_id: str, hdf5_file='embeddings.h5'):
-    types = ['mcqs', 'oaqs', 'tfqs']
+    types = ['mcqs', 'oeqs', 'tfqs']
     correct_file = types[question_type - 1]
 
     path = os.path.join(DATABASES_PATH, db_id, 'embeddings', hdf5_file)
@@ -138,7 +138,7 @@ def save_embedding_hdf5(embedding, question_type: int, db_id: str, hdf5_file='em
             data[-1] = embedding
 
 def delete_content_hdf5(question_type: int, db_id: str, hdf5_file='embeddings.h5'):
-    types = ['mcqs', 'oaqs', 'tfqs']
+    types = ['mcqs', 'oeqs', 'tfqs']
     correct_file = types[question_type - 1]
 
     path = os.path.join(DATABASES_PATH, db_id, 'embeddings', hdf5_file)
@@ -154,7 +154,7 @@ def delete_content_hdf5(question_type: int, db_id: str, hdf5_file='embeddings.h5
         print(f"El archivo {hdf5_file} no existe.")
 
 def delete_all_content_hdf5(db_id: str, hdf5_file='embeddings.h5'):
-    types = ['mcqs', 'oaqs', 'tfqs']
+    types = ['mcqs', 'oeqs', 'tfqs']
     
     path = os.path.join(DATABASES_PATH, db_id, 'embeddings', hdf5_file)
     for question_type in range(1, len(types) + 1):

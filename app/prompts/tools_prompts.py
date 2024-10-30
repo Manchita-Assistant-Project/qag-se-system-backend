@@ -36,7 +36,7 @@ Aquí un ejemplo: \
 
 
 EVALUATE_PROMPT = """
-Basado única y excluvisamente en esta cadena: \
+Basado únicamente en esta información: \
 
 `{context}`
 ----------------------------------------------------------------
@@ -49,16 +49,23 @@ es la respuesta correcta o incorrecta a la pregunta: \
 
 Pregunta: {question}
 ----------------------------------------------------------------
-La respuesta no tiene que ser exacta, pero puede ser similar. \
+La respuesta debe ser considerada correcta si refleja conceptos \
+importantes de manera similar o implícita. Ejemplos de respuestas \
+correctas pueden incluir interpretaciones, ideas relacionadas, o \
+puntos relevantes a los temas principales de la pregunta. \
+
 Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
 una respuesta similar sería `saber programar`. \
     
 ¡No tiene que ser la respuesta tal cuál! \
+
 Puede ser una respuesta similar o una respuesta que implique la respuesta correcta. \
 
-Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
+Responde de forma breve:
 
-Si la respuesta `answer` es `****`, responde "La respuesta es incorrecta...".
+Si la respuesta cubre ideas centrales del contexto, responde: "¡La respuesta es correcta!"
+Si la respuesta no es relevante o no cubre ideas centrales, responde: "La respuesta es incorrecta..."
+Si la respuesta proporcionada es ****, responde "La respuesta es incorrecta..."
 """
 
 

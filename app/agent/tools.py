@@ -72,7 +72,7 @@ def qanda_evaluation(input_data: str, game_type: str, db_id: str) -> str:
     question, answer = input_data.split('|||')
     print(f"QUESTION: {question} | ANSWER: {answer}")
     
-    context = [each_qanda for each_qanda in data if each_qanda['question'] == question]
+    context = [each_qanda for each_qanda in data if each_qanda['question'] == question][0]
     
     # model = AzureChatOpenAI(
     #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -84,7 +84,14 @@ def qanda_evaluation(input_data: str, game_type: str, db_id: str) -> str:
         temperature=0.2
     )
     
-    context_string, right_answer = utils.define_context_string(context)
+    context_string, right_answer = utils.define_context_string(context, game_type)
+    db = chroma_utils.get_db(db_id)
+    
+    results = db.similarity_search_with_score(question, k=5)
+    context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    
+    # context_string = context_string + '\n\n' + '--'*50 + '\n\n' + context_text
+    
     print(f"CONTEXT STRING: {context_string}")
     
     answer = answer if answer != '' else "****"
@@ -94,7 +101,8 @@ def qanda_evaluation(input_data: str, game_type: str, db_id: str) -> str:
     
     if game_type == "simple_quiz":
         prompt += f'\nSi la respuesta es incorrecta, responde "La respuesta es incorrecta..." y \
-                    agrega la respuesta correcta: "{right_answer}".'
+                    agrega la respuesta correcta: "{right_answer}". Debe ser una frase completa, \
+                    no solo la respuesta.'
     
     response_text = model.invoke(prompt).content
     
@@ -138,9 +146,9 @@ def qanda_chooser(game_type: str, db_id: str) -> str:
     data = utils.load_json(json_path)
     
     if game_type == "story":
-        questions = [item["question"] for item in data if item["type"] == "MCQ" and item["difficulty"] == "Difícil"]
+        questions = [item["question"] for item in data if item["type"] == "OEQ"]
     elif game_type == "simple_quiz":
-        questions = [item for item in data]
+        questions = [item for item in data if item["type"] == "MCQ" or item["type"] == "TFQ"]
             
     random_question = random.choice(questions)
     
@@ -324,8 +332,10 @@ def character_success_or_failure(current_story_dict: Story, current_lives: int, 
     json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
     questions_dict = utils.load_json(json_path)
 
-    context = [each_qanda for each_qanda in questions_dict if each_qanda['question'] == question]    
-    context_string, right_answer = utils.define_context_string(context)
+    context = [each_qanda for each_qanda in questions_dict if each_qanda['question'] == question][0]  
+    context_string, right_answer = utils.define_context_string(context, "story")
+    
+    right_answer = utils.summarize_answers(model, context_string)
     
     step = current_story_dict["step"]
     current_story = current_story_dict["name"]
@@ -393,20 +403,14 @@ def character_loop_interaction(current_story_dict: Story, response: str):
 
     return f"{character_emoji}  {response_text}"
 
-def response_classifier(question: str, query: str, db_id: str):
-    db = chroma_utils.get_db(db_id)
-    
+def response_classifier(question: str, query: str, db_id: str):   
     model = ChatOpenAI(
         model=MODEL_NAME,
         temperature=0.2
     )
-    
-    results = db.similarity_search_with_score(query, k=90)
-    
-    context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
-    
+        
     prompt_template = ChatPromptTemplate.from_template(RESPONSE_CLASSIFIER_PROMPT)
-    prompt = prompt_template.format(context=context_text, response=query, question=question)
+    prompt = prompt_template.format(response=query, question=question)
 
     response_text = model.invoke(prompt).content
     return True if response_text == "True" else False

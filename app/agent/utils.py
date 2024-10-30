@@ -148,19 +148,39 @@ def agent_w_tools_node(state, agent, name):
         'messages': [result],
     }
 
-def define_context_string(context):
-    answer_choice = context[0]["answer"]
+def define_context_string(context: list, game_type: str):
+    answer_choice = context["answer"]
     answer_string = ""
-    
-    if len(answer_choice) == 1:
-        answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
-    elif answer_choice[0].lower() in ['a', 'b', 'c', 'd'] and answer_choice[1] in ['.', ')']:
-        answer_string = answer_choice[2:]
-    else:
-        answer_string = answer_choice
+
+    final_evaluation_string = ""
+    if game_type == "simple_quiz":    
+        if len(answer_choice) == 1:
+            answer_string = [context["choices"][choice] for choice in context["choices"].keys() if choice == answer_choice][0]
+        elif answer_choice[0].lower() in ['a', 'b', 'c', 'd'] and answer_choice[1] in ['.', ')']:
+            answer_string = answer_choice[2:]
+        else:
+            answer_string = answer_choice
         
-    final_evaluation_string = f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+        final_evaluation_string = f"PREGUNTA: {context['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+    elif game_type == "story":
+        answer_list = [context["choices"][choice] for choice in context["choices"]]
+        for each_answer in answer_list:
+            answer_string += f"- {each_answer}\n"
+            
+        final_evaluation_string = f"PREGUNTA: {context['question']} | RESPUESTAS: \n{answer_string.lower()}"
+            
     return final_evaluation_string, answer_string.lower()
+
+def summarize_answers(model, context: str):
+    prompt_template = """
+    Resume en un par de frases el contenido de la siguiente información:
+    
+    "{context}"    
+    """
+    prompt = prompt_template.format(context=context)
+    response_text = model.invoke(prompt).content
+    
+    return response_text
 
 def choose_random_story():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

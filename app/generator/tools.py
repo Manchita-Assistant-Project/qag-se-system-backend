@@ -19,10 +19,11 @@ from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 
-from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT, \
+from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OEQ_PROMPT, Q_TFQ_PROMPT, \
                                        HARDER_Q_PROMPT, Q_REFINER_PROMPT, \
-                                       A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT, \
-                                       Q_EVALUATION_PROMPT, TEN_Q_MCQ_PROMPT, TEN_Q_TFQ_PROMPT
+                                       A_MCQ_PROMPT, A_OEQ_PROMPT, A_TFQ_PROMPT, \
+                                       Q_EVALUATION_PROMPT, TEN_Q_MCQ_PROMPT, \
+                                       TEN_Q_TFQ_PROMPT, TEN_Q_OEQ_PROMPT
                                        
 
 from dotenv import load_dotenv
@@ -70,7 +71,7 @@ def get_context_tool(db_id: str, query: str="", k: int=90):
     return context
 
 def question_generator_tool(question_type: int, difficulty: str, context: str):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
 
@@ -85,8 +86,8 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
         temperature=0.8
     )
     
-    types = [Q_MCQ_PROMPT, Q_OAQ_PROMPT, Q_TFQ_PROMPT]
-    # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
+    types = [Q_MCQ_PROMPT, Q_OEQ_PROMPT, Q_TFQ_PROMPT]
+    # types = [QANDA_MCQ_PROMPT, QANDA_OEQ_PROMPT, QANDA_TFQ_PROMPT]
     
     prompt_template = ChatPromptTemplate.from_template(types[question_type - 1])
     prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="", generated_questions=generated_questions_string)
@@ -111,7 +112,7 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
     return response_text
 
 def ten_questions_generator_tool(db_id: str, question_type: int, difficulty: str, context: str):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(db_id, correct_file)
 
@@ -132,8 +133,8 @@ def ten_questions_generator_tool(db_id: str, question_type: int, difficulty: str
         temperature=0.8
     )
     
-    types = [TEN_Q_MCQ_PROMPT, Q_OAQ_PROMPT, TEN_Q_TFQ_PROMPT]
-    # types = [QANDA_MCQ_PROMPT, QANDA_OAQ_PROMPT, QANDA_TFQ_PROMPT]
+    types = [TEN_Q_MCQ_PROMPT, TEN_Q_OEQ_PROMPT, TEN_Q_TFQ_PROMPT]
+    # types = [QANDA_MCQ_PROMPT, QANDA_OEQ_PROMPT, QANDA_TFQ_PROMPT]
     
     prompt_template = ChatPromptTemplate.from_template(types[question_type - 1])
     prompt = prompt_template.format(context=context, generated_questions=generated_questions_string)
@@ -158,7 +159,7 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
         temperature=0.7
     )
     
-    types = [A_MCQ_PROMPT, A_OAQ_PROMPT, A_TFQ_PROMPT]
+    types = [A_MCQ_PROMPT, A_OEQ_PROMPT, A_TFQ_PROMPT]
     
     print(f'PREGUNTA: {question}')
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
@@ -249,7 +250,7 @@ def evaluate_quality_tool(db_id: str, generated_question: str, threshold: float)
     return similarity, response
 
 def refine_question(db_id: str, generated_question: str, feedback: str, quality: float, question_type: int, threshold: float):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(db_id, correct_file)
 
@@ -291,7 +292,7 @@ def refine_question_tool(db_id: str, generated_question: str, feedback: str, sim
     return response
 
 def question_seen_tool(question: dict, question_type: int):
-    files = ['mcqs', 'oaqs', 'tfqs']
+    files = ['mcqs', 'oeqs', 'tfqs']
     correct_file = files[question_type - 1]
     generated_questions_list = utils.load_json(correct_file)
 
