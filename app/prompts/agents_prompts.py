@@ -21,7 +21,7 @@ Things that are not related to the simple questions or the story game are:
 - Giving advice
 - Telling jokes
 - Writing code
-- Giving recepies
+- Giving recipes
 - etc.
 
 If the user wants questions, you have to call the tool `qanda_chooser`.

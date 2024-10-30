@@ -85,10 +85,10 @@ def qanda_evaluation(input_data: str, game_type: str, db_id: str) -> str:
     )
     
     context_string, right_answer = utils.define_context_string(context, game_type)
-    db = chroma_utils.get_db(db_id)
+    # db = chroma_utils.get_db(db_id)
     
-    results = db.similarity_search_with_score(question, k=5)
-    context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    # results = db.similarity_search_with_score(question, k=5)
+    # context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     
     # context_string = context_string + '\n\n' + '--'*50 + '\n\n' + context_text
     
