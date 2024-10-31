@@ -204,6 +204,10 @@ d.) Posible respuesta 4 \
 
 ---------------------------------------------------------------------------------
 Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
+    
+Haz que no todas las respuestas correctas sean la opción "a" o la primera opción, \
+sino que varíen entre las cuatro (4) opciones. Haz que la respuesta correcta se distribuya \
+aleatoriamente entre las cuatro (4) opciones.
 
 ---------------------------------------------------------------------------------
 Nunca generes más de cuatro (4) posibles respuestas.

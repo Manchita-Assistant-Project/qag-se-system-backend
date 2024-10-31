@@ -21,3 +21,4 @@ class State(TypedDict):
     from_story: Optional[bool]
     db_chroma: Optional[str]
     db_sqlite: Optional[str]
+    user_name: Optional[str]

@@ -18,7 +18,8 @@ import app.database.sqlite_utils as sqlite_utils
 from app.prompts.tools_prompts import QANDA_PROMPT, EVALUATE_PROMPT, \
                                       INTERACTION_PROMPT, \
                                       POINTS_RETRIEVAL_PROMPT, \
-                                      FEEDBACK_PROMPT, RESPONSE_CLASSIFIER_PROMPT
+                                      FEEDBACK_PROMPT, RESPONSE_CLASSIFIER_PROMPT, \
+                                      MOTIVATION_PROMPT
 
 from dotenv import load_dotenv
 os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
@@ -102,7 +103,10 @@ def qanda_evaluation(input_data: str, game_type: str, db_id: str) -> str:
     if game_type == "simple_quiz":
         prompt += f'\nSi la respuesta es incorrecta, responde "La respuesta es incorrecta..." y \
                     agrega la respuesta correcta: "{right_answer}". Debe ser una frase completa, \
-                    no solo la respuesta.'
+                    no solo la respuesta. \
+                    Luego, si la respuesta es incorrecta, incluye un mensaje de ánimo para el usuario. \
+                    Si la respuesta es correcta, incluye un mensaje de felicitación. \
+                    En ambos casos, ¡incluye un mensaje que diga algo como "¿Quieres otra pregunta? ¡Pídemela!"!'
     
     response_text = model.invoke(prompt).content
     
@@ -211,7 +215,7 @@ def points_retrieval(user_id: str, db_id: str) -> str:
     response_text = model.invoke(prompt).content
     return response_text
 
-def points_only_retrieval(user_id: str, db_id: str) -> str:
+def points_only_retrieval(user_id: str, db_id: str) -> int:
     """
     Returns the current points count.
     """
@@ -231,6 +235,18 @@ def asked_questions_retrieval(user_id: str, db_id) -> int:
     Returns the current number of questions asked to the user.
     """
     return sqlite_utils.get_asked_questions(user_id, db_id)
+
+def motivator_tool(current_points: int, name: str) -> str:
+    model = ChatOpenAI(
+        model=MODEL_NAME,
+        temperature=1
+    )
+    print(f"NAME: {name} | {type(name)}")
+    prompt_template = ChatPromptTemplate.from_template(MOTIVATION_PROMPT)
+    prompt = prompt_template.format(name=name, points=current_points)
+    response_text = model.invoke(prompt).content
+    
+    return response_text    
 
 def narrator_tool(current_story: str, step: int, db_id: str) -> str:
     """

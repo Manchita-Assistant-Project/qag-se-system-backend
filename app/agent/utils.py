@@ -161,7 +161,7 @@ def define_context_string(context: list, game_type: str):
         else:
             answer_string = answer_choice
         
-        final_evaluation_string = f"PREGUNTA: {context['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
+        final_evaluation_string = f"PREGUNTA: {context['question']}\n Hay dos respuestas correctas que debes aceptar: \n- La frase/palabra: '{answer_string.lower()}'\n- La letra: '{answer_choice}' en mayúsculas o minúsculas"
     elif game_type == "story":
         answer_list = [context["choices"][choice] for choice in context["choices"]]
         for each_answer in answer_list:

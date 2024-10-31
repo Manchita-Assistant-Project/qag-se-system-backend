@@ -125,6 +125,22 @@ def points_updater_tool_node(state):
                                                              # esta función no genera mensajes, solo
                                                              # actualiza los puntos del usuario.
 
+def motivator_node(state):
+    """
+    A node that motivates the user to continue playing if they have more than X points.
+    """
+    name = state["user_name"]
+    print(f"[MOTIVATOR_NODE] name: {name}")
+    last_message = state["messages"][-1]
+    
+    current_points = tools.points_only_retrieval(state["thread_id"], state["db_sqlite"])
+    
+    if current_points % 5 == 0 and 'incorrecta' not in last_message.content.lower():
+        result = tools.motivator_tool(current_points, name)
+        return {"messages": [f"{last_message.content}\n\n{result}"], "from_story": False}
+        
+    return {"messages": [last_message], "from_story": False}
+
 def narrator_node(state):
     """
     Narrates the goblin story.

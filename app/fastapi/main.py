@@ -69,10 +69,11 @@ story_game_tools = [
 
 user_graphs = {}
 
-def get_or_create_user_graph(thread_id: str, db_id: str):
+def get_or_create_user_graph(thread_id: str, db_id: str, user_name: str):
     global user_graphs
     print(f"THREAD_ID: {thread_id}")
     print(f"DB_ID: {db_id}")
+    print(f"USER_NAME: {user_name}")
     
     # Verifica si existe el grafo para el thread_id
     if thread_id not in user_graphs:
@@ -99,6 +100,7 @@ def get_or_create_user_graph(thread_id: str, db_id: str):
             "thread_id": thread_id,
             "db_chroma": db_id,
             "db_sqlite": db_id,
+            "user_name": user_name,
             "from_story": False,
             "messages": []
         }
@@ -116,6 +118,7 @@ class ChatInput(BaseModel):
     query: str
     thread_id: str = None
     db_id: Optional[str] = None
+    user_name: Optional[str] = None
     user_answer: Optional[str] = None  # Campo "opcional" para manejar la interrupción
 
 @app.post("/chat")
@@ -161,7 +164,7 @@ async def chat(input_data: ChatInput):
     )
     
     print(input_data)
-    graph = get_or_create_user_graph(input_data.thread_id, input_data.db_id)
+    graph = get_or_create_user_graph(input_data.thread_id, input_data.db_id, input_data.user_name)
     print(f"GRAPH: {input_data.thread_id} - {graph.get_state(thread).next}")
     print(f"INPUT DATA: {input_data}")
 
