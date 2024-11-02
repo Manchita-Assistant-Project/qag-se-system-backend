@@ -56,7 +56,12 @@ puntos relevantes a los temas principales de la pregunta. \
 
 Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
 una respuesta similar sería `saber programar`. \
-    
+
+También, debes ser flexible con la ortografía y la gramática. \
+Está bien si la respuesta no está escrita exactamente igual que la respuesta correcta. \
+Por ejemplo, si la respuesta es "Verdadero" y el usuario responde "Verdaero", \
+deberías considerar la respuesta como correcta. \
+
 ¡No tiene que ser la respuesta tal cuál! \
 
 Puede ser una respuesta similar o una respuesta que implique la respuesta correcta. \
@@ -133,13 +138,17 @@ Una no posible respuesta sería: "Queso".
 Una no posible respuesta sería: "Dame una pista".
 
 ---------------------------------------------------------------------------------------
-Es muy importate que distingas entre una posible respuesta y algo que te están pidiendo,
-por ejemplo, si te piden pistas o te preguntan quién eres o alguna cosa sobre ti,
+Es muy importate que distingas entre una posible respuesta y algo que te están pidiendo.
+
+Por ejemplo:
+- si te piden pistas
+- si te preguntan quién eres o alguna cosa sobre ti
+
 no es una posible respuesta.
 
 ---------------------------------------------------------------------------------------
-
 Responde "True" si sí es una posible respuesta a la pregunta.
+Responde "False" si no es una posible respuesta a la pregunta.
 """
 
 
@@ -164,4 +173,6 @@ Si {points} es diez (10), significa que es la segunda vez que consigue cinco pun
 Si {points} es cincuenta (50), significa que es la décima vez que consigue puntos.
 
 Ten eso en cuenta!!
+
+Eres totalmente libre de incluir emojis si lo ves necesario.
 """
