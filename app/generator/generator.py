@@ -1,7 +1,60 @@
+import os
+from typing import Dict, List, Literal
+
+from pydantic import BaseModel
+from langchain.prompts import ChatPromptTemplate
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
+from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader
+
+import app.config as config
 import app.generator.utils as utils
 import app.generator.graph as graph
 
-from langgraph.errors import GraphRecursionError
+from app.prompts.qandas_prompts import FORMAT_QANDAS_PROMPT
+
+from dotenv import load_dotenv
+os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
+os.environ["AZURE_OPENAI_ENDPOINT"] = config.AZURE_OPENAI_ENDPOINT
+os.environ["OPENAI_API_TYPE"] = config.OPENAI_API_TYPE
+os.environ["OPENAI_API_VERSION"] = config.OPENAI_API_VERSION
+os.environ["OPENAI_DEPLOYMENT_NAME"] = config.OPENAI_DEPLOYMENT_NAME
+MODEL_NAME = config.OPENAI_MODEL_4OMINI
+load_dotenv()
+
+class PdfOuput(BaseModel):
+    question: str
+    choices: dict
+    answer: str
+    type: Literal["MCQ", "TFQ", "OEQ"]
+    difficulty: Literal["Fácil", "Difícil"]	
+
+class PdfOuputList(BaseModel):
+    questions: List[PdfOuput]
+
+def format_qandas_from_external_document(db_id: str, filename: str):
+    llm = ChatOpenAI(
+        model_name=MODEL_NAME,
+        temperature=0.2,
+    )
+    
+    path = os.path.join(utils.DATABASES_PATH, db_id, 'external', filename)
+    loaded_document = utils.load_documents(path)
+    document_string = "\n".join([doc.page_content for doc in loaded_document])
+    # print(f"📄 Document loaded: {document_string}")
+    
+    prompt_template = ChatPromptTemplate.from_template(FORMAT_QANDAS_PROMPT)
+    prompt = prompt_template.format(document_string=document_string)
+    
+    structured_llm = llm.with_structured_output(PdfOuputList)
+    response_text = structured_llm.invoke(prompt)
+    
+    # print(f"📄 Response: {response_text} - {type(response_text)}")
+    
+    for question in response_text["questions"]:
+        utils.update_json(db_id, 'qs', question)
+    
+    return response_text
 
 def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: float, quality_threshold: float, db_id: str):
     # eliminamos el contenido de los archivos de persistencia de embeddings

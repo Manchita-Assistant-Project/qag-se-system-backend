@@ -412,3 +412,73 @@ Por favor, retorna las preguntas y las dificultades en el siguiente formato JSON
 ---------------------------------------------------------------------------------
 Asegúrate de seguir siempre este formato y estructura para todas las preguntas generadas.
 """
+
+
+FORMAT_QANDAS_PROMPT = """
+Dado el siguiente texto que contiene preguntas y respuestas:
+
+"{document_string}"
+
+Quiero que formatees las preguntas y respuestas en el siguiente formato JSON:
+[
+    (
+        "question": "¿Cuál es la capital de Colombia?",
+        "choices": (
+            "a": "Bogotá",
+            "b": "Medellín",
+            "c": "Cali",
+            "d": "Barranquilla"
+        ),
+        "answer": "a",
+        "type": "MCQ",
+        "difficulty": "Fácil"
+    ),
+]
+
+Es importante que diferencies entre las preguntas de opción múltiple (MCQ), de respuesta abierta (OEQ) y de verdadero o falso (TFQ).
+
+Ejemplo de una pregunta de OPCIÓN MÚLTIPLE (MCQ):
+(
+    "question": "¿Cuál es la capital de Colombia?",
+    "choices": (
+        "a": "Bogotá",
+        "b": "Medellín",
+        "c": "Cali",
+        "d": "Barranquilla"
+    ),
+    "answer": "a",
+    "type": "MCQ",
+    "difficulty": "Fácil"
+)
+
+Ejemplo de una pregunta de RESPUESTA ABIERTA (OEQ):
+(
+    "question": "¿Cómo evoluciona la relación entre Ross y Rachel en Friends?",
+    "choices": (
+        "a": "Comienzan su relación en la temporada 2 después de un primer beso en Central Perk.",
+        "b": "Terminan en la temporada 3 tras el "break" y la infidelidad de Ross.",
+        "c": "Se casan accidentalmente en Las Vegas y luego anulan el matrimonio.",
+        "d": "Rachel queda embarazada y crían a su hija Emma juntos.",
+        "e": "En el final, Ross confiesa su amor y Rachel decide quedarse en Nueva York."
+    ),
+    "answer": "None",
+    "type": "OEQ",
+    "difficulty": "Difícil"
+)
+
+Ejemplo de una pregunta VERDADERO O FALSO (TFQ):
+(
+    "question": "¿Es el río Nilo el río más largo del mundo?",
+    "choices": (
+        "a": "Verdadero",
+        "b": "Falso"
+    ),
+    "answer": "b",
+    "type": "TFQ",
+    "difficulty": "Fácil"
+)
+--------------------------------------------------------------------------
+
+Por favor, NUNCA olvides el diccionario "choices".
+¡Es muy importante!
+"""

@@ -7,6 +7,8 @@ import string
 import numpy as np
 from typing import Dict, List
 
+import app.database.chroma_utils as chroma_utils
+
 base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 base_dir_app = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -199,3 +201,7 @@ def add_question_marks(text: str) -> str:
         text = '¿' + text[:-1] + '?'
         
     return text
+
+def load_documents(file_location: str):
+    loaded_documents = chroma_utils.load_documents(file_location)
+    return loaded_documents

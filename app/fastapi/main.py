@@ -284,51 +284,63 @@ def knowledge_base_exists(bd_id: str):
 # ==================================== #
 
 @app.post("/upload_file")
-async def upload_pdf(files: List[UploadFile] = File(...)):
+async def upload_pdf(files1: List[UploadFile] = File(...), files2: List[UploadFile] = File(...)):
     db_id = chroma_utils.generate_bd_id()
     print(f"DB_ID: {db_id}")
-    for file in files:
+    
+    files_location = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'files')
+    chroma_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'knowledge')
+    
+    chroma_utils.verify_directory_exists(chroma_path)
+    chroma_utils.verify_directory_exists(files_location)
+    chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as'))
+    chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'embeddings'))
+    
+    for file in files1:
         # Validar que cada archivo sea un PDF o un archivo de Word
         if file.content_type not in ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"]:
             raise HTTPException(status_code=400, detail=f"El archivo '{file.filename}' no es un PDF ni un archivo de Word.")
 
         # Guardar el archivo temporalmente en el servidor
-        files_location = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'files')
         file_location = os.path.join(files_location, file.filename)
-        
-        chroma_utils.verify_directory_exists(files_location)
-        chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as'))
-        chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'knowledge'))
-        chroma_utils.verify_directory_exists(os.path.join(chroma_utils.DATABASES_PATH, db_id, 'embeddings'))
         
         with open(file_location, "wb") as f:
             shutil.copyfileobj(file.file, f)
 
         # Carga el archivo a la base de conocimiento
-        chroma_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'knowledge')
-        loader.main_load(chroma_path, file_location)
+        loader.main_load(chroma_path, files_location)
         
-    # Generar el archivo JSON con las preguntas y respuestas
-    quality_threshold = 0.82
-    mcq_similarity_threshold = 0.8
-    tfq_similarity_threshold = 0.85
-    print("GENERATING Q&As")
-    generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id)
+        # Elimina el archivo temporal
+        os.remove(file_location)
+        
+    if len(files2) < 0:
+        # Generar el archivo JSON con las preguntas y respuestas
+        quality_threshold = 0.82
+        mcq_similarity_threshold = 0.8
+        tfq_similarity_threshold = 0.85
+        print("GENERATING Q&As")
+        generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id)
+    else:
+        files_location = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'external')
+        chroma_utils.verify_directory_exists(files_location)
+        
+        for file in files2:
+            file_location = os.path.join(files_location, file.filename)
+            print(f"FILE LOCATION: {file_location}")
+            
+            with open(file_location, "wb") as f:
+                shutil.copyfileobj(file.file, f)
+        
+            generator.format_qandas_from_external_document(db_id, file.filename)
+            
+            os.remove(file_location)
     
     sqlite_utils.create_table(db_id)
     
-    # qandas_json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
-    # with open(qandas_json_path, 'r') as f:
-    #     data = json.load(f)
+    qandas_json_path = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
+    with open(qandas_json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
     
-    # ¡¡A ESTE JSON TOCA AGREGAR EL CÓDIGO!!
-    # "content": [
-    #   {
-    #       "code": "..."
-    #   },
-    #   {
-    #       "question": "..."
-    #   },
-    # ]
-    
-    # return data
+    data['content'].append({ "code": db_id })
+        
+    return data

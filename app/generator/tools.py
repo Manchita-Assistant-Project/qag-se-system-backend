@@ -15,9 +15,9 @@ import app.database.chroma_utils as chroma_utils
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
 from app.prompts.qandas_prompts import Q_MCQ_PROMPT, Q_OEQ_PROMPT, Q_TFQ_PROMPT, \
                                        HARDER_Q_PROMPT, Q_REFINER_PROMPT, \
