@@ -20,6 +20,7 @@ import app.agent.tools as tools
 from app.agent.graph import workflow
 import app.generator.loader as loader
 import app.generator.generator as generator
+import app.generator.utils as generator_utils
 import app.database.chroma_utils as chroma_utils
 import app.database.sqlite_utils as sqlite_utils
 from app.agent.utils import JSON_PATH, load_json
@@ -308,10 +309,10 @@ async def upload_pdf(files1: List[UploadFile] = File(...), files2: List[UploadFi
             shutil.copyfileobj(file.file, f)
 
         # Carga el archivo a la base de conocimiento
-        loader.main_load(chroma_path, files_location)
+        loader.main_load(chroma_path, file_location)
         
         # Elimina el archivo temporal
-        os.remove(file_location)
+        os.remove(file_location)    
         
     if len(files2) < 0:
         # Generar el archivo JSON con las preguntas y respuestas
@@ -331,8 +332,16 @@ async def upload_pdf(files1: List[UploadFile] = File(...), files2: List[UploadFi
             with open(file_location, "wb") as f:
                 shutil.copyfileobj(file.file, f)
         
-            generator.format_qandas_from_external_document(db_id, file.filename)
-            
+            ext = os.path.splitext(file.filename)[-1].lower()
+            print(f"EXTENSION: {ext}")
+            if ext != '.json':
+                generator.format_qandas_from_external_document(db_id, file.filename)
+            else:
+                path = os.path.join(files_location, file.filename)
+                data = utils.load_json(path)
+                for question in data:
+                    generator_utils.update_json(db_id, 'qs', question)
+                
             os.remove(file_location)
     
     sqlite_utils.create_table(db_id)

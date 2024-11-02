@@ -41,15 +41,12 @@ def format_qandas_from_external_document(db_id: str, filename: str):
     path = os.path.join(utils.DATABASES_PATH, db_id, 'external', filename)
     loaded_document = utils.load_documents(path)
     document_string = "\n".join([doc.page_content for doc in loaded_document])
-    # print(f"📄 Document loaded: {document_string}")
     
     prompt_template = ChatPromptTemplate.from_template(FORMAT_QANDAS_PROMPT)
     prompt = prompt_template.format(document_string=document_string)
     
     structured_llm = llm.with_structured_output(PdfOuputList)
     response_text = structured_llm.invoke(prompt)
-    
-    # print(f"📄 Response: {response_text} - {type(response_text)}")
     
     for question in response_text["questions"]:
         utils.update_json(db_id, 'qs', question)
