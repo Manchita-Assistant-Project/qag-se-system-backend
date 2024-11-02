@@ -18,7 +18,7 @@ Es importante que incluyas la pregunta dentro de tu respuesta.
 Es importante que nunca respondas la pregunta, solo la haces.
 
 No se te olvide que TÚ eres el que hace la pregunta, no el visitante.
-El viajer no hace preguntas, solo responde las tuyas.
+El viajero no hace preguntas, solo responde las tuyas.
 ¡No respondas la pregunta, solo hazla!
 
 Integra la pregunta dentro de tu respuesta.
@@ -52,7 +52,7 @@ Es importante que incluyas la pregunta dentro de tu respuesta.
 Es importante que nunca respondas la pregunta, solo la haces.
 
 No se te olvide que TÚ eres el que hace la pregunta, no el visitante.
-El viajer no hace preguntas, solo responde las tuyas.
+El viajero no hace preguntas, solo responde las tuyas.
 ¡No respondas la pregunta, solo hazla!
 
 Integra la pregunta dentro de tu respuesta.
@@ -85,7 +85,7 @@ Es importante que incluyas la pregunta dentro de tu respuesta.
 Es importante que nunca respondas la pregunta, solo la haces.
 
 No se te olvide que TÚ eres el que hace la pregunta, no el visitante.
-El viajer no hace preguntas, solo responde las tuyas.
+El viajero no hace preguntas, solo responde las tuyas.
 ¡No respondas la pregunta, solo hazla!
 
 Integra la pregunta dentro de tu respuesta.
@@ -114,7 +114,29 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + FIRST_CHARACTER_ACLARATION
 
 
-FIRST_CHARACTER_LIFES_LOST_PROMPT = """
+FIRST_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al visitante, pero parece que él no quiere responder.
+
+Te acaba de decir esto: "{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Por ejemplo, si te pregunta algo de tu persona, responde con naturalidad siguiendo tu personalidad.
+
+Por ejemplo, si te pregunta por pistas, debes darle una pista.
+
+-------------------------------------------------------------------------------------------------
+Recuérdale que debe responder el acertijo si quiere entrar al Instituto.
+
+Recuérdale que el acertijo que le hiciste es el siguiente:
+
+"{question}"
+
+"""
+
+
+FIRST_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere entrar al Instituto.
@@ -123,9 +145,9 @@ Solo dile que ha perdido una vida y le recuerdas la pregunta:
 
 {question}
 
-Las vidas aún le quedan al visitante:
+Las vidas que aún le quedan al visitante:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al visitante).
 
@@ -149,6 +171,8 @@ FIRST_CHARACTER_FAILURE_PROMPT = """
 ¡El visitante acaba de perder todas sus vidas!
 Desepcionado, le tienes que decir que ha perdido todas sus vidas y que lastimosamente no puede entrar al Instituto.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el visitante no tiene más vidas.
 El viaje del visitante terminó...
 Le tienes que decir que no hay forma de que entre al Instituto.
@@ -171,7 +195,26 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + SECOND_CHARACTER_ACLARATION
 
 
-SECOND_CHARACTER_LIFES_LOST_PROMPT = """
+SECOND_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al visitante, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere que le des las instrucciones que necesita.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+""" + SECOND_CHARACTER_ACLARATION
+
+
+SECOND_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
@@ -180,9 +223,9 @@ No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuer
 
 {question}
 
-Las vidas aún le quedan al visitante:
+Las vidas que aún le quedan al visitante:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al visitante).
 
@@ -206,6 +249,8 @@ SECOND_CHARACTER_FAILURE_PROMPT = """
 ¡El visitante acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el visitante no tiene más vidas.
 El viaje del visitante terminó...
 Le tienes que decir que no hay forma de que lo dejes pasar.
@@ -228,7 +273,26 @@ El acertijo con el que TÚ desafías al visitante es:
 """ + THIRD_CHARACTER_ACLARATION
 
 
-THIRD_CHARACTER_LIFES_LOST_PROMPT = """
+THIRD_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al visitante, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere que le dejes entrar.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+""" + THIRD_CHARACTER_ACLARATION
+
+
+THIRD_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al visitante, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
@@ -236,9 +300,9 @@ No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuer
 No le ofrezcas más acertijos, solo dale el permiso.
 {question}
 
-Las vidas aún le quedan al visitante:
+Las vidas que aún le quedan al visitante:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al visitante).
 
@@ -260,6 +324,8 @@ THIRD_CHARACTER_FAILURE_PROMPT = """
 {personality}
 ¡El visitante acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
+
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
 
 En este momento, el visitante no tiene más vidas.
 El viaje del visitante terminó...

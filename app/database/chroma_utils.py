@@ -1,5 +1,7 @@
 import os
+import random
 import shutil
+import string
 from typing import Any, Callable
 from langchain.schema.document import Document
 from langchain_community.vectorstores import Chroma
@@ -13,7 +15,7 @@ from langchain_community.document_loaders import UnstructuredWordDocumentLoader,
 # import sys
 # sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
-base_dir_files = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 base_dir_app = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def verify_directory_exists(directory_path):
@@ -23,8 +25,10 @@ def verify_directory_exists(directory_path):
     else:
         print(f"Directory '{directory_path}' already exists.")
 
-FILES_PATH = os.path.join(base_dir_files, 'files')
+FILES_PATH = os.path.join(base_dir, 'files')
 verify_directory_exists(FILES_PATH)
+DATABASES_PATH = os.path.join(base_dir, 'databases')
+verify_directory_exists(DATABASES_PATH)
 CHROMA_PATH = os.path.join(base_dir_app, 'database', 'chroma')
 verify_directory_exists(CHROMA_PATH)
 
@@ -36,25 +40,20 @@ class StreamingCallbackHandler(BaseCallbackHandler):
         self.partial_output += token
         print(token, end="", flush=True)
 
-def load_documents():
-    files_and_folders = os.listdir(FILES_PATH)
-    file_names = [f for f in files_and_folders if os.path.isfile(os.path.join(FILES_PATH, f))]
-
-    ext = os.path.splitext(file_names[0])[-1].lower() # extensión del archivo en minúscula
-
-    file_path = os.path.join(FILES_PATH, file_names[0])
-
+def load_documents(file_location: str):
+    files_folder = os.path.dirname(file_location)
+    file_name = os.path.basename(file_location)
+    ext = os.path.splitext(file_name)[-1].lower() # extensión del archivo en minúscula
+    
+    print(f"📂 Loading file: {file_name}")
+    
     if ext == ".pdf":
-        loader = PyPDFDirectoryLoader(os.path.dirname(FILES_PATH))
+        loader = PyPDFDirectoryLoader(files_folder)
         print(f"📄 Downloading a PDF document.")
         documents = loader.load()
     elif ext == ".docx":
-        loader = UnstructuredWordDocumentLoader(file_path)
+        loader = UnstructuredWordDocumentLoader(file_location)
         print(f"📝 Downloading a Word document.")
-        documents = loader.load()
-    elif ext == ".xlsx":
-        loader = UnstructuredExcelLoader(file_path)
-        print(f"📊 Downloading an Excel document.")
         documents = loader.load()
     else:
         raise ValueError(f"File format not supported: {ext}")
@@ -78,9 +77,9 @@ def get_embedding_function():
     )
     return embeddings
 
-def add_to_chroma(chunks: list[Document]):
+def add_to_chroma(chroma_path: str, chunks: list[Document]):
     db = Chroma(
-        persist_directory=CHROMA_PATH,
+        persist_directory=chroma_path,
         embedding_function=get_embedding_function()
     )
 
@@ -135,6 +134,23 @@ def calculate_chunk_ids(chunks):
 
     return chunks
 
+def get_db(db_id: str, base_folder: str=DATABASES_PATH) -> Chroma:
+    path = os.path.join(base_folder, db_id, 'knowledge')
+    print(f"Loading Chroma database from: {path}")
+    return Chroma(
+        persist_directory=path,
+        embedding_function=get_embedding_function()
+    )
+    
+def generate_bd_id() -> str:
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters).upper() for _ in range(6))
+
+def knowledge_base_exists(bd_id: str, base_folder: str=DATABASES_PATH) -> bool:
+    folders = os.listdir(base_folder)
+    
+    return bd_id in folders
+    
 def clear_database():
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)

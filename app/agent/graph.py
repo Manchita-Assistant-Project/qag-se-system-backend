@@ -4,10 +4,12 @@ from typing import Literal
 import app.agent.utils as utils
 import app.agent.nodes as nodes
 from app.agent.state import State
+import app.database.chroma_utils as chroma_utils
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
+from langchain_core.runnables import RunnableConfig
 
 single_use_tools = [
     'rag_search',
@@ -18,9 +20,12 @@ single_use_tools = [
 
 character_game_tools = [
     'narrator_tool',
-    'first_character',
-    'second_character',
-    'third_character',
+    "character",
+    "character_first_interaction",
+    "character_life_lost",
+    "character_success_or_failure",
+    "character_loop_interaction",
+    "lives_retrieval"
 ]
 
 # routing functions
@@ -44,12 +49,21 @@ def should_use_single_tool(state) -> Literal["chooser", "single_tools", "narrato
         
     return "__end__"
 
-def points_or_lifes(state) -> Literal["points_updater_tool", "lifes_updater_tool"]:
+def response_or_interaction(state) -> Literal["character", "evaluation_tool"]:
+    current_story = state.get("current_story", None)
+    step_in_step = current_story["step_in_step"] if current_story else None
+
+    if step_in_step is not None and step_in_step == 4:
+        return "character"
+    
+    return "evaluation_tool"
+
+def points_or_lives(state) -> Literal["points_updater_tool", "lives_updater_tool"]:
     tool_used = state["from_story"] if "from_story" in state else False
 
     if tool_used:
-        print("lifes_updater_tool")
-        return "lifes_updater_tool"
+        print("lives_updater_tool")
+        return "lives_updater_tool"
     else:
         print("points_updater_tool")
         return "points_updater_tool"
@@ -62,21 +76,20 @@ def character_or_finish(state) -> Literal["character", "__end__"]:
     else:
         return END
 
-def which_character(state) -> Literal["first_character", "second_character", "third_character"]:
-    step = state["current_story"]["step"]
-
-    if step == 1:
-        return "first_character"
-    elif step == 2:
-        return "second_character"
-    elif step == 3:
-        return "third_character"
+def which_from_character(state) -> Literal["character_first_interaction", "character_life_lost", "character_success_or_failure", "character_loop_interaction"]:
+    step_in_step = state["current_story"]["step_in_step"]
+    print(f"--- {step_in_step} ---")
+    possible_steps = ["character_first_interaction", "character_life_lost", "character_success_or_failure", "character_loop_interaction"]
+    
+    next_step = possible_steps[step_in_step - 1]
+    print(f"--- {next_step} ---")
+    return next_step
     
 def should_continue_or_another_try(state) -> Literal["human_interaction", "__end__"]:
     last_evaluation_message = state["messages"][-2].content
-    current_lifes = state["messages"][-1].content.split("|||")[1]
+    current_lives = state["messages"][-1].content.split("|||")[1]
     
-    if "incorrecta" in last_evaluation_message and int(current_lifes) > 0:
+    if "incorrecta" in last_evaluation_message and int(current_lives) > 0:
         print("Another try")
         return "human_interaction"
     else:
@@ -91,16 +104,20 @@ workflow.add_node("single_tools", nodes.single_tools_tool_node)
 
 workflow.add_node("chooser", nodes.chooser_tool_node)
 workflow.add_node("human_interaction", nodes.human_interaction)
+workflow.add_node("response_classifier", nodes.response_classifier_node)
 workflow.add_node("evaluation_tool", nodes.evaluation_tool_node)
 workflow.add_node("points_updater_tool", nodes.points_updater_tool_node)
+workflow.add_node("motivator", nodes.motivator_node)
 
 workflow.add_node("narrator", nodes.narrator_node)
 workflow.add_node("character", nodes.character_node)
-workflow.add_node("first_character", nodes.first_character_node)
-workflow.add_node("second_character", nodes.second_character_node)
-workflow.add_node("third_character", nodes.third_character_node)
 
-workflow.add_node("lifes_updater_tool", nodes.lifes_updater_tool_node)
+workflow.add_node("character_first_interaction", nodes.character_first_interaction_node)
+workflow.add_node("character_life_lost", nodes.character_life_lost_node)
+workflow.add_node("character_success_or_failure", nodes.character_success_or_failure_node)
+workflow.add_node("character_loop_interaction", nodes.character_loop_interaction_node)
+
+workflow.add_node("lives_updater_tool", nodes.lives_updater_tool_node)
 
 # add edges
 workflow.set_entry_point("simple_interaction")
@@ -111,8 +128,13 @@ workflow.add_conditional_edges(
 )
 
 workflow.add_conditional_edges(
+    "response_classifier",
+    response_or_interaction
+)
+
+workflow.add_conditional_edges(
     "evaluation_tool",
-    points_or_lifes
+    points_or_lives
 )
 
 workflow.add_conditional_edges(
@@ -122,24 +144,32 @@ workflow.add_conditional_edges(
 
 workflow.add_conditional_edges(
     "character",
-    which_character
+    which_from_character
 )
 
-workflow.add_conditional_edges(
-    "lifes_updater_tool",
-    should_continue_or_another_try
-)
+# workflow.add_conditional_edges(
+#     "lives_updater_tool",
+#     should_continue_or_another_try
+# )
 
 workflow.add_edge("single_tools", END)
 
 workflow.add_edge("chooser", "human_interaction")
-workflow.add_edge("human_interaction", "evaluation_tool")
-workflow.add_edge("points_updater_tool", END)
+# workflow.add_edge("human_interaction", "evaluation_tool")
+workflow.add_edge("human_interaction", "response_classifier")
+workflow.add_edge("points_updater_tool", "motivator")
+workflow.add_edge("motivator", END)
 
 # workflow.add_edge("narrator", "character")
-workflow.add_edge("first_character", "human_interaction")
-workflow.add_edge("second_character", "human_interaction")
-workflow.add_edge("third_character", "human_interaction")
+# workflow.add_edge("first_character", "human_interaction")
+# workflow.add_edge("second_character", "human_interaction")
+# workflow.add_edge("third_character", "human_interaction")
+workflow.add_edge("lives_updater_tool", "character")
+workflow.add_edge("character_first_interaction", "human_interaction")
+workflow.add_edge("character_loop_interaction", "human_interaction")
+workflow.add_edge("character_life_lost", "human_interaction")
+workflow.add_edge("character_success_or_failure", END)
+
 
 def use_graph():
     # compile the graph
@@ -156,8 +186,22 @@ def use_graph():
     thread = {
         "configurable": {
             "thread_id": thread_id,
+            "recursion_limit": 50
         }
     }
+
+    config = RunnableConfig(
+        thread_id=thread_id,
+        recursion_limit=50
+    )
+
+    db_id = 'NKNKNK'
+    # db = chroma_utils.get_db(db_id)
+    
+    # db_obj = ChromaDatabase(
+    #     db_id=db_id,
+    #     db=db
+    # )
 
     questions = [
         'hola!',
@@ -179,9 +223,9 @@ def use_graph():
     # while True:
     for query in questions:
         # query = input("You: ")
-        graph.update_state(thread, {"thread_id": thread_id})
+        graph.update_state(thread, {"thread_id": thread_id, "db_chroma": db_id})
         # print(f"SNAPSHOT {query}: {snapshot}")
-        for event in graph.stream({"messages": [HumanMessage(content=query)]}, thread, stream_mode="values"):
+        for event in graph.stream({"messages": [HumanMessage(content=query)]}, config, stream_mode="values"):
             print(f"TOOL USED {graph.get_state(thread).values['messages'][-1].name}")
             event['messages'][-1].pretty_print()
 
@@ -218,17 +262,17 @@ def use_graph():
             )
             print(f"AFTER: {graph.get_state(thread).next}")
             
-            for event in graph.stream(None, thread, stream_mode="values"):
+            for event in graph.stream(None, config, stream_mode="values"):
                 event['messages'][-1].pretty_print()
             
             # interrupción para el camino del juego del character cuando tiene una respuesta incorrecta
-            if list(graph.get_state(thread).metadata['writes'].keys())[0] == 'lifes_updater_tool':
+            if list(graph.get_state(thread).metadata['writes'].keys())[0] == 'lives_updater_tool':
                 if "incorrecta" in graph.get_state(thread).values["messages"][-2].content:
                     snapshot = graph.get_state(thread).values["messages"][-2].content
-                    current_lifes_snapshot = 3
+                    current_lives_snapshot = 3
                     i = 3
-                    while "incorrecta" in snapshot and current_lifes_snapshot > 0: # si la respuesta es incorrecta y aún tiene vidas
-                        print(f'LIFES UPDATER TOOL -> {snapshot}')
+                    while "incorrecta" in snapshot and current_lives_snapshot > 0: # si la respuesta es incorrecta y aún tiene vidas
+                        print(f'LIVES UPDATER TOOL -> {snapshot}')
                         user_answer = input('You: ')
                         question = graph.get_state(thread).values['current_story']["to_evaluate"]
                         
@@ -246,19 +290,19 @@ def use_graph():
                             as_node="human_interaction" # acá toca usar ese as_node para que se ejecute como si fuera el nodo 'human_interaction', para que pase bien a evaluar y luego a actualizar vidas
                         )
                         
-                        for event in graph.stream(None, thread, stream_mode="values"):
+                        for event in graph.stream(None, config, stream_mode="values"):
                             event['messages'][-1].pretty_print()
                             
                         snapshot = graph.get_state(thread).values["messages"][-2].content
                         print(f"SNAPSHOT: {snapshot}")
                         
-                        current_lifes_snapshot = int(graph.get_state(thread).values["messages"][-1].content.split('|||')[1])
-                        print(f"CURRENT LIFES: {current_lifes_snapshot}")
+                        current_lives_snapshot = int(graph.get_state(thread).values["messages"][-1].content.split('|||')[1])
+                        print(f"CURRENT LIVES: {current_lives_snapshot}")
 
                         print(f"AFTER: {graph.get_state(thread).next}")
                         
                         # i += 1
-                    for event in graph.stream(None, thread, stream_mode="values"):
+                    for event in graph.stream(None, config, stream_mode="values"):
                         event['messages'][-1].pretty_print()
                             
 # use_graph()

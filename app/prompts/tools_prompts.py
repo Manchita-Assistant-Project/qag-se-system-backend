@@ -36,7 +36,7 @@ Aquí un ejemplo: \
 
 
 EVALUATE_PROMPT = """
-Basado única y excluvisamente en esta cadena: \
+Basado únicamente en esta información: \
 
 `{context}`
 ----------------------------------------------------------------
@@ -49,17 +49,28 @@ es la respuesta correcta o incorrecta a la pregunta: \
 
 Pregunta: {question}
 ----------------------------------------------------------------
-La respuesta no tiene que ser exacta, pero puede ser similar. \
+La respuesta debe ser considerada correcta si refleja conceptos \
+importantes de manera similar o implícita. Ejemplos de respuestas \
+correctas pueden incluir interpretaciones, ideas relacionadas, o \
+puntos relevantes a los temas principales de la pregunta. \
+
 Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
 una respuesta similar sería `saber programar`. \
-    
+
+También, debes ser flexible con la ortografía y la gramática. \
+Está bien si la respuesta no está escrita exactamente igual que la respuesta correcta. \
+Por ejemplo, si la respuesta es "Verdadero" y el usuario responde "Verdaero", \
+deberías considerar la respuesta como correcta. \
+
 ¡No tiene que ser la respuesta tal cuál! \
+
 Puede ser una respuesta similar o una respuesta que implique la respuesta correcta. \
 
+Responde de forma breve:
 
-Responde "¡La respuesta es correcta!" o "La respuesta es incorrecta...".
-
-Si la respuesta `answer` es `****`, responde "La respuesta es incorrecta...".
+Si la respuesta cubre ideas centrales del contexto, responde: "¡La respuesta es correcta!"
+Si la respuesta no es relevante o no cubre ideas centrales, responde: "La respuesta es incorrecta..."
+Si la respuesta proporcionada es ****, responde "La respuesta es incorrecta..."
 """
 
 
@@ -106,4 +117,62 @@ Cuando digas los puntos, debes animar al usuario a seguir adelante.
 Nunca respondas comenzando con "Asisente: ..."
 
 PUNTOS: {points}
+"""
+
+
+RESPONSE_CLASSIFIER_PROMPT = """
+Debes determinar si la respuesta: "{response}"
+Es una posible respuesta a la pregunta: "{question}"
+
+Una posible respuesta no necesariamente es una correcta,
+simplemente es una posible respuesta (correcta o incorrecta).
+
+Por ejemplo, dada la pregunta: "¿Cuál es la capital de Colombia?"
+
+Una posible respuesta sería: "Bogotá".
+
+Otra posible respuesta sería: "Medellín", aún así sea incorrecta.
+
+Una no posible respuesta sería: "Queso".
+
+Una no posible respuesta sería: "Dame una pista".
+
+---------------------------------------------------------------------------------------
+Es muy importate que distingas entre una posible respuesta y algo que te están pidiendo.
+
+Por ejemplo:
+- si te piden pistas
+- si te preguntan quién eres o alguna cosa sobre ti
+
+no es una posible respuesta.
+
+---------------------------------------------------------------------------------------
+Responde "True" si sí es una posible respuesta a la pregunta.
+Responde "False" si no es una posible respuesta a la pregunta.
+"""
+
+
+MOTIVATION_PROMPT = """
+Eres un modelo que motiva a un usuario a seguir adelante.
+
+¡Es importante que motives al usuario a seguir aprendiendo!
+
+El usuario se llama: '{name}'
+
+Si '{name}' no está vacío, inclúyelo en tu respuesta.
+¡No lo tienes que saludar! Solo incluye su nombre en la respuesta.
+
+Si '{name}' está vacío, no lo incluyas en tu respuesta.
+
+Logró llegar a {points} puntos. ¡Felicítalo!
+
+Es muy importante que le animes a seguir adelante y a seguir aprendiendo.
+
+Si {points} es cinco (5), significa que fueron sus primeros cinco puntos.
+Si {points} es diez (10), significa que es la segunda vez que consigue cinco puntos.
+Si {points} es cincuenta (50), significa que es la décima vez que consigue puntos.
+
+Ten eso en cuenta!!
+
+Eres totalmente libre de incluir emojis si lo ves necesario.
 """

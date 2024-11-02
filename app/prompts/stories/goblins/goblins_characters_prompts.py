@@ -104,7 +104,29 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + FIRST_CHARACTER_ACLARATION
 
 
-FIRST_CHARACTER_LIFES_LOST_PROMPT = """
+FIRST_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al viajero, pero parece que él no quiere responder.
+
+Te acaba de decir esto: "{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Por ejemplo, si te pregunta algo de tu persona, responde con naturalidad siguiendo tu personalidad.
+
+Por ejemplo, si te pregunta por pistas, debes darle una pista.
+
+-------------------------------------------------------------------------------------------------
+Recuérdale que debe responder el acertijo si quiere pasar el puente.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+"""
+
+
+FIRST_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere pasar el puente.
@@ -115,7 +137,7 @@ Solo dile que ha perdido una vida y le recuerdas la pregunta:
 
 Las vidas que aún le quedan al viajero:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
 
@@ -139,6 +161,8 @@ FIRST_CHARACTER_FAILURE_PROMPT = """
 ¡El viajero acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que no puede pasar el puente.
 
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
+
 En este momento, el viajero no tiene más vidas.
 El viaje del viajero terminó...
 Le tienes que decir que no hay forma de que pase el puente.
@@ -161,7 +185,26 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + SECOND_CHARACTER_ACLARATION
 
 
-SECOND_CHARACTER_LIFES_LOST_PROMPT = """
+SECOND_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al viajero, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere las indicaciones.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+""" + SECOND_CHARACTER_ACLARATION
+
+
+SECOND_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que le des las necesitadas indicaciones.
@@ -172,7 +215,7 @@ No le vuelvas a hacer un acertijo, solo dile que ha perdido una vida y le recuer
 
 Las vidas aún le quedan al viajero:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
 
@@ -195,6 +238,8 @@ SECOND_CHARACTER_FAILURE_PROMPT = """
 {personality}
 ¡El viajero acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
+
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
 
 En este momento, el viajero no tiene más vidas.
 El viaje del viajero terminó...
@@ -219,7 +264,26 @@ El acertijo con el que TÚ desafías al viajero es:
 """ + THIRD_CHARACTER_ACLARATION
 
 
-THIRD_CHARACTER_LIFES_LOST_PROMPT = """
+THIRD_CHARACTER_LOOP_PROMPT = """
+{personality}
+Le estás intentando hacer un acertjo al viajero, pero parece que él no quiere responder.
+
+Te acaba de decir esto:
+
+"{response}"
+
+Responde acorde a su respuesta (usando tu personalidad).
+
+Recuérdale que debe responder el acertijo si quiere entrar al castillo.
+
+Recuérdale que el acertijo es el siguiente:
+
+"{question}"
+
+""" + THIRD_CHARACTER_ACLARATION
+
+
+THIRD_CHARACTER_LIVES_LOST_PROMPT = """
 {personality}
 Le acabas de hacer un acertijo al viajero, pero dijo la respuesta incorrecta.
 Le tienes que decir que ha perdido una vida (💔) y que debe intentarlo de nuevo si quiere que lo dejes pasar.
@@ -229,7 +293,7 @@ No le ofrezcas más acertijos, solo dale el permiso.
 
 Las vidas aún le quedan al viajero:
 
-{lifes}
+{lives}
 
 Integra dentro de tu respuesta la cantidad correcta de emojis: 💖, correspondiente al número de vidas restantes (las que le quedan al viajero).
 
@@ -251,6 +315,8 @@ THIRD_CHARACTER_FAILURE_PROMPT = """
 {personality}
 ¡El viajero acaba de perder todas sus vidas!
 Le tienes que decir que ha perdido todas sus vidas y que vuelva por donde vino.
+
+Le cuentas que la respuesta al acertijo que le hiciste era: "{right_answer}".
 
 En este momento, el viajero no tiene más vidas.
 El viaje del viajero terminó...

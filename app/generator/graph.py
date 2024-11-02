@@ -1,3 +1,4 @@
+import time
 import uuid
 from typing import Literal
 
@@ -19,21 +20,21 @@ def question_or_answer_path(state) -> Literal["question_generator", "answer_gene
     else:
         return "answer_generator"
     
-def question_approved(state) -> Literal["question_refiner", "context_generator"]:
+def question_approved(state) -> Literal["question_refiner", "messages_remover"]:
     quality_threshold = state["threshold"]["quality_threshold"]
     quality = state["messages"][-1].content.split("|||")[1]
 
     if float(quality) < quality_threshold:
         return "question_refiner"
     else:
-        return "context_generator"
+        return "messages_remover"
     
-def question_already_seen(state) -> Literal["context_generator", "question_evaluator"]:
+def question_already_seen(state) -> Literal["messages_remover", "question_evaluator"]:
     similarity_threshold = state["threshold"]["similarity_threshold"]
     similarity = state["messages"][-1].content.split("|||")[1]
 
     if float(similarity) >= similarity_threshold: # ajustar threshold
-        return "context_generator"
+        return "messages_remover"
     else:
         return "question_evaluator"
 
@@ -43,11 +44,11 @@ workflow = StateGraph(State)
 # add nodes
 workflow.add_node("context_generator", nodes.context_generator_node)
 workflow.add_node("question_generator", nodes.question_generator_node)
-workflow.add_node("answer_generator", nodes.answer_generator_node)
 workflow.add_node("question_seen_validator", nodes.question_seen_node)
+workflow.add_node("messages_remover", nodes.messages_remover_node)
 workflow.add_node("question_evaluator", nodes.question_evaluator_node)
 workflow.add_node("question_refiner", nodes.question_refiner_node)
-# workflow.add_node("question_classifier", nodes.question_classifier_node)
+workflow.add_node("answer_generator", nodes.answer_generator_node)
 workflow.add_node("qanda_saver", nodes.data_saver_tool)
 
 # add edges
@@ -69,13 +70,14 @@ workflow.add_conditional_edges(
 )
 
 workflow.add_edge("question_generator", "question_seen_validator")
+workflow.add_edge("messages_remover", "context_generator")
 # workflow.add_edge("question_generator", "question_evaluator")
 workflow.add_edge("question_refiner", "question_evaluator")
 # workflow.add_edge("question_classifier", "context_generator")
 workflow.add_edge("answer_generator", "qanda_saver")
 workflow.add_edge("qanda_saver", END)
 
-def use_graph(question_type: int, question_difficulty_int: int, similarity_threshold: float, quality_threshold: float):
+def use_graph(question_type: int, question_difficulty_int: int, similarity_threshold: float, quality_threshold: float, db_id: str):
     # compile the graph
     checkpointer = MemorySaver()
     graph = workflow.compile(
@@ -130,7 +132,10 @@ def use_graph(question_type: int, question_difficulty_int: int, similarity_thres
         quality_threshold=quality_threshold
     )
     
-    graph.update_state(thread, { "question": question, "threshold": threshold })
+    graph.update_state(thread, { "question": question, "threshold": threshold, "db_id": db_id, "messages_to_remove": [] })
+    
+    print("Using graph...")
+    # time.sleep(10)
     
     for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, config, stream_mode="values"):
         print(f"NEXT: {graph.get_state(thread).next}")

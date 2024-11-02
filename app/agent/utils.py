@@ -117,7 +117,6 @@ def agent_node(state, agent, name):
     }
     
 def agent_w_tools_node(state, agent, name):
-    
     # mensaje de regaño si no se hizo un tool call
     instruction_message = """
     ¡No hiciste un tool call! ¡Haz el respectivo tool call! No generes texto, solo haz el tool call.
@@ -149,19 +148,39 @@ def agent_w_tools_node(state, agent, name):
         'messages': [result],
     }
 
-def define_context_string(context):
-    answer_choice = context[0]["answer"]
+def define_context_string(context: list, game_type: str):
+    answer_choice = context["answer"]
     answer_string = ""
-    
-    if len(answer_choice) == 1:
-        answer_string = [context[0]["choices"][choice] for choice in context[0]["choices"].keys() if choice == answer_choice][0]
-    elif answer_choice[0].lower() in ['a', 'b', 'c', 'd'] and answer_choice[1] in ['.', ')']:
-        answer_string = answer_choice[2:]
-    else:
-        answer_string = answer_choice
+
+    final_evaluation_string = ""
+    if game_type == "simple_quiz":    
+        if len(answer_choice) == 1:
+            answer_string = [context["choices"][choice] for choice in context["choices"].keys() if choice == answer_choice][0]
+        elif answer_choice[0].lower() in ['a', 'b', 'c', 'd'] and answer_choice[1] in ['.', ')']:
+            answer_string = answer_choice[2:]
+        else:
+            answer_string = answer_choice
         
-    final_evaluation_string = f"PREGUNTA: {context[0]['question']} | RESPUESTA CORRECTA: {answer_string.lower()}"
-    return final_evaluation_string
+        final_evaluation_string = f"Para la pregunta: {context['question']}\n Hay dos respuestas correctas que debes aceptar: \n- Cualquier variación (es decir, diferentes formas de escritura, puede incluir errores ortográficos) de la frase o palabra: '{answer_string.lower()}'\n- La letra: '{answer_choice}' en mayúsculas o minúsculas"
+    elif game_type == "story":
+        answer_list = [context["choices"][choice] for choice in context["choices"]]
+        for each_answer in answer_list:
+            answer_string += f"- {each_answer}\n"
+            
+        final_evaluation_string = f"PREGUNTA: {context['question']} | RESPUESTAS: \n{answer_string.lower()}"
+            
+    return final_evaluation_string, answer_string.lower()
+
+def summarize_answers(model, context: str):
+    prompt_template = """
+    Resume en un par de frases el contenido de la siguiente información:
+    
+    "{context}"    
+    """
+    prompt = prompt_template.format(context=context)
+    response_text = model.invoke(prompt).content
+    
+    return response_text
 
 def choose_random_story():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -174,12 +193,21 @@ def choose_random_story():
     
     return random_story
 
-def load_character_prompt(current_story: str, character: str):
+def load_character_prompt(current_story: str, step: int):
     """
     Carga todos los prompts que cumplen con el patrón {character}_CHARACTER_PROMPT
     desde un módulo dinámicamente.
     Lanza un AttributeError si no se encuentran prompts.
     """
+    
+    step_to_kind = {
+        1: 'FIRST',
+        2: 'SECOND',
+        3: 'THIRD'
+    }
+    
+    print(f"STEP: {step} - {step_to_kind[step]}")
+    
     characters_module_path = f"app.prompts.stories.{current_story}.{current_story}_characters_prompts"
     
     # Importar el módulo dinámicamente
@@ -189,7 +217,7 @@ def load_character_prompt(current_story: str, character: str):
     all_attributes = dir(module)
     
     # Filtrar los prompts que cumplen con el patrón
-    formatted_string = f"{character}_CHARACTER_PROMPT"
+    formatted_string = f"{step_to_kind[step]}_CHARACTER_PROMPT"
     personality_prompts = [attr for attr in all_attributes if re.match(formatted_string + r'', attr)]
     
     if not personality_prompts:
@@ -200,12 +228,19 @@ def load_character_prompt(current_story: str, character: str):
     
     return loaded_prompts
 
-def load_character_personalities(current_story: str, character: str):
+def load_character_personalities(current_story: str, step: int):
     """
     Carga todos los prompts que cumplen con el patrón {character}_CHARACTER_PERSONALITY_.*
     desde un módulo dinámicamente.
     Lanza un AttributeError si no se encuentran prompts.
     """
+    
+    step_to_kind = {
+        1: 'FIRST',
+        2: 'SECOND',
+        3: 'THIRD'
+    }
+    
     characters_module_path = f"app.prompts.stories.{current_story}.{current_story}_characters_personalities"
     
     # Importar el módulo dinámicamente
@@ -215,7 +250,7 @@ def load_character_personalities(current_story: str, character: str):
     all_attributes = dir(module)
     
     # Filtrar los prompts que cumplen con el patrón
-    formatted_string = f"{character}_CHARACTER_PERSONALITY"
+    formatted_string = f"{step_to_kind[step]}_CHARACTER_PERSONALITY"
     personality_prompts = [attr for attr in all_attributes if re.match(formatted_string + r'.*', attr)]
     
     if not personality_prompts:
@@ -250,7 +285,7 @@ def load_character_auxiliar_prompts(current_story: str, step: int):
     {character}_CHARACTER_{kind}_PROMPT
     donde kind puede ser:
         - SUCCESS
-        - LIFES_LOST
+        - LIVES_LOST
         - FAILURE
     desde un módulo dinámicamente.
     Lanza un AttributeError si no se encuentran prompts.
@@ -261,13 +296,15 @@ def load_character_auxiliar_prompts(current_story: str, step: int):
         3: 'THIRD'
     }
     
+    print(f"STEP: {step} - {step_to_kind[step]}")
+    
     characters_module_path = f"app.prompts.stories.{current_story}.{current_story}_characters_prompts"
     
     module = importlib.import_module(characters_module_path)
     
     all_attributes = dir(module)
     
-    kinds = ['SUCCESS', 'LIFES_LOST', 'FAILURE']
+    kinds = ['SUCCESS', 'LIVES_LOST', 'FAILURE', 'LOOP']
     
     loaded_prompts = {}
     

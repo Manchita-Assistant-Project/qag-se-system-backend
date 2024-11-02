@@ -22,7 +22,7 @@ La pregunta debe ser de nivel: "{difficulty}"
 """
 
 
-Q_OAQ_PROMPT = """
+Q_OEQ_PROMPT = """
 Eres un modelo que genera preguntas de respuesta abierta a partir \
 únicamente de: \
 
@@ -119,27 +119,67 @@ No tienes por qué poner el tipo de la pregunta en la pregunta que generes.
 
 
 Q_EVALUATION_PROMPT = """
-Evaluate the following generated question.
+Dada la definición de las siguientes métricas de evaluación humanas:
 
-Generated question: "{generated_question}"
+- Gramaticalidad: Mide la corrección gramatical de la pregunta generada, independientemente del contexto.
 
-Use this context to evaluate the generated question:
+- Adecuación: Examina la corrección semántica de la pregunta sin importar el contexto.
 
-"{context}"
+- Relevancia: Mide el grado en que la pregunta generada es pertinente y está alineada con el contexto dado.
 
-Evaluate the generated question based on the following criteria, providing a score from 0 to 1 for each, along with a brief explanation:
+- Complejidad: Estima el nivel de razonamiento o esfuerzo cognitivo requerido para responder la pregunta generada.
 
-- Clarity: Is the question easy to understand, and does it clearly include the key concepts being asked about? The question should explicitly mention important elements rather than leaving them implied. For example, if referring to a subject, the question should not be vague like "What is the goal of this subject?" but should specify clearly what it refers to. A score of 1 indicates the question is clear and unambiguous, while a lower score suggests vagueness or potential confusion.
+- Novedad: Mide la originalidad y el carácter distintivo de la pregunta generada en comparación con una pregunta estándar para el contexto dado.
 
-- Relevance: How closely does the question align with the provided context? Does it directly relate to the content, or does it feel tangential or unrelated? A score of 1 reflects that the question is highly relevant to the context, while a lower score suggests that the question may not directly address the information provided.
+Evalúa la siguiente pregunta generada: "{generated_question}"
 
-- Complexity: Does the question demonstrate a deeper level of thinking, or is it overly simplistic? This criterion looks at how much thought the question requires to answer and if it challenges the reader to reflect or analyze. A score of 1 indicates that the question is appropriately challenging for the context, while a lower score suggests it is too basic or too advanced for the situation.
+Use this context to evaluate the generated question: "{context}"
 
-- Originality: Is the question unique, or does it seem like a standard question that could be asked about any similar situation? If the generated question feels generic or overused, penalize originality. A score of 1 indicates a highly original and creative question, while a lower score should be given for questions that seem commonplace.
+Proporciona una calificación entre 0 y 1 para cada criterio e incluye una breve justificación para la puntuación asignada a cada uno.
 
-Provide a score from 0 to 1 for each criterion and include a brief justification for the score assigned to each.
+Siempre retorna las cinco (5) métricas de evaluación y su respectiva justificación.
+"""
 
-Always return the four (4) scores.
+
+Q_REFINER_PROMPT = """
+Dado esta retroalimentación que contiene métricas de evaluación humanas:
+
+"{feedback}"
+
+Modifica la siguiente pregunta: "{generated_question}"
+
+Ten en cuenta que la pregunta tuvo un valor de calidad final de: {quality}
+
+--------------------------------------------------------------------------------
+Modifica la pregunta generada para que las métricas en el feedback promedien {threshold}
+
+Analiza la retroalimentación y realiza los cambios necesarios para mejorar la calidad de la pregunta.
+
+Revisa las métricas de evaluación que tienen valores bajos y realiza los cambios necesarios para mejorarlas.
+
+---------------------------------------------------------------------------------
+Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
+en este arreglo de preguntas:
+
+"{generated_questions_string}"
+
+----------------------------------------------------------------------------------
+¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
+
+----------------------------------------------------------------------------------
+Nunca cambies el tipo de pregunta!
+
+Tipo de la pregunta: "{question_type}"
+    
+----------------------------------------------------------------------------------
+Nunca retornes la misma pregunta generada. ¡Siempre mejórala!
+
+¡Hazle cambios significativos!
+
+----------------------------------------------------------------------------------
+Solo retorna la versión mejorada de la pregunta generada.
+
+No retornes nunca texto como "Pregunta mejorada: ..." o "Versión mejorada: ...". o nada similar.
 """
 
 
@@ -164,6 +204,10 @@ d.) Posible respuesta 4 \
 
 ---------------------------------------------------------------------------------
 Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
+    
+Haz que no todas las respuestas correctas sean la opción "a" o la primera opción, \
+sino que varíen entre las cuatro (4) opciones. Haz que la respuesta correcta se distribuya \
+aleatoriamente entre las cuatro (4) opciones.
 
 ---------------------------------------------------------------------------------
 Nunca generes más de cuatro (4) posibles respuestas.
@@ -188,30 +232,28 @@ dentro de un diccionario Python.
 """
 
 
-A_OAQ_PROMPT = """
-Eres un modelo que genera respuestas de respuesta abierta a partir \
+A_OEQ_PROMPT = """
+Eres un modelo que genera respuestas a partir \
 únicamente de: \
 
 {context}
 
 ---------------------------------------------------------------------------------
-Una de las respuestas que generes debe responder la pregunta:
+Debes generar cinco (5) respuestas correctas que respondan la pregunta:
 
 "{question}"
 
 ---------------------------------------------------------------------------------
 Las respuestas que hagas, generalas todas en un formato de varias opciones. \
 Un ejemplo de esto sería: \
-a.) Posible respuesta 1 \
-b.) Posible respuesta 2 \
-c.) Posible respuesta 3 \
-d.) Posible respuesta 4 \
+a.) Respuesta correcta 1 \
+b.) Respuesta correcta 2 \
+c.) Respuesta correcta 3 \
+d.) Respuesta correcta 4 \
+e.) Respuesta correcta 5 \
 
 ---------------------------------------------------------------------------------
-Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
-    
----------------------------------------------------------------------------------
-Nunca generes más de cuatro (4) posibles respuestas.
+Haz que las respuestas sean muy variadas entre sí. \
     
 ---------------------------------------------------------------------------------
 Las respuestas debe ser de nivel: "{difficulty}"
@@ -220,12 +262,13 @@ Las respuestas debe ser de nivel: "{difficulty}"
 Debes retornar la pregunta ("{question}"), opciones de respuesta correcta en formato JSON. \
 Aquí un ejemplo: \
 
-    "question": "¿Cuál es la capital de Colombia?", \
+    "question": "¿Cómo ha influido la serie Friends en la cultura popular?", \
     "choices": ( \
-        "a": "Bogotá", \
-        "b": "Medellín", \
-        "c": "Cali", \
-        "d": "Barranquilla" \
+        "a": "Friends popularizó frases icónicas como "We were on a break!" y estilos de vida, convirtiéndose en un fenómeno de referencia en la cultura pop.", \
+        "b": "La serie redefinió las comedias de situación al centrarse en un grupo de amigos, inspirando a numerosas comedias con formatos similares.", \
+        "c": "Friends estableció un estándar de estilo en moda y cortes de cabello, como el peinado "Rachel", que marcó tendencia en los años 90.", \
+        "d": "Su enfoque en temas universales, como el amor y la amistad, la convirtió en una serie que trasciende generaciones y sigue siendo popular hoy en día.", \
+        "e": "La dinámica y química entre los personajes mostró la importancia del elenco en el éxito de una serie, influenciando futuras producciones de comedia." \
     ), \
     "answer": "None" \
         
@@ -302,6 +345,42 @@ Siempre retorna el formato completo para todas las preguntas.
 """
 
 
+TEN_Q_OEQ_PROMPT = """
+Genera diez (10) preguntas de respuesta abierta que permitan respuestas detalladas
+y con múltiples enfoques, basadas en el siguiente contexto:
+
+{context}
+
+---------------------------------------------------------------------------------
+Las preguntas deben ser formuladas siempre como preguntas, no como afirmaciones.
+
+---------------------------------------------------------------------------------
+Intenta que las preguntas sean amplias y favorezcan respuestas largas, diversas y
+con interpretaciones variadas, permitiendo que el respondiente aporte ideas
+propias o analice el contexto en profundidad.
+
+---------------------------------------------------------------------------------
+Ocho (8) de las preguntas deben ser de nivel "Fácil" y dos (2) deben ser de nivel
+"Difícil". Asegúrate de que las preguntas de nivel "Difícil" requieran un análisis
+más profundo del contexto o permitan múltiples perspectivas complejas.
+
+---------------------------------------------------------------------------------
+Por favor, retorna las preguntas y las dificultades en el siguiente formato JSON:
+
+[
+    (
+        "question": "¿De qué manera ha influido la serie Friends en la cultura \
+                     popular y en las relaciones entre amigos en la vida real?",
+        "difficulty": "Fácil"
+    ),
+    ...
+]
+
+---------------------------------------------------------------------------------
+Asegúrate de seguir siempre este formato y estructura para todas las preguntas generadas.
+"""
+
+
 TEN_Q_TFQ_PROMPT = """
 Genera diez (10) preguntas de respuesta VERDADERA o FALSA basadas en el siguiente contexto:
 
@@ -333,4 +412,3 @@ Por favor, retorna las preguntas y las dificultades en el siguiente formato JSON
 ---------------------------------------------------------------------------------
 Asegúrate de seguir siempre este formato y estructura para todas las preguntas generadas.
 """
-
