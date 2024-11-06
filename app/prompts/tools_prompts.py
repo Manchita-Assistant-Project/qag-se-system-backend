@@ -38,23 +38,20 @@ Aquí un ejemplo: \
 EVALUATE_PROMPT = """
 Basado únicamente en esta información: \
 
-`{context}`
+"{context}"
+
 ----------------------------------------------------------------
+Responde de forma corta si la respuesta: {answer} \
 
-Responde de forma corta si la respuesta: \
+es la respuesta correcta o incorrecta a la pregunta: {question}
 
-Respuesta: {answer} \
-
-es la respuesta correcta o incorrecta a la pregunta: \
-
-Pregunta: {question}
 ----------------------------------------------------------------
 La respuesta debe ser considerada correcta si refleja conceptos \
 importantes de manera similar o implícita. Ejemplos de respuestas \
 correctas pueden incluir interpretaciones, ideas relacionadas, o \
 puntos relevantes a los temas principales de la pregunta. \
 
-Por ejemplo, si la respuesta es `diversos lenguajes de programación`, \
+Por ejemplo, si la respuesta es `saber diversos lenguajes de programación`, \
 una respuesta similar sería `saber programar`. \
 
 También, debes ser flexible con la ortografía y la gramática. \
@@ -64,6 +61,7 @@ deberías considerar la respuesta como correcta. \
 
 ¡No tiene que ser la respuesta tal cuál! \
 
+----------------------------------------------------------------
 Puede ser una respuesta similar o una respuesta que implique la respuesta correcta. \
 
 Responde de forma breve:
@@ -71,6 +69,18 @@ Responde de forma breve:
 Si la respuesta cubre ideas centrales del contexto, responde: "¡La respuesta es correcta!"
 Si la respuesta no es relevante o no cubre ideas centrales, responde: "La respuesta es incorrecta..."
 Si la respuesta proporcionada es ****, responde "La respuesta es incorrecta..."
+
+-----------------------------------------------------------------
+Debes ser flexible con la ortografía. \
+Está bien si la respuesta no está escrita exactamente igual que la respuesta correcta. \
+
+Por ejemplo:
+- Si la respuesta correcta es "falso" y el usuario ingresa algo mal escrito como "flaso" \
+o cualquiero variación de la respuesta correcta pero mal escrita, debes considerarla correcta. \
+- Si la respuesta correcta es "verdadero" y el usuario ingresa algo mal escrito como "verdaero" \
+o cualquier variación de la respuesta correcta mal escrita, debes considerarla correcta. \
+
+-----------------------------------------------------------------
 """
 
 

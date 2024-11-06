@@ -284,11 +284,11 @@ def narrator_tool(current_story: str, step: int, db_id: str) -> str:
     prompt = prompt_template.format(step=step)
 
     response_text = model.invoke(prompt).content
-    
+
     if step == 4:
-        response_text += f"\n\n¡Felicitaciones, completaste la historia! Puedes pedirle a Manchita otra historia \
-                           o pedirle preguntas para ganar puntos. ¡Tú decides!"
-    
+        response_text += "\n\n¡Felicitaciones, completaste la historia! Puedes pedirme otra historia \
+                          o preguntas para ganar puntos. ¡Tú decides!"
+
     return f"✒️  {response_text}", current_story
 
 def verify_tool_call(message: AIMessage) -> bool:
