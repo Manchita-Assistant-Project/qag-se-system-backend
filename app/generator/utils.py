@@ -68,6 +68,29 @@ def update_json(db_id: str, filename: str, data: dict):
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(json_dict, f, ensure_ascii=False, indent=4)
 
+def update_temp_json(temp_filename: str, data: dict):
+    if os.path.exists(temp_filename):
+        with open(temp_filename, 'r', encoding='utf-8') as f:
+            json_dict = json.load(f)
+    else:
+        json_dict = {"content": []}
+
+    json_dict["content"].append(data)
+
+    with open(temp_filename, 'w', encoding='utf-8') as f:
+        json.dump(json_dict, f, ensure_ascii=False, indent=4)
+
+def merge_temp_files(temp_files, main_json_path):
+    main_data = {"content": []}
+    for temp_file in temp_files:
+        with open(temp_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            if "content" in data:
+                main_data["content"].extend(data["content"])
+    
+    with open(main_json_path, 'w', encoding='utf-8') as f:
+        json.dump(main_data, f, ensure_ascii=False, indent=4)
+
 def delete_content_json(db_id: str, filename: str):
     path = os.path.join(DATABASES_PATH, db_id, 'q&as', filename + '.json')
     with open(path, 'r', encoding='utf-8') as f:

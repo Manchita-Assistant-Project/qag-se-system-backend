@@ -3,6 +3,7 @@ import re
 import json
 import random
 import string
+import tempfile
 import numpy as np
 import pandas as pd
 from typing import Dict, List, TypedDict
@@ -441,6 +442,22 @@ def find_most_different_question(db_id: str, questions: list, question_type: int
     # Retornar la pregunta con la menor similitud y su valor
     return most_different_question, min_similarity
 
+# def save_question_tool(db_id: str, question: dict, question_type: str):
+#     utils.update_json(db_id, question_type, question)
+#     utils.update_json(db_id, 'qs', question)
+
 def save_question_tool(db_id: str, question: dict, question_type: str):
-    utils.update_json(db_id, question_type, question)
-    utils.update_json(db_id, 'qs', question)
+    # Crea un archivo temporal para almacenar las preguntas
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.json')
+    temp_filename = temp_file.name
+    temp_file.close()
+
+    # Inicializa el archivo con una estructura básica si está vacío
+    if not os.path.exists(temp_filename) or os.path.getsize(temp_filename) == 0:
+        with open(temp_filename, 'w', encoding='utf-8') as f:
+            json.dump({"content": []}, f)
+
+    # Actualiza el archivo temporal con la nueva pregunta
+    utils.update_temp_json(temp_filename, question)  # Guarda la pregunta para 'qs' también
+
+    return temp_filename

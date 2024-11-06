@@ -173,6 +173,10 @@ Nunca retornes la misma pregunta generada. ¡Siempre mejórala!
 ----------------------------------------------------------------------------------
 Solo retorna la versión mejorada de la pregunta generada.
 
+Es muy importante que nunca respondas la pregunta original. Solo retorna la versión mejorada.
+
+Es muy importante que nunca agregues opciones de respuestas. Solo retorna la pregunta.
+
 No retornes nunca texto como "Pregunta mejorada: ..." o "Versión mejorada: ...". o nada similar.
 """
 

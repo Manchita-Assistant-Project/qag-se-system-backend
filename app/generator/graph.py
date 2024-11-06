@@ -137,9 +137,13 @@ def use_graph(question_type: int, question_difficulty_int: int, similarity_thres
     print("Using graph...")
     # time.sleep(10)
     
+    last_message = ""
     for event in graph.stream({"messages": [HumanMessage(content=question_type)]}, config, stream_mode="values"):
         print(f"NEXT: {graph.get_state(thread).next}")
         if graph.get_state(thread).next != "context_generator" and len(event['messages'][-1].content) <= 50:
             event['messages'][-1].pretty_print()
+            last_message = event['messages'][-1].content
+            
+    return last_message
 
 # use_graph(1, 1, 0.8, 0.75)

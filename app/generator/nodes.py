@@ -152,4 +152,6 @@ def data_saver_tool(state):
     if "answer" not in question_format_dict:
         question_format_dict["answer"] = "None"
 
-    tools.save_question_tool(db_id, question_format_dict, type_to_string[question["question_type"]].lower() + 's')
+    temp_filename = tools.save_question_tool(db_id, question_format_dict, type_to_string[question["question_type"]].lower() + 's')
+    
+    return { "messages": [temp_filename] }

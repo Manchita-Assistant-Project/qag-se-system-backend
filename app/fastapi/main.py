@@ -319,8 +319,9 @@ async def upload_pdf(files1: List[UploadFile] = File(...), files2: Optional[List
         quality_threshold = 0.82
         mcq_similarity_threshold = 0.8
         tfq_similarity_threshold = 0.85
+        number_of_questions = 1
         print("GENERATING Q&As")
-        generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id)
+        generator.generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id, number_of_questions)
     else:
         files_location = os.path.join(chroma_utils.DATABASES_PATH, db_id, 'external')
         chroma_utils.verify_directory_exists(files_location)
