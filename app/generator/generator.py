@@ -59,7 +59,7 @@ def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: f
     
     # preguntas "Opción Múltiple"
     print("Generating MCQs...")
-    for i in range(1, 21): # 21
+    for i in range(1, 4): # 21
         question_type = 1
         if (i % 3 == 0):
             question_difficulty_int = 1
@@ -82,7 +82,7 @@ def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: f
     
     # preguntas "Verdadero o Falso"
     print("Generating TFQs...")
-    for i in range(1, 11): # 11
+    for i in range(1, 4): # 21
         question_type = 3
         if (i % 3 == 0):
             question_difficulty_int = 1
@@ -104,7 +104,7 @@ def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: f
     
     # preguntas de Respuesta Abierta
     print("Generating OEQs...")
-    for i in range(1, 11): # 11
+    for i in range(1, 4): # 21
         question_type = 2
         if (i % 3 == 0):
             question_difficulty_int = 1
@@ -132,9 +132,9 @@ def generate_qandas(mcq_similarity_threshold: float, tfq_similarity_threshold: f
 #     mcq_similarity_threshold = 0.8
 #     tfq_similarity_threshold = 0.8
 #     print('--- GENERATING FOR FIRST DATABASE ---')
-#     generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id='TXVHBV')
-#     print('--- GENERATING FOR SECOND DATABASE ---')
-#     generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id='XLAVUD')
-#     print('--- GENERATING FOR THIRD DATABASE ---')
-#     generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id='YNHXDE')
+#     generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id='NKTQNH')
+#     # print('--- GENERATING FOR SECOND DATABASE ---')
+#     # generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id='XLAVUD')
+#     # print('--- GENERATING FOR THIRD DATABASE ---')
+#     # generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id='YNHXDE')
 #     print('--- DONE ---')

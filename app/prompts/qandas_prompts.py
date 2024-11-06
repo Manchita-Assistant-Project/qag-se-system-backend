@@ -121,23 +121,23 @@ No tienes por qué poner el tipo de la pregunta en la pregunta que generes.
 Q_EVALUATION_PROMPT = """
 Dada la definición de las siguientes métricas de evaluación humanas:
 
-- Gramaticalidad: Mide la corrección gramatical de la pregunta generada, independientemente del contexto.
+- Claridad: ¿Es fácil de entender la pregunta y menciona claramente los conceptos clave que se están preguntando? La pregunta debe incluir explícitamente los elementos importantes en lugar de dejarlos implícitos. Por ejemplo, si se refiere a una asignatura, la pregunta no debería ser vaga como "¿Cuál es el objetivo de esta asignatura?", sino que debería especificar claramente a qué se refiere. Si aparece un concepto específico del contexto, es importante que esté claro qué significa dentro de la pregunta. Una puntuación de 1 indica que la pregunta es clara y no tiene ambigüedades, mientras que una puntuación más baja sugiere vaguedad o posible confusión.
 
-- Adecuación: Examina la corrección semántica de la pregunta sin importar el contexto.
+- Contextualización: ¿Aprovecha la pregunta los elementos específicos del contexto, mostrando una comprensión detallada de la información dada? Esto implica que la pregunta no solo es relevante, sino que integra términos, detalles o conceptos únicos presentes en el contexto proporcionado. Una puntuación de 1 indica que la pregunta está claramente contextualizada y refleja los detalles únicos del tema, mientras que una puntuación más baja sugiere que la pregunta podría ser genérica o no aprovechar la especificidad del contexto.
 
-- Relevancia: Mide el grado en que la pregunta generada es pertinente y está alineada con el contexto dado.
+- Complejidad: ¿La pregunta demuestra un nivel de pensamiento más profundo, o es demasiado simple? Este criterio observa cuánta reflexión requiere la pregunta para responder y si desafía al lector a reflexionar o analizar. Una puntuación de 1 indica que la pregunta es apropiadamente desafiante para el contexto, mientras que una puntuación más baja sugiere que es demasiado básica o demasiado avanzada para la situación.
 
-- Complejidad: Estima el nivel de razonamiento o esfuerzo cognitivo requerido para responder la pregunta generada.
-
-- Novedad: Mide la originalidad y el carácter distintivo de la pregunta generada en comparación con una pregunta estándar para el contexto dado.
+- Originalidad: ¿La pregunta es única o parece una pregunta estándar que podría hacerse en cualquier situación similar? Si la pregunta generada se siente genérica o sobreutilizada, penaliza la originalidad. Una puntuación de 1 indica que la pregunta es altamente original y creativa, mientras que una puntuación más baja se debe otorgar a preguntas que parecen comunes.
 
 Evalúa la siguiente pregunta generada: "{generated_question}"
 
-Use this context to evaluate the generated question: "{context}"
+Usa este contexto para evaluar la pregunta generada: "{context}"
 
 Proporciona una calificación entre 0 y 1 para cada criterio e incluye una breve justificación para la puntuación asignada a cada uno.
 
-Siempre retorna las cinco (5) métricas de evaluación y su respectiva justificación.
+Siempre retorna las cuatro (4) métricas de evaluación y su respectiva justificación.
+
+Por favor, nunca agregues símbolos como "*" a tu respuesta.
 """
 
 
@@ -157,14 +157,8 @@ Analiza la retroalimentación y realiza los cambios necesarios para mejorar la c
 
 Revisa las métricas de evaluación que tienen valores bajos y realiza los cambios necesarios para mejorarlas.
 
----------------------------------------------------------------------------------
-Es muy importante que la pregunta que generes no sea igual a ninguna pregunta
-en este arreglo de preguntas:
-
-"{generated_questions_string}"
-
-----------------------------------------------------------------------------------
-¡Haz que la pregunta sea creativa, pero siempre teniendo en cuenta el `contexto`!
+Es importante que tengas en cuenta que "mejorar la pregunta" no siempre es hacerla más larga o agregarle preguntas.
+Ten en cuenta las métricas de evaluación y el feedback para MODIFICAR la pregunta.
 
 ----------------------------------------------------------------------------------
 Nunca cambies el tipo de pregunta!
@@ -195,7 +189,7 @@ Una de las respuestas que generes debe responder la pregunta:
 "{question}"
 
 ---------------------------------------------------------------------------------
-Las respuestas que hagas, generalas todas en un formato de varias opciones. \
+Las respuestas deben generarse en un formato de opciones múltiples. \
 Un ejemplo de esto sería: \
 a.) Posible respuesta 1 \
 b.) Posible respuesta 2 \
@@ -203,32 +197,57 @@ c.) Posible respuesta 3 \
 d.) Posible respuesta 4 \
 
 ---------------------------------------------------------------------------------
-Haz que las respuestas sean muy variadas entre sí y entre cada pregunta. \
-    
-Haz que no todas las respuestas correctas sean la opción "a" o la primera opción, \
-sino que varíen entre las cuatro (4) opciones. Haz que la respuesta correcta se distribuya \
-aleatoriamente entre las cuatro (4) opciones.
+Asegúrate de que las respuestas sean muy variadas entre sí y entre cada pregunta. \
+
+Nunca generes más de cuatro (4) opciones posibles. \
 
 ---------------------------------------------------------------------------------
-Nunca generes más de cuatro (4) posibles respuestas.
+Las respuestas deben ser de nivel: "{difficulty}"
 
 ---------------------------------------------------------------------------------
-Las respuestas debe ser de nivel: "{difficulty}"
+**ETAPA DE GENERACIÓN**: Genera una pregunta en el siguiente formato, incluyendo opciones \
+y la respuesta correcta, en un diccionario Python:
+(
+    "question": "{question}",
+    "choices": (
+        "a": "Respuesta 1",
+        "b": "Respuesta 2",
+        "c": "Respuesta 3",
+        "d": "Respuesta 4"
+    ),
+    "answer": "c"  # Esta es la opción correcta
+)
+
+No todas las respuestas correctas deben ser la opción "c"; \
+varíalas aleatoriamente entre las cuatro (4) opciones (recuerda que las opciones son "a", "b", "c", "d"). \
 
 ---------------------------------------------------------------------------------
-Debes retornar la pregunta ("{question}"), opciones y respuesta correcta en formato JSON. \
-Aquí un ejemplo: \
+**ETAPA DE VERIFICACIÓN DE RESPUESTA CORRECTA**: Revisa si la respuesta marcada \
+en "answer" es realmente la más adecuada y precisa según el contexto proporcionado. \
+Si encuentras algún problema, ajusta las opciones para asegurar que la respuesta \
+correcta esté bien identificada.
 
-    "question": "¿Cuál es la capital de Colombia?", \
-    "choices": ( \
-        "a": "Bogotá", \
-        "b": "Medellín", \
-        "c": "Cali", \
-        "d": "Barranquilla" \
-    ), \
-    "answer": "a" \
-        
-dentro de un diccionario Python.
+---------------------------------------------------------------------------------
+**ETAPA DE VERIFICACIÓN DE RESPUESTAS INCORRECTAS**: Ahora verifica cada opción \
+incorrecta para asegurarte de que sean respuestas plausibles pero incorrectas. \
+Las respuestas incorrectas deben estar relacionadas con el contexto pero ser claramente \
+falsas o menos adecuadas que la respuesta correcta, sin ser demasiado evidentes. \
+Asegúrate de que ninguna de las respuestas incorrectas pueda confundirse fácilmente \
+con la respuesta correcta.
+
+---------------------------------------------------------------------------------
+Retorna el diccionario final en el siguiente formato: 
+
+(
+    "question": "{question}",
+    "choices": (
+        "a": "Respuesta 1",
+        "b": "Respuesta 2",
+        "c": "Respuesta 3",
+        "d": "Respuesta 4"
+    ),
+    "answer": "c"  # Esta es la opción correcta después de verificación
+)
 """
 
 
@@ -273,6 +292,8 @@ Aquí un ejemplo: \
     "answer": "None" \
         
 dentro de un diccionario Python.
+
+Nunca olvides ninguno de los tres (3) elementos: "question", "choices" y "answer".
 """
 
 

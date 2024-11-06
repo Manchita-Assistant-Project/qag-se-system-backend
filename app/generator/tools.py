@@ -218,28 +218,55 @@ def conditional_evaluation(db_id: str, generated_question: str, threshold: float
     return response
 
 def structure_output_metrics(evaluation: str) -> float:
-    grammaticality_pattern = r"Gramaticalidad:\s*((0|1)(\.\d+)?)"
-    appropiateness_pattern = r"Adecuación:\s*((0|1)(\.\d+)?)"
-    relevance_pattern = r"Relevancia:\s*((0|1)(\.\d+)?)"
-    complexity_pattern = r"Complejidad:\s*((0|1)(\.\d+)?)"
-    novelty_pattern = r"Novedad:\s*((0|1)(\.\d+)?)"
+    # grammaticality_pattern = r"Gramaticalidad:\s*((0|1)(\.\d+)?)"
+    # appropiateness_pattern = r"Adecuación:\s*((0|1)(\.\d+)?)"
+    # relevance_pattern = r"Relevancia:\s*((0|1)(\.\d+)?)"
+    # complexity_pattern = r"Complejidad:\s*((0|1)(\.\d+)?)"
+    # novelty_pattern = r"Novedad:\s*((0|1)(\.\d+)?)"
+    # conciseness_pattern = r"Concisión:\s*((0|1)(\.\d+)?)"
+    # ambiguity_pattern = r"Ambigüedad:\s*((0|1)(\.\d+)?)"
 
-    grammaticality = re.search(grammaticality_pattern, evaluation)
-    appropiateness = re.search(appropiateness_pattern, evaluation)
+    # grammaticality = re.search(grammaticality_pattern, evaluation)
+    # appropiateness = re.search(appropiateness_pattern, evaluation)
+    # relevance = re.search(relevance_pattern, evaluation)
+    # complexity = re.search(complexity_pattern, evaluation)
+    # novelty = re.search(novelty_pattern, evaluation)
+    # conciseness = re.search(conciseness_pattern, evaluation)
+    # ambiguity = re.search(ambiguity_pattern, evaluation)
+
+    # gramamaticality_score = float(grammaticality.group(1)) if grammaticality else 0
+    # appropiateness_score = float(appropiateness.group(1)) if appropiateness else 0
+    # relevance_score = float(relevance.group(1)) if relevance else 0
+    # complexity_score = float(complexity.group(1)) if complexity else 0
+    # novelty_score = float(novelty.group(1)) if novelty else 0
+    # conciseness_score = float(conciseness.group(1)) if conciseness else 0
+    # ambiguity_score = float(ambiguity.group(1)) if ambiguity else 0
+    
+    # print(f"Grammaticality: {gramamaticality_score} | Appropiateness: {appropiateness_score} | Relevance: {relevance_score} | Complexity: {complexity_score} | Novelty: {novelty_score} | Conciseness: {conciseness_score} | Ambiguity: {ambiguity_score}")
+
+    # average = round((gramamaticality_score + appropiateness_score + relevance_score + complexity_score + novelty_score + conciseness_score + ambiguity_score) / 7, 3)
+    
+    # return average
+    
+    clarity_pattern = r"Claridad:\s*((0|1)(\.\d+)?)"
+    relevance_pattern = r"Contextualización:\s*((0|1)(\.\d+)?)"
+    complexity_pattern = r"Complejidad:\s*((0|1)(\.\d+)?)"
+    originality_pattern = r"Originalidad:\s*((0|1)(\.\d+)?)"
+
+    clarity = re.search(clarity_pattern, evaluation)
     relevance = re.search(relevance_pattern, evaluation)
     complexity = re.search(complexity_pattern, evaluation)
-    novelty = re.search(novelty_pattern, evaluation)
+    originality = re.search(originality_pattern, evaluation)
 
-    gramamaticality_score = float(grammaticality.group(1)) if grammaticality else 0
-    appropiateness_score = float(appropiateness.group(1)) if appropiateness else 0
+    clarity_score = float(clarity.group(1)) if clarity else 0
     relevance_score = float(relevance.group(1)) if relevance else 0
     complexity_score = float(complexity.group(1)) if complexity else 0
-    novelty_score = float(novelty.group(1)) if novelty else 0
-    
-    print(f"Grammaticality: {gramamaticality_score} | Appropiateness: {appropiateness_score} | Relevance: {relevance_score} | Complexity: {complexity_score} | Novelty: {novelty_score}")
+    originality_score = float(originality.group(1)) if originality else 0
 
-    average = round((gramamaticality_score + appropiateness_score + relevance_score + complexity_score + novelty_score) / 5, 3)
-    
+    print(f"Claridad: {clarity_score} | Contextualización: {relevance_score} | Complejidad: {complexity_score} | Originalidad: {originality_score}")
+
+    average = round((clarity_score + relevance_score + complexity_score + originality_score) / 4, 2)
+
     return average
 
 def evaluate_quality_tool(db_id: str, generated_question: str, threshold: float):       

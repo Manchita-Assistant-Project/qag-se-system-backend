@@ -285,7 +285,7 @@ def knowledge_base_exists(bd_id: str):
 # ==================================== #
 
 @app.post("/upload_file")
-async def upload_pdf(files1: List[UploadFile] = File(...), files2: List[UploadFile] = File(...)):
+async def upload_pdf(files1: List[UploadFile] = File(...), files2: Optional[List[UploadFile]] = File([])):
     db_id = chroma_utils.generate_bd_id()
     print(f"DB_ID: {db_id}")
     
@@ -314,7 +314,7 @@ async def upload_pdf(files1: List[UploadFile] = File(...), files2: List[UploadFi
         # Elimina el archivo temporal
         os.remove(file_location)    
         
-    if len(files2) < 0:
+    if len(files2) == 0:
         # Generar el archivo JSON con las preguntas y respuestas
         quality_threshold = 0.82
         mcq_similarity_threshold = 0.8
@@ -350,6 +350,9 @@ async def upload_pdf(files1: List[UploadFile] = File(...), files2: List[UploadFi
     with open(qandas_json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
-    data['content'].append({ "code": db_id })
+    # data["content"].append({ "code": db_id })
+    data["content"].insert(0, { "code": db_id })
+    
+    print(f"DATA: {data}")
         
     return data

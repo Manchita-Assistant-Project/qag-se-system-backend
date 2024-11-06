@@ -137,9 +137,9 @@ def data_saver_tool(state):
     double_quotes_string = question_format.replace('"', '/')
     double_quotes_string = double_quotes_string.replace("'", '"')
     double_quotes_string = double_quotes_string.replace("/", "'")
-    print(double_quotes_string)
+    # print(double_quotes_string)
     question_format_dict = json.loads(double_quotes_string)
-    print(question_format_dict)
+    # print(question_format_dict)
 
     type_to_string = {
         1: "MCQ",
@@ -148,5 +148,8 @@ def data_saver_tool(state):
     }
     question_format_dict["type"] = type_to_string[question["question_type"]]
     question_format_dict["difficulty"] = question["question_difficulty"]
+
+    if "answer" not in question_format_dict:
+        question_format_dict["answer"] = "None"
 
     tools.save_question_tool(db_id, question_format_dict, type_to_string[question["question_type"]].lower() + 's')
