@@ -6,12 +6,12 @@ import app.generator.tools as tools
 from langchain_core.messages import RemoveMessage
 
 def context_generator_node(state):
-    print('--- CONTEXT GENERATOR ---')
+    # print('--- CONTEXT GENERATOR ---')
     db_id = state["db_id"]
     question = state["question"]
     messages_to_remove = state["messages_to_remove"]
     
-    print(f"MESSAGES: {state['messages']}")
+    # print(f"MESSAGES: {state['messages']}")
     
     if question["approved"] == True: # se genera un contexto basado en la pregunta generada
         result = tools.get_context_tool(db_id, question["question"], k=5)
@@ -23,13 +23,13 @@ def context_generator_node(state):
                                                       # se ha agregado el contexto, entonces el índice
                                                       # será el siguiente
                                                    
-    print(f"CONTEXT INDEXES: {messages_to_remove}")
+    # print(f"CONTEXT INDEXES: {messages_to_remove}")
                                            
     return { "messages": [result], "messages_to_remove": messages_to_remove }
 
 def question_generator_node(state):
-    print('--- QUESTION GENERATOR ---')
-    print(f"ESTADO: {state.keys()}")
+    # print('--- QUESTION GENERATOR ---')
+    # print(f"ESTADO: {state.keys()}")
     db_id = state["db_id"]
     question = state["question"]
     question_type = question["question_type"] # para este momento ya existe
@@ -40,11 +40,11 @@ def question_generator_node(state):
     result = tools.ten_questions_generator_tool(db_id, question_type, question_difficulty, context)
     
     # question["question"] = result
-    # print(f"question: {result}")
+    # # print(f"question: {result}")
     return { "messages": [result[0]["question"]], "question": question, "questions": result }
 
 def question_seen_node(state):
-    print("--- QUESTION SEEN ---")
+    # print("--- QUESTION SEEN ---")
     db_id = state["db_id"]
     question = state["question"]
     question_type = question["question_type"]
@@ -57,7 +57,7 @@ def question_seen_node(state):
     # seen = tools.question_seen_embeddings_tool(question, question_type, similarity_threshold)
     question_n, seen = tools.find_most_different_question(db_id, questions, question_type, similarity_threshold)
     
-    print(f"Similarity: {seen}")
+    # print(f"Similarity: {seen}")
     
     if seen >= similarity_threshold:
         return { "messages": [f"{seen}|||{seen}"] }
@@ -67,23 +67,23 @@ def question_seen_node(state):
     return { "messages": [f"{question['question']}|||{seen}"], "question": question }
 
 def messages_remover_node(state):
-    print('--- MESSAGES REMOVER ---')
+    # print('--- MESSAGES REMOVER ---')
     messages = state["messages"]
     messages_to_remove = state["messages_to_remove"]
-    print(f"CONTEXT INDEXES: {messages_to_remove}")    
+    # print(f"CONTEXT INDEXES: {messages_to_remove}")    
     
-    print("Removed contexts")
+    # print("Removed contexts")
     return { "messages": [RemoveMessage(id=messages[each_index].id) for each_index in messages_to_remove], "messages_to_remove": [] }
 
 def question_evaluator_node(state):
-    print('--- QUESTION EVALUATOR ---')
+    # print('--- QUESTION EVALUATOR ---')
     db_id = state["db_id"]
     question = state["question"]
     messages_to_remove = state["messages_to_remove"]
     quality_threshold = state["threshold"]["quality_threshold"]
     
     generated_question = state["messages"][-1].content.replace("'", '"').split('|||')[0]
-    print(f"PREGUNTA A EVALUAR: {generated_question}")
+    # print(f"PREGUNTA A EVALUAR: {generated_question}")
     # generated_question_dict = json.loads(generated_question_dict_str) if generated_question_dict_str[0] == '{' else generated_question_dict_str
     # generated_question = generated_question_dict["question"]
     quality, feedback = tools.evaluate_quality_tool(db_id, generated_question, quality_threshold)
@@ -99,7 +99,7 @@ def question_evaluator_node(state):
     return { "messages": [f"{feedback}|||{quality}"], "question": question, "messages_to_remove": messages_to_remove }
 
 def question_refiner_node(state):
-    print('--- QUESTION REFINER ---')
+    # print('--- QUESTION REFINER ---')
     db_id = state["db_id"]
     question = state["question"]
     quality_threshold = state["threshold"]["quality_threshold"]
@@ -112,7 +112,7 @@ def question_refiner_node(state):
     return { "messages": [response] }
 
 def answer_generator_node(state):
-    print('--- ANSWER GENERATOR ---')
+    # print('--- ANSWER GENERATOR ---')
     question = state["question"]
     question_type = question["question_type"]
     question_difficulty = question["question_difficulty"]
@@ -120,13 +120,13 @@ def answer_generator_node(state):
     context = state["messages"][-1].content
 
     result = tools.answer_generator_tool(question_type, question["question"], question_difficulty, context)
-    print(result)
+    # print(result)
     question["question_answers"] = result
 
     return { "messages": [result], "question": question }
 
 def data_saver_tool(state):
-    print('--- DATA SAVER ---')
+    # print('--- DATA SAVER ---')
     db_id = state["db_id"]
     question = state["question"]
     question_format = question["question_answers"]
@@ -137,9 +137,9 @@ def data_saver_tool(state):
     double_quotes_string = question_format.replace('"', '/')
     double_quotes_string = double_quotes_string.replace("'", '"')
     double_quotes_string = double_quotes_string.replace("/", "'")
-    # print(double_quotes_string)
+    # # print(double_quotes_string)
     question_format_dict = json.loads(double_quotes_string)
-    # print(question_format_dict)
+    # # print(question_format_dict)
 
     type_to_string = {
         1: "MCQ",

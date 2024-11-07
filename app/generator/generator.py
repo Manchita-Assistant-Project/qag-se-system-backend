@@ -220,7 +220,7 @@ def generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_
 #     quality_threshold = 0.82
 #     mcq_similarity_threshold = 0.8
 #     tfq_similarity_threshold = 0.8
-#     number_of_questions = 20
+#     number_of_questions = 1
     
 #     start_time = time.time()  # Tiempo de inicio
     

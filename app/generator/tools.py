@@ -78,7 +78,7 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
 
     generated_questions = [question["question"] for question in generated_questions_list]
 
-    # print(f"generated_questions: {generated_questions}")
+    # # print(f"generated_questions: {generated_questions}")
     
     generated_questions_string = utils.structure_generated_questions_string(generated_questions)
 
@@ -94,11 +94,11 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
     prompt = prompt_template.format(context=context, difficulty=difficulty, harder_prompt="", generated_questions=generated_questions_string)
 
     response_text = llm.invoke(prompt).content
-    print(f"response_text: {response_text}")
+    # print(f"response_text: {response_text}")
     
     if difficulty == 'Difícil':
         rand_int = random.randint(2, 5) # cinco niveles de dificultad
-        print(f"rand_int: {rand_int}")
+        # print(f"rand_int: {rand_int}")
         harder_prompt_template = ChatPromptTemplate.from_template(HARDER_Q_PROMPT)
         question_type_to_string = {
             1: "Opción Múltiple",
@@ -108,7 +108,7 @@ def question_generator_tool(question_type: int, difficulty: str, context: str):
         for _ in range(rand_int): # iterar para hacer la pregunta para hacerla más difícil
             harder_prompt = harder_prompt_template.format(question=response_text, context=context, question_type=question_type_to_string[question_type])
             response_text = llm.invoke(harder_prompt).content
-            print(f"response_text: {response_text}")
+            # print(f"response_text: {response_text}")
     
     return response_text
 
@@ -119,10 +119,10 @@ def ten_questions_generator_tool(db_id: str, question_type: int, difficulty: str
 
     generated_questions = [question["question"] for question in generated_questions_list]
 
-    # print(f"generated_questions: {generated_questions}")
+    # # print(f"generated_questions: {generated_questions}")
     
     generated_questions_string = utils.structure_generated_questions_string(generated_questions)
-    # print(generated_questions_string)
+    # # print(generated_questions_string)
     
     # llm = AzureChatOpenAI(
     #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
@@ -141,11 +141,11 @@ def ten_questions_generator_tool(db_id: str, question_type: int, difficulty: str
     prompt = prompt_template.format(context=context, generated_questions=generated_questions_string)
 
     # response_text = llm.invoke(prompt).content
-    # print(f"response_text 1: {response_text}")
+    # # print(f"response_text 1: {response_text}")
     
     structured_llm = llm.with_structured_output(QuestionsOutputList)
     response_text = structured_llm.invoke(prompt)
-    # print(f"response_text 2: {response_text}")
+    # # print(f"response_text 2: {response_text}")
     
     return response_text["questions"]
 
@@ -162,7 +162,7 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
     
     types = [A_MCQ_PROMPT, A_OEQ_PROMPT, A_TFQ_PROMPT]
     
-    print(f'PREGUNTA: {question}')
+    # print(f'PREGUNTA: {question}')
     prompt_template = ChatPromptTemplate.from_template(types[q_type - 1])
     prompt = prompt_template.format(context=context, question=question, difficulty=difficulty)
     structured_llm = llm.with_structured_output(FullQuestionOutput)
@@ -176,11 +176,11 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
     # for _ in range(10):
     #     try:
     #         response_text = structured_llm.invoke(prompt)
-    #         print(response_text)
+    #         # print(response_text)
     #         response_dict = json.loads(response_text)  # intentamos convertir el texto a dict
     #         return response_text
     #     except json.JSONDecodeError:
-    #         print("Error al convertir response_text a dict. Regenerando el texto...")
+    #         # print("Error al convertir response_text a dict. Regenerando el texto...")
     #         prompt += f"""
     #         ---------------------------------------------------------------------------------
     #         [UPDATE PROMPT] No generaste el formato correcto de respuestas.
@@ -192,14 +192,14 @@ def answer_generator_tool(q_type: int, question: str, difficulty: str, context: 
     #         """
     #         continue  # vuelve a intentar si hay error
     #     except Exception as e:
-    #         print(f"Otro error ocurrió: {e}")
+    #         # print(f"Otro error ocurrió: {e}")
     #         break  # rompe el loop si ocurre un error inesperado no relacionado con JSON
 
     # return "ERROR"
 
 def conditional_evaluation(db_id: str, generated_question: str, threshold: float):
     context = get_context(db_id)
-    print("Got context")
+    # print("Got context")
     # llm = AzureChatOpenAI(
     #     deployment_name=os.environ["OPENAI_DEPLOYMENT_NAME"],
     #     temperature=0.2
@@ -210,11 +210,11 @@ def conditional_evaluation(db_id: str, generated_question: str, threshold: float
         temperature=0.2
     )
     
-    print(f"Evaluating: {generated_question}")
+    # print(f"Evaluating: {generated_question}")
     prompt_template = ChatPromptTemplate.from_template(Q_EVALUATION_PROMPT)
     prompt = prompt_template.format(generated_question=generated_question, context=context)
     response = llm.invoke(prompt).content
-    print(f"LLM response: {response}")
+    # print(f"LLM response: {response}")
     
     return response
 
@@ -243,7 +243,7 @@ def structure_output_metrics(evaluation: str) -> float:
     # conciseness_score = float(conciseness.group(1)) if conciseness else 0
     # ambiguity_score = float(ambiguity.group(1)) if ambiguity else 0
     
-    # print(f"Grammaticality: {gramamaticality_score} | Appropiateness: {appropiateness_score} | Relevance: {relevance_score} | Complexity: {complexity_score} | Novelty: {novelty_score} | Conciseness: {conciseness_score} | Ambiguity: {ambiguity_score}")
+    # # print(f"Grammaticality: {gramamaticality_score} | Appropiateness: {appropiateness_score} | Relevance: {relevance_score} | Complexity: {complexity_score} | Novelty: {novelty_score} | Conciseness: {conciseness_score} | Ambiguity: {ambiguity_score}")
 
     # average = round((gramamaticality_score + appropiateness_score + relevance_score + complexity_score + novelty_score + conciseness_score + ambiguity_score) / 7, 3)
     
@@ -264,7 +264,7 @@ def structure_output_metrics(evaluation: str) -> float:
     complexity_score = float(complexity.group(1)) if complexity else 0
     originality_score = float(originality.group(1)) if originality else 0
 
-    print(f"Claridad: {clarity_score} | Contextualización: {relevance_score} | Complejidad: {complexity_score} | Originalidad: {originality_score}")
+    # print(f"Claridad: {clarity_score} | Contextualización: {relevance_score} | Complejidad: {complexity_score} | Originalidad: {originality_score}")
 
     average = round((clarity_score + relevance_score + complexity_score + originality_score) / 4, 2)
 
@@ -274,7 +274,7 @@ def evaluate_quality_tool(db_id: str, generated_question: str, threshold: float)
     response = conditional_evaluation(db_id, generated_question, threshold)
     similarity = structure_output_metrics(response)
     
-    print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
+    # print(f"[SIMILARITY EVALUATION TOOL] Similarity: {similarity}")
     return similarity, response
 
 def refine_question(db_id: str, generated_question: str, feedback: str, quality: float, question_type: int, threshold: float):
@@ -311,7 +311,7 @@ def refine_question(db_id: str, generated_question: str, feedback: str, quality:
         question_type=question_type_to_string[question_type]
     )
     response = llm.invoke(prompt).content
-    print(f"LLM response: {response}")
+    # print(f"LLM response: {response}")
     return response
 
 def refine_question_tool(db_id: str, generated_question: str, feedback: str, similarity: float, question_type: int, threshold: float):   
@@ -328,7 +328,7 @@ def question_seen_tool(question: dict, question_type: int):
     
     generated_questions_string = utils.structure_generated_questions_string(generated_questions)
     
-    print(f"Evaluating if {question} was already seen...")
+    # print(f"Evaluating if {question} was already seen...")
         
     seen = any(value == question["question"] for value in generated_questions)
     
@@ -371,10 +371,10 @@ def question_seen_tool(question: dict, question_type: int):
     else:
         response = "1.0"
         
-    # print(f"question_seen_tool: {response}")
+    # # print(f"question_seen_tool: {response}")
     matches = re.findall(r'\b\d+\.\d+|\b[01]\b', response)[-1]
     
-    print(f"Valoración: {matches}")
+    # print(f"Valoración: {matches}")
     return float(matches)
 
 def question_seen_embeddings_tool(question: dict, question_type: int, threshold: float, hdf5_file='embeddings.h5'):
@@ -428,7 +428,7 @@ def find_most_different_question(db_id: str, questions: list, question_type: int
         similarities = cosine_similarity([question_embedding], stored_embeddings)
         curr_similarity = min(similarities[0]) # encontrar la menor similitud
 
-        print(f"{curr_similarity}")
+        # print(f"{curr_similarity}")
         # Verificar si la similitud es menor al umbral y si es la menor encontrada hasta ahora
         if curr_similarity < threshold and curr_similarity < min_similarity:
             min_similarity = curr_similarity

@@ -118,7 +118,7 @@ def delete_local_file(file_path):
 def create_empty_hdf5_file(path):
     with h5py.File(path, 'w') as f:
         pass
-    print(f"Archivo HDF5 '{path}' creado vacío.")
+    # print(f"Archivo HDF5 '{path}' creado vacío.")
 
 def load_embeddings_hdf5(question_type: int, db_id: str, hdf5_file='embeddings.h5'):
     types = ['mcqs', 'oeqs', 'tfqs']
@@ -138,7 +138,7 @@ def load_embeddings_hdf5(question_type: int, db_id: str, hdf5_file='embeddings.h
             else:
                 return []
     except OSError as e:
-        print(f"Error al abrir el archivo HDF5: {e}")
+        # print(f"Error al abrir el archivo HDF5: {e}")
         return []
 
 def save_embedding_hdf5(embedding, question_type: int, db_id: str, hdf5_file='embeddings.h5'):
