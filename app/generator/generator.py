@@ -210,25 +210,25 @@ def generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_
             temp_files.extend(future.result())
     
     # Fusiona los archivos temporales en el JSON principal
-    main_json_path = os.path.join(utils.DATABASES_PATH, db_id, 'q&as', 'qs2.json')
+    main_json_path = os.path.join(utils.DATABASES_PATH, db_id, 'q&as', 'qs.json')
     utils.merge_temp_files(temp_files, main_json_path)
     
     utils.delete_all_content_hdf5(db_id, hdf5_file='embeddings.h5')
 
-if __name__ == "__main__":
-    db_id = 'UDXQOG'
-    quality_threshold = 0.82
-    mcq_similarity_threshold = 0.8
-    tfq_similarity_threshold = 0.8
-    number_of_questions = 20
+# if __name__ == "__main__":
+#     db_id = 'UDXQOG'
+#     quality_threshold = 0.82
+#     mcq_similarity_threshold = 0.8
+#     tfq_similarity_threshold = 0.8
+#     number_of_questions = 20
     
-    start_time = time.time()  # Tiempo de inicio
+#     start_time = time.time()  # Tiempo de inicio
     
-    print('--- GENERATING Q&AS ---')
-    generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id, number_of_questions)
+#     print('--- GENERATING Q&AS ---')
+#     generate_qandas(mcq_similarity_threshold, tfq_similarity_threshold, quality_threshold, db_id, number_of_questions)
     
-    end_time = time.time()  # Tiempo de finalización
-    elapsed_time = end_time - start_time  # Tiempo total en segundos
+#     end_time = time.time()  # Tiempo de finalización
+#     elapsed_time = end_time - start_time  # Tiempo total en segundos
 
-    print('--- DONE ---')
-    print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
+#     print('--- DONE ---')
+#     print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
