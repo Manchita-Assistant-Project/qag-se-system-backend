@@ -1,4 +1,8 @@
-![Agent Graph](./graph.png)
+# Agent Graph
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/39a60ecc-7543-4660-8388-b3d2541f2d03" alt="Agent Graph Architecture" width="400"/>
+</p>
 
 Below is a brief overview of each node and conditional edge in the agent graph:
 
