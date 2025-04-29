@@ -17,7 +17,7 @@ If you use this software, please cite it as below:
 
 * [Manchita: An AI-powered gamified learning environment](!TODO)
 
-N. Klopstock, E.J. Duarte, E. Becerra, R. Manrique (2025). *Manchita: An AI-powered gamified learning environment.* In: A. Sifaleras, F. Lin (eds), Generative Intelligence and Intelligent Tutoring Systems. ITS 2025.
+N. Klopstock, E.J. Duarte, E. Becerra, R. Manrique (2025). *Manchita: An AI-powered gamified learning environment.* In: S. Graf, A. Markos (eds), 21th International Conference on Intelligent Tutoring Systems ‘Generative Systems’. ITS 2025.
 
 ```bibtex
 @article{klopstock2025manchita,
