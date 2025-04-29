@@ -1,5 +1,11 @@
 # Manchita: An AI-powered Gamified Learning Environment
 
+<!-- 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/00501bc2-759e-4557-a102-ee92ce915cdb" alt="manchita logo" width="400"/>
+</p>
+-->
+
 ## What is Manchita Assistant?
 *Manchita* is the first version of a gamified learning environment powered by Generative Artificial Intelligence (AI) to enhance engagement and participation in learning. The system integrates Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG) techniques to automatically answer learners' questions in an interactive, conversational manner. Additionally, our environment enables educators to develop interactive questionnaires utilizing various gamified strategies. By incorporating elements such as narrative-driven challenges, scoring mechanisms, and streak-based games, our online learning environment fosters increased engagement.
 
