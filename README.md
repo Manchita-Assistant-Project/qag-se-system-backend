@@ -21,6 +21,6 @@ N. Klopstock, E.J. Duarte, E. Becerra, R. Manrique (2025). *Manchita: An AI-powe
 @article{klopstock2025manchita,
   title={Manchita: An AI-powered gamified learning environment},
   author={Klopstock, Nicolás and Duarte, Ernesto José and Becerra, Edier and Manrique, Rubén},
-  journal={...},
+  journal={21th International Conference on Intelligent Tutoring Systems ‘Generative Systems’},
   year={2025}
 }
