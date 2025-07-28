@@ -13,14 +13,20 @@ It consists of two AI agents: [Evaluation Agent](./app/agent/README.md) and [Gen
 
 If you use this software, please cite it as below:
 
-* [Manchita: An AI-powered gamified learning environment](!TODO)
+* [Manchita: An AI-powered gamified learning environment](https://link.springer.com/chapter/10.1007/978-3-031-98281-1_16)
 
-N. Klopstock, E.J. Duarte, E. Becerra, R. Manrique (2025). *Manchita: An AI-powered gamified learning environment.* In: S. Graf, A. Markos (eds), 21th International Conference on Intelligent Tutoring Systems ‘Generative Systems’. ITS 2025.
+Klopstock, N., Duarte, E.J., Becerra, E., Manrique, R. (2026). Manchita: An AI-Powered Gamified Learning Environment. In: Graf, S., Markos, A. (eds) Generative Systems and Intelligent Tutoring Systems. ITS 2025. Lecture Notes in Computer Science, vol 15723. Springer, Cham.
 
 ```bibtex
-@article{klopstock2025manchita,
-  title={Manchita: An AI-powered gamified learning environment},
-  author={Klopstock, Nicolás and Duarte, Ernesto José and Becerra, Edier and Manrique, Rubén},
-  journal={21th International Conference on Intelligent Tutoring Systems ‘Generative Systems’},
-  year={2025}
+@incollection{klopstock2026manchita,
+  author    = {Klopstock, Nicolás and Duarte, Ernesto J. and Becerra, Edier and Manrique, Rubén},
+  title     = {Manchita: An AI-Powered Gamified Learning Environment},
+  booktitle = {Generative Systems and Intelligent Tutoring Systems. ITS 2025},
+  editor    = {Graf, Sabine and Markos, Andreas},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {15723},
+  year      = {2026},
+  publisher = {Springer, Cham},
+  doi       = {10.1007/978-3-031-98281-1_16},
+  url       = {https://doi.org/10.1007/978-3-031-98281-1_16}
 }
